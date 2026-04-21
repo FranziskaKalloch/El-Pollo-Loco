@@ -1,9 +1,9 @@
 class Background extends MoveAbleObject {
-  constructor(imagePath) {
+  constructor(imagePath, x, y) {
     super();
     this.loadImage(imagePath);
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y; // 480-this.height // koordinate berechnen
     this.width = 720;
     this.height = 480;
   }
