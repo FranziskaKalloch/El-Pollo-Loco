@@ -1,6 +1,7 @@
 class World {
   character = new Character();
-  enemies = [new Chicken(200, 150, 100, 100), new Chicken(400, 150, 100, 100), new Chicken(600, 150, 100, 100)];
+  enemies = [new Chicken(), new Chicken(), new Chicken()];
+  clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
 
   canvas;
   ctx;
@@ -13,6 +14,12 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Clouds anzeigen lassen
+
+    for (const cloud of this.clouds) {
+      this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
+    }
 
     this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height); // (bild, x, y, breite, höhe )
 
