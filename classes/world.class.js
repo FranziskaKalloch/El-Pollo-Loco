@@ -50,8 +50,15 @@ class World {
     }
 
     // Character
-
-    this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height); // (bild, x, y, breite, höhe )
+    // das ist der Moment, wo das Bild gerendert wird
+    if (this.character.otherDirection == false) {
+      this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height); // (bild, x, y, breite, höhe ))
+    } else {
+      this.ctx.save();
+      this.ctx.scale(-1, 1);
+      this.ctx.drawImage(this.character.img, -this.character.x - this.character.width, this.character.y, this.character.width, this.character.height);
+      this.ctx.restore();
+    }
 
     // Chickens
 

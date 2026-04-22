@@ -31,21 +31,31 @@ class Character extends MoveAbleObject {
 
   animate() {
     setInterval(() => {
-      if (this.world.keyboard.RIGHT) {
-        this.x += 10;
-        console.log(this.world.keyboard.RIGHT);
-
-        // Walk Animation
-        this.img = this.imageCache[this.currentImage]; // es darf nur bis 6 gehen, daher this.imageCache.length
-        this.currentImage++;
-        if (this.currentImage >= this.imageCache.length) {
-          this.currentImage = 0;
-        }
+      // move forward & backward
+      this.move();
+      // Walk Animation
+      this.img = this.imageCache[this.currentImage]; // es darf nur bis 6 gehen, daher this.imageCache.length
+      this.currentImage++;
+      if (this.currentImage >= this.imageCache.length) {
+        this.currentImage = 0;
       }
     }, 100);
   }
 
+  move() {
+    if (this.world.keyboard.RIGHT) {
+      this.x += 10;
+      this.otherDirection = false; // Bild nicht gespiegelt
+    }
+    if (this.world.keyboard.LEFT) {
+      this.x -= 10;
+      this.otherDirection = true; // Bild ist gespiegelt
+    }
+  }
+
   jump() {}
+
+  throw() {}
 }
 
 // IMAGES_WALKING = [

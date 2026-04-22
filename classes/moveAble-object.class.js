@@ -5,6 +5,8 @@ class MoveAbleObject {
   height = 300;
   width = 150;
   imageCache = []; // ein Speicher von Bildern
+  speed;
+  otherDirection = false;
 
   // loadImage('img/test.png')
   loadImage(path) {
