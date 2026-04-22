@@ -1,6 +1,5 @@
 class Character extends MoveAbleObject {
   img;
-
   imageCache = [];
   imagesWalking = [
     'img/2_character_pepe/2_walk/W-21.png',
@@ -45,11 +44,17 @@ class Character extends MoveAbleObject {
   move() {
     if (this.world.keyboard.RIGHT) {
       this.x += 10;
-      this.otherDirection = false; // Bild nicht gespiegelt
+      this.otherDirection = false; // Bild nicht gespiegelt / schaut nach rechts
+      this.world.camera_x = -this.x + 100; // Kamera wird verschoben - gegenteilig zum Laufen
     }
-    if (this.world.keyboard.LEFT) {
+    if (this.world.keyboard.LEFT && this.x > 0) {
       this.x -= 10;
-      this.otherDirection = true; // Bild ist gespiegelt
+      this.otherDirection = true; // Bild ist gespiegelt / schaut nach links
+      // das spiegeln an sich, passiert in draw()
+      this.world.camera_x = -this.x + 100;
+    }
+    if (this.world.camera_x > 0) {
+      this.world.camera_x = 0;
     }
   }
 
@@ -57,6 +62,10 @@ class Character extends MoveAbleObject {
 
   throw() {}
 }
+
+// Aufgaben:
+// eine Endpunkt im Level festlegen
+// levenEnd = 3000;
 
 // IMAGES_WALKING = [
 // W-21

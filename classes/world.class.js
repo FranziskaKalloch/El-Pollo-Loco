@@ -1,21 +1,31 @@
 class World {
+  //character = new Character();
+  //level = level1
+
   enemies = [new Chicken(), new Chicken(), new Chicken()];
   clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
 
-  // Aufgabe:
-  // background layers in der richtigen reihenfolge einfügeb
   backgroundObjects = [
     new Background('img/5_background/layers/air.png', 0, 0),
     new Background('img/5_background/layers/3_third_layer/1.png', 0, 0),
     new Background('img/5_background/layers/2_second_layer/1.png', 0, 0),
     new Background('img/5_background/layers/1_first_layer/1.png', 0, 0),
+    new Background('img/5_background/layers/air.png', 720, 0),
+    new Background('img/5_background/layers/3_third_layer/2.png', 720, 0),
+    new Background('img/5_background/layers/2_second_layer/2.png', 720, 0),
+    new Background('img/5_background/layers/1_first_layer/2.png', 720, 0),
+    new Background('img/5_background/layers/air.png', 1440, 0),
+    new Background('img/5_background/layers/3_third_layer/1.png', 1440, 0),
+    new Background('img/5_background/layers/2_second_layer/1.png', 1440, 0),
+    new Background('img/5_background/layers/1_first_layer/1.png', 1440, 0),
   ];
 
   canvas;
   ctx;
   keyboard;
+  camera_x = 0; // wird 100px nach links verschoben / startwert
 
-  constructor(canvas, keyboard) {
+  constructor(canvas, keyboard, level1) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
@@ -35,6 +45,10 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // hier wollen wir den komplette Auschnitt des Canvas verschieben
+
+    this.ctx.translate(this.camera_x, 0); // translate bedeutete, dass wir etwas verschieben wollen
 
     // Background Image
 
@@ -65,6 +79,10 @@ class World {
     for (const enemy of this.enemies) {
       this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
     }
+
+    // Hier wird alles wieder rückgängig gemacht -> Zuerst
+
+    this.ctx.translate(-this.camera_x, 0);
 
     // draw() wird immer wieder aufgerufen
     let start = this;
