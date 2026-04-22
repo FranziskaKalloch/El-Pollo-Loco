@@ -11,8 +11,9 @@ class Character extends MoveAbleObject {
     'img/2_character_pepe/2_walk/W-26.png',
   ];
 
-  constructor() {
+  constructor(world) {
     super();
+    this.world = world;
     this.loadImage('img/2_character_pepe/2_walk/W-21.png');
     this.loadToCache();
     this.animate();
@@ -30,10 +31,16 @@ class Character extends MoveAbleObject {
 
   animate() {
     setInterval(() => {
-      this.img = this.imageCache[this.currentImage]; // es darf nur bis 6 gehen, daher this.imageCache.length
-      this.currentImage++;
-      if (this.currentImage >= this.imageCache.length) {
-        this.currentImage = 0;
+      if (this.world.keyboard.RIGHT) {
+        this.x += 10;
+        console.log(this.world.keyboard.RIGHT);
+
+        // Walk Animation
+        this.img = this.imageCache[this.currentImage]; // es darf nur bis 6 gehen, daher this.imageCache.length
+        this.currentImage++;
+        if (this.currentImage >= this.imageCache.length) {
+          this.currentImage = 0;
+        }
       }
     }, 100);
   }
