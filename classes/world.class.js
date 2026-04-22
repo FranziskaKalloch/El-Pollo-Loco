@@ -43,7 +43,7 @@ class World {
 
     for (const cloud of this.clouds) {
       this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
-      cloud.moveLeft();
+      // cloud.moveLeft();
     }
 
     // Character
