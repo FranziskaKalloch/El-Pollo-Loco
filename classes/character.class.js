@@ -20,7 +20,6 @@ class Character extends MoveAbleObject {
     'img/2_character_pepe/3_jump/J-38.png',
     'img/2_character_pepe/3_jump/J-39.png',
   ];
-  y = 20;
   speedY = 0;
   acceleration = 2;
   currentImage = 0;
@@ -32,6 +31,7 @@ class Character extends MoveAbleObject {
     this.loadToCache();
     this.animate();
     this.gravity();
+    this.jump();
   }
 
   loadToCache() {
@@ -72,16 +72,29 @@ class Character extends MoveAbleObject {
     }
   }
 
-  jump() {}
+  jump() {
+    setInterval(() => {
+      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+        // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
+        this.speedY = -30; // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
+        console.log('Ich springe');
+      }
+    }, 1000 / 25);
+  }
 
+  //
+  // Gravitation darf wirken wenn:
+  // 1. Pepe bereits in der Luft ist
+  // ODER
+  // 2. Pepe gerade nach oben springt (speedY < 0)
   gravity() {
     setInterval(() => {
-      if (this.isAboveGround()) {
+      if (this.isAboveGround() || this.speedY < 0) {
         this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
         this.speedY = this.speedY + this.acceleration; //
       } else {
-        this.y = 150;
-        this.speedY = 0;
+        this.y = 150; // „Bleib optisch hier stehen.“
+        this.speedY = 0; // „Deine Fallbewegung ist wirklich beendet.“
       }
     }, 1000 / 25);
   }
