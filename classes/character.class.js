@@ -28,17 +28,19 @@ class Character extends MoveAbleObject {
     super();
     this.world = world;
     this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-    this.loadToCache();
+    this.loadImages(this.imagesWalking); // Funktion hat einen Parameter, also kann ich auch nur ein Argument übergeben...
+    this.loadImages(this.imagesJumping); // daher wird sie zweimal aufgerufen
     this.animate();
     this.gravity();
     this.jump();
   }
 
-  loadToCache() {
-    for (let i = 0; i < this.imagesWalking.length; i++) {
-      let image = new Image(); // hier ist jetzt ein leeres Bildobjekt
-      image.src = this.imagesWalking[i]; // sagt welche Datei geladen werden soll
-      this.imageCache.push(image);
+  loadImages(array) {
+    for (let index = 0; index < array.length; index++) {
+      let path = array[index]; // hier wird der aktuelle Bildname gespeichert 
+      let image = new Image(); // hier wird ein Bildobjekt erstellt
+      image.src = path; // hier wird das Bild geladen 
+      this.imageCache[path] = image; // speichert das Bild unter diesen Namen 
     }
   }
 
@@ -46,12 +48,17 @@ class Character extends MoveAbleObject {
     setInterval(() => {
       // move forward & backward
       this.move();
-      // Walk Animation
-      this.img = this.imageCache[this.currentImage]; // es darf nur bis 6 gehen, daher this.imageCache.length
-      this.currentImage++;
-      if (this.currentImage >= this.imageCache.length) {
-        this.currentImage = 0;
+      let currentImages;
+      if (this.isAboveGround()) {
+        currentImages = this.imagesJumping;
+      } else {
+        currentImages = this.imagesWalking;
       }
+      // Walk Animation
+      let imageIndex = this.currentImage % currentImages.length;
+      let path = currentImages[imageIndex];
+      this.img = this.imageCache[path];
+      this.currentImage++;
     }, 100);
   }
 
@@ -76,7 +83,8 @@ class Character extends MoveAbleObject {
     setInterval(() => {
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
-        this.speedY = -30; // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
+        this.speedY = -30; // nach oben // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
+        this.currentImage = 0;
         console.log('Ich springe');
       }
     }, 1000 / 25);

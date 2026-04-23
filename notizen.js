@@ -31,7 +31,55 @@ function gravity() {
 // mit acceleration jetzt ein bisschen ausprobieren, damit die Fallgeschwindikeit passt
 
 // Als nächstes uss man wissen, ob er in der Luft ist oder nicht
+// .. die Funktion gibt lediglich den Ausdruck wieder, dass er sich am Boden befinden
 
 function isAboveGround() {
   return this.y < 180;
 }
+// diesen Ausdruck können wir jetzt in die if Abfrage packen, also die Funktion
+
+//..gravity..
+//setInterval
+//if(isAboveGround) {}
+
+// diese Abfrage wird öfters benötigt, daher machen wir es einfacher zu lesen
+
+// Grafiken des Charakters ändern
+// ... Jump animationen
+
+// KOllision - Linien um Objekte zeichnen
+
+function drawFrame() {
+  this.ctx.beginPath();
+  this.ctx.lineWidth = 5;
+  this.ctx.strokeStyle = 'yellow';
+  this.ctx.rect(Object.x, object.y, object.width, object.height);
+  this.ctx.stroke();
+}
+
+
+if(character.x + charater.width > Chicken.x && 
+    character.y + character.height > Chicken.y &&
+    character.x < Chicken.x &&
+    character.y < Chicken.y + Chicken.height
+  )
+
+  function isColliding(object) {
+    return this.x + this.width > object.x &&
+      this.y + this.height > object.y &&
+      this.x < object.x + object.width &&
+      this.y < object.y + object.height
+  }
+
+
+  function isHit() {
+    // return energy -= 20; 
+  }
+
+  function isHurt() {}
+
+  //Später z. B.:
+
+//* Schaden nur einmal pro Treffer
+//* Gegner verliert auch Leben
+//* Unterschiedliche Schäden (Chicken vs Boss)

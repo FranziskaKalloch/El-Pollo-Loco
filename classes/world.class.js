@@ -25,11 +25,14 @@ class World {
   keyboard;
   camera_x = 0; // wird 100px nach links verschoben / startwert
 
+  
+
   constructor(canvas, keyboard, level1) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.character = new Character(this);
+    this.checkCollisions();
 
     this.draw();
   }
@@ -92,6 +95,34 @@ class World {
     });
     // hier wird die Methode so häufig augerufen, wie es die Grafikkarte hergibt - 10 bis 60 pro sekunde, je nachdem.
   }
+
+ checkCollisions() {
+
+  setInterval(() => {
+
+    console.log('Intervall läuft');
+
+    this.enemies.forEach((enemy) => {
+
+      console.log('Prüfe Gegner', enemy);
+
+      if (this.character.isColliding(enemy)) {
+
+        console.log('Kollidiert mit Character');
+
+        this.character.energy -= 20;
+
+        console.log(this.character.energy);
+
+      }
+
+    });
+
+  }, 1000);
+
+}
+
+
 
   addToMap(move) {
     this.ctx.drawImage(move.img, move.x, move.y, move.width, move.height);
