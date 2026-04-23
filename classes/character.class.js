@@ -9,6 +9,21 @@ class Character extends MoveAbleObject {
     'img/2_character_pepe/2_walk/W-25.png',
     'img/2_character_pepe/2_walk/W-26.png',
   ];
+  imagesJumping = [
+    'img/2_character_pepe/3_jump/J-31.png',
+    'img/2_character_pepe/3_jump/J-32.png',
+    'img/2_character_pepe/3_jump/J-33.png',
+    'img/2_character_pepe/3_jump/J-34.png',
+    'img/2_character_pepe/3_jump/J-35.png',
+    'img/2_character_pepe/3_jump/J-36.png',
+    'img/2_character_pepe/3_jump/J-37.png',
+    'img/2_character_pepe/3_jump/J-38.png',
+    'img/2_character_pepe/3_jump/J-39.png',
+  ];
+  y = 20;
+  speedY = 0;
+  acceleration = 2;
+  currentImage = 0;
 
   constructor(world) {
     super();
@@ -16,6 +31,7 @@ class Character extends MoveAbleObject {
     this.loadImage('img/2_character_pepe/2_walk/W-21.png');
     this.loadToCache();
     this.animate();
+    this.gravity();
   }
 
   loadToCache() {
@@ -25,8 +41,6 @@ class Character extends MoveAbleObject {
       this.imageCache.push(image);
     }
   }
-
-  currentImage = 0;
 
   animate() {
     setInterval(() => {
@@ -59,6 +73,22 @@ class Character extends MoveAbleObject {
   }
 
   jump() {}
+
+  gravity() {
+    setInterval(() => {
+      if (this.isAboveGround()) {
+        this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
+        this.speedY = this.speedY + this.acceleration; //
+      } else {
+        this.y = 150;
+        this.speedY = 0;
+      }
+    }, 1000 / 25);
+  }
+
+  isAboveGround() {
+    return this.y < 150; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
+  } // gibt ein true zurück // Ja Pepe ist in der Luft
 
   throw() {}
 }
