@@ -20,9 +20,14 @@ class Character extends MoveAbleObject {
     'img/2_character_pepe/3_jump/J-38.png',
     'img/2_character_pepe/3_jump/J-39.png',
   ];
+
+  imagesHurt = [];
+  imagesDead = [];
+  imagesIdle = [];
   speedY = 0;
   acceleration = 2;
   currentImage = 0;
+  lastHit = 0; // die Variable sagt, dass
 
   constructor(world) {
     super();
@@ -44,6 +49,7 @@ class Character extends MoveAbleObject {
     }
   }
 
+  // verallgemeinern und dann nur eine if Abfrage mit den jeweiligen Images reinpacken
   animate() {
     setInterval(() => {
       // move forward & backward

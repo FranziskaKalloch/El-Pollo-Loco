@@ -24,6 +24,7 @@ class World {
   ctx;
   keyboard;
   camera_x = 0; // wird 100px nach links verschoben / startwert
+  statusBar = new Statusbar(); 
 
   
 
@@ -58,6 +59,9 @@ class World {
     for (const background of this.backgroundObjects) {
       this.ctx.drawImage(background.img, background.x, background.y, background.width, background.height);
     }
+
+    // Statusbar zeichnen lassen 
+    this.ctx.drawImage(this.statusBar.img, this.statusBar.x, this.statusBar.y, this.statusBar.width, this.statusBar.height)
 
     // Clouds anzeigen lassen
 
@@ -99,25 +103,15 @@ class World {
  checkCollisions() {
 
   setInterval(() => {
-
     console.log('Intervall läuft');
-
     this.enemies.forEach((enemy) => {
-
       console.log('Prüfe Gegner', enemy);
-
       if (this.character.isColliding(enemy)) {
-
         console.log('Kollidiert mit Character');
-
         this.character.energy -= 20;
-
         console.log(this.character.energy);
-
       }
-
     });
-
   }, 1000);
 
 }

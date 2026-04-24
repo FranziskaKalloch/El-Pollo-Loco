@@ -71,15 +71,19 @@ if(character.x + charater.width > Chicken.x &&
       this.y < object.y + object.height
   }
 
+// Statusbar 
+// ---> coin Leiste // wie viele Coins wurden bereits eingesammelt
+// ---> Leben // 
 
-  function isHit() {
-    // return energy -= 20; 
-  }
+// Statusbar soll immer fest oben links sichtbar sein 
+// dazu brauchen wir eine neue Klasse 
 
-  function isHurt() {}
+// Aufbau des Spiels:
 
-  //Später z. B.:
-
-//* Schaden nur einmal pro Treffer
-//* Gegner verliert auch Leben
-//* Unterschiedliche Schäden (Chicken vs Boss)
+// World *1 ---> danach kommt 
+// Drawable Object als übergeordnete Klasse von MoveAbleObject und Statusbar
+// untergeordnete Klasse von MoveAbleObject sind:
+// Character ..
+// Chicken ..
+// Cloud ...
+// backgroundObject..
