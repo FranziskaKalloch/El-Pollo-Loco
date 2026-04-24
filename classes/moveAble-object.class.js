@@ -7,11 +7,11 @@ class MoveAbleObject extends DrawableObject {
   speed;
   otherDirection = false;
   energy = 100; 
-  
 
- 
+  constructor() {
+    super(); 
+  }
   
-  // isColliding (chicken )
   isColliding(object) {
     return this.x + this.width > object.x && 
     this.y + this.height > object.y &&
