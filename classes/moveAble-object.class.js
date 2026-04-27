@@ -11,6 +11,8 @@ class MoveableObject extends DrawableObject {
   acceleration = 2;
   energy = 100; 
   lastHit = 0; 
+ 
+ 
 
   constructor() {
     super(); 
@@ -37,6 +39,7 @@ class MoveableObject extends DrawableObject {
   } // gibt ein true zurück // Ja Pepe ist in der Luft
 
   
+  // reine Physik/Geometrie - berühren sich zwei Objekte!
   isColliding(object) {
     return this.x + this.width > object.x && 
     this.y + this.height > object.y &&
@@ -45,10 +48,26 @@ class MoveableObject extends DrawableObject {
   }
 
 
+// Konsequenz/Reaktion
+// ... was passiert, wenn eine Kollision passiert ist?
+// Leben abziehen
+// Zeit speichern
+// später Animation/ Sound 
 
 hit() {
+  if(this.energy > 0) {
+    this.energy -= 20; 
+    this.lastHit = Date.now(); // jetzt wurde ich getroffen, genau in dieser Sekunde 
+  if(this.energy <0) {
+    this.energy = 0; 
+  }
+}
+
+//  Date.now();  // Speichert die aktuelle Zeit in Millisekunden seit 1970 || Date.now() ist dabei die Funktion für die Zeit in ms
+
+// lastHit ----> Speichern Sie die aktuelle Zeit, wenn ein Klick oder eine Aktion stattfindet:
+
 // return energy -= 20; 
-    //Das ist die Funktion, die Schaden anwendet.
 // 1. Schaden bekommen (energy reduzieren)
 // // 2. Prüfen: ist Character noch am Leben? // es soll nur abgezogen werden, wenn ernergy über 0 ist
 // 3. Hurt-Zustand aktivieren (z.B. Zeitstempel speichern)
@@ -58,7 +77,6 @@ hit() {
   // keine Energie mehr abziehen, wenn energie kleiner 0 sein sollte }
   // } else {
   //.     this.lastHit = new Date().getTime();     } // so speichert man Zeit in Zahlenform  --> Zeitspanne kommt in isHurt()
-}
 
 
 isHurt() {
@@ -73,7 +91,7 @@ isDead() {
 }
 
 
-function isHurt() {
+function  isHurt() {
 // 1. Prüfen: wurde Character vor kurzem getroffen?
   // 2. Vergleich mit Zeit (z.B. letzte Verletzung)
   // 3. true zurückgeben, wenn noch im Hurt-Zustand
