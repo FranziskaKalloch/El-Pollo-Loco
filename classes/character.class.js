@@ -84,6 +84,9 @@ class Character extends MoveableObject {
       } else {
         currentImages = this.imagesWalking;
       }
+      if(this.isHurt()) {
+        currentImages = this.imagesHurt; 
+      }
       // Walk Animation
       let imageIndex = this.currentImage % currentImages.length;
       let path = currentImages[imageIndex];
