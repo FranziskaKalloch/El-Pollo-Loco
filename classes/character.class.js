@@ -32,6 +32,7 @@ class Character extends MoveableObject {
     "img/2_character_pepe/5_dead/D-54.png",
     "img/2_character_pepe/5_dead/D-55.png",
     "img/2_character_pepe/5_dead/D-56.png",
+    "img/2_character_pepe/5_dead/D-57.png",
   ];
   imagesIdle = [
     "img/2_character_pepe/1_idle/idle/I-1.png",
@@ -59,6 +60,9 @@ class Character extends MoveableObject {
     "img/2_character_pepe/1_idle/long_idle/I-20.png",
   ]
 
+  deadAnimationStarted = false; 
+  deadFrameCounter = 0; 
+
 
   constructor(world) {
     super();
@@ -67,6 +71,7 @@ class Character extends MoveableObject {
     this.loadImages(this.imagesWalking); // Funktion hat einen Parameter, also kann ich auch nur ein Argument übergeben...
     this.loadImages(this.imagesJumping); // daher wird sie zweimal aufgerufen
     this.loadImages(this.imagesHurt); 
+    this.loadImages(this.imagesDead); 
     this.animate();
     this.gravity();
     this.jump();
@@ -74,26 +79,41 @@ class Character extends MoveableObject {
 
  
 
-  // verallgemeinern und dann nur eine if Abfrage mit den jeweiligen Images reinpacken
+  // entscheidet + setzt das richtige Bild 
+ updateImages() {
+  // DEAD zuerst behandeln
+  if (this.isDead()) {
+    this.playDeadAnimation();
+    return;
+  } else {
+  // normale Animation
+  this.playLoopAnimation();
+  }
+}
+
+  // steuert den Ablauf
   animate() {
     setInterval(() => { 
       this.move(); // move forward & backward
-      let currentImages;
-      if (this.isAboveGround()) {
-        currentImages = this.imagesJumping;
-      } else {
-        currentImages = this.imagesWalking;
-      }
-      if(this.isHurt()) {
-        currentImages = this.imagesHurt; 
-      }
-      // Walk Animation
-      let imageIndex = this.currentImage % currentImages.length;
-      let path = currentImages[imageIndex];
-      this.img = this.imageCache[path];
-      this.currentImage++;
+      this.updateImages(); 
     }, 100);
   }
+
+  playLoopAnimation() {
+  let currentImages;
+    if (this.isHurt()) {
+      currentImages = this.imagesHurt;
+    } else if (this.isAboveGround()) {
+      currentImages = this.imagesJumping;
+    } else {
+      currentImages = this.imagesWalking;
+    }
+
+  let imageIndex = this.currentImage % currentImages.length;
+  let path = currentImages[imageIndex];
+  this.img = this.imageCache[path];
+  this.currentImage++;
+}
 
   move() {
     if (this.world.keyboard.RIGHT) {
@@ -112,7 +132,26 @@ class Character extends MoveableObject {
     }
   }
 
-  jump() {
+
+playDeadAnimation() {
+  let currentImages = this.imagesDead;
+    // Start der Dead Animation
+    if (!this.deadAnimationStarted) {
+      this.currentImage = 0;
+      this.deadAnimationStarted = true;
+      this.deadFrameCounter = 0;
+    }
+  let imageIndex = Math.min(this.currentImage, currentImages.length - 1);
+  let path = currentImages[imageIndex];
+  this.img = this.imageCache[path];
+  // langsamer abspielen
+  this.deadFrameCounter++;
+    if (this.deadFrameCounter % 5 === 0 && this.currentImage < currentImages.length - 1) {
+      this.currentImage++;
+    }
+}
+
+jump() {
     setInterval(() => {
       if (this.world.keyboard.SPACE && !this.isAboveGround()) {
         // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist

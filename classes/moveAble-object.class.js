@@ -64,22 +64,6 @@ hit() {
   }
 }
 
-//  Date.now();  // Speichert die aktuelle Zeit in Millisekunden seit 1970 || Date.now() ist dabei die Funktion für die Zeit in ms
-
-// lastHit ----> Speichern Sie die aktuelle Zeit, wenn ein Klick oder eine Aktion stattfindet:
-
-// return energy -= 20; 
-// 1. Schaden bekommen (energy reduzieren)
-// // 2. Prüfen: ist Character noch am Leben? // es soll nur abgezogen werden, wenn ernergy über 0 ist
-// 3. Hurt-Zustand aktivieren (z.B. Zeitstempel speichern)
-// 4. Optional später: Cooldown beachten (nicht mehrfach direkt Schaden bekommen)
-
- // if() {
-  // keine Energie mehr abziehen, wenn energie kleiner 0 sein sollte }
-  // } else {
-  //.     this.lastHit = new Date().getTime();     } // so speichert man Zeit in Zahlenform  --> Zeitspanne kommt in isHurt()
-
-
 // ich bin gerade verletzt und darf keinen neuen Schade für x sekunden bekommen 
 isHurt() {  
   let timeSinceLastHit = Date.now() - this.lastHit; 
@@ -89,14 +73,7 @@ isHurt() {
  
 
  isDead() {
-// 1. Prüfen: ist energy <= 0?
-  // 2. true zurückgeben, wenn tot
-  // 3. false zurückgeben, wenn noch am Leben
-
-// return this.energy === 0; 
-
-// dann kommt in der animate() FUnktion, wenn wir Tod sind, dann kommen andere Bilder
-// imagesDead
+  return this.energy === 0; 
 }
 
 }
