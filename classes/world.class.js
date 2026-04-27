@@ -82,14 +82,17 @@ class World {
     });  // hier wird die Methode so häufig augerufen, wie es die Grafikkarte hergibt - 10 bis 60 pro sekunde, je nachdem.
   }
 
+
+  // Game Loop/Überwachung: passiert gerade irgendwo im Spiel eine Kollision?
+  // läuft dauerhaft (setInterval), geht durch alle Gegner,
+  // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
+  // das ist der Wächter
  checkCollisions() {
   setInterval(() => {
-    console.log('Intervall läuft');
+    console.log('check Kollision läuft');
     this.enemies.forEach((enemy) => {
-      console.log('Prüfe Gegner', enemy);
-      if (this.character.isColliding(enemy)) {
-        console.log('Kollidiert mit Character');
-        this.character.energy -= 20;
+      if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+        this.character.hit(); 
         console.log(this.character.energy);
       }
     });

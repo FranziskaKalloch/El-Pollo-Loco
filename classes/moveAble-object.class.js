@@ -58,7 +58,8 @@ hit() {
   if(this.energy > 0) {
     this.energy -= 20; 
     this.lastHit = Date.now(); // jetzt wurde ich getroffen, genau in dieser Sekunde 
-  if(this.energy <0) {
+  }
+  if(this.energy < 0) {
     this.energy = 0; 
   }
 }
@@ -79,36 +80,15 @@ hit() {
   //.     this.lastHit = new Date().getTime();     } // so speichert man Zeit in Zahlenform  --> Zeitspanne kommt in isHurt()
 
 
-isHurt() {
-
+// ich bin gerade verletzt und darf keinen neuen Schade für x sekunden bekommen 
+isHurt() {  
+  let timeSinceLastHit = Date.now() - this.lastHit; 
+  console.log('"Ich BIN gerade noch im Hurt-Zustand"')
+  return timeSinceLastHit < 1000; 
 }
-
-isDead() {
-
-}
-
-  
-}
-
-
-function  isHurt() {
-// 1. Prüfen: wurde Character vor kurzem getroffen?
-  // 2. Vergleich mit Zeit (z.B. letzte Verletzung)
-  // 3. true zurückgeben, wenn noch im Hurt-Zustand
-  // 4. false zurückgeben, wenn wieder „normal“
-
-  // enstprechende grafik anzeigen --> imagesHurt
-
-  // let timepassed = new Date().getTime() - this.lastHit; // Differenz in millisikunden
-  // timepassded = timespassed / 1000; difference in sekunden
-  // return timepassed < 5; // das heisst, wenn wir in den letzten 5 Sekunden getroffen wurden, dann gibt die Funktion den Wert true zurück
-  // der Zeitraum von 5 sekunden ist aber zu lang
-  // besser kleinerer also 1 sekunde
-
  
 
-
-function isDead() {
+ isDead() {
 // 1. Prüfen: ist energy <= 0?
   // 2. true zurückgeben, wenn tot
   // 3. false zurückgeben, wenn noch am Leben
