@@ -1,4 +1,4 @@
-class Chicken extends MoveAbleObject {
+class Chicken extends MoveableObject {
   img;
 
   imagesWalking = [

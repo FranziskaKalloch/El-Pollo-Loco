@@ -1,4 +1,4 @@
-class Background extends MoveAbleObject {
+class Background extends MoveableObject {
   constructor(imagePath, x, y) {
     super();
     this.loadImage(imagePath);

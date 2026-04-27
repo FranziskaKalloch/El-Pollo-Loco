@@ -1,6 +1,5 @@
-class Character extends MoveAbleObject {
-  img;
-  imageCache = [];
+class Character extends MoveableObject {
+ 
   imagesWalking = [
     'img/2_character_pepe/2_walk/W-21.png',
     'img/2_character_pepe/2_walk/W-22.png',
@@ -24,10 +23,7 @@ class Character extends MoveAbleObject {
   imagesHurt = [];
   imagesDead = [];
   imagesIdle = [];
-  speedY = 0;
-  acceleration = 2;
-  currentImage = 0;
-  lastHit = 0; // die Variable sagt, dass
+
 
   constructor(world) {
     super();
@@ -40,20 +36,12 @@ class Character extends MoveAbleObject {
     this.jump();
   }
 
-  loadImages(array) {
-    for (let index = 0; index < array.length; index++) {
-      let path = array[index]; // hier wird der aktuelle Bildname gespeichert 
-      let image = new Image(); // hier wird ein Bildobjekt erstellt
-      image.src = path; // hier wird das Bild geladen 
-      this.imageCache[path] = image; // speichert das Bild unter diesen Namen 
-    }
-  }
+ 
 
   // verallgemeinern und dann nur eine if Abfrage mit den jeweiligen Images reinpacken
   animate() {
-    setInterval(() => {
-      // move forward & backward
-      this.move();
+    setInterval(() => { 
+      this.move(); // move forward & backward
       let currentImages;
       if (this.isAboveGround()) {
         currentImages = this.imagesJumping;
@@ -96,51 +84,10 @@ class Character extends MoveAbleObject {
     }, 1000 / 25);
   }
 
-  //
-  // Gravitation darf wirken wenn:
-  // 1. Pepe bereits in der Luft ist
-  // ODER
-  // 2. Pepe gerade nach oben springt (speedY < 0)
-  gravity() {
-    setInterval(() => {
-      if (this.isAboveGround() || this.speedY < 0) {
-        this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
-        this.speedY = this.speedY + this.acceleration; //
-      } else {
-        this.y = 150; // „Bleib optisch hier stehen.“
-        this.speedY = 0; // „Deine Fallbewegung ist wirklich beendet.“
-      }
-    }, 1000 / 25);
-  }
-
-  isAboveGround() {
-    return this.y < 150; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
-  } // gibt ein true zurück // Ja Pepe ist in der Luft
-
+  
   throw() {}
 }
 
 // Aufgaben:
 // eine Endpunkt im Level festlegen
 // levenEnd = 3000;
-
-// IMAGES_WALKING = [
-// W-21
-// W-22
-// W-23
-// ...
-// ]
-
-// this.loadImage(this.IMAGES_WALKING)
-// let currentImage = 0;
-
-// this animate();  // in den constructor
-
-//  animate() {
-//     setInterval(() => {
-//       let i = this.currentImage % this.imagesWalking.length;  // Modulo ist der mathematische Rest // let i = 0 % 6 //
-//       let path = this.imagesWalking[i];
-//       this.img = this.imageCache[path];
-//       this.currentImage++
-//    }, 100);
-//  }

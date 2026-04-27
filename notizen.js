@@ -71,19 +71,10 @@ if(character.x + charater.width > Chicken.x &&
       this.y < object.y + object.height
   }
 
-// Statusbar 
-// ---> coin Leiste // wie viele Coins wurden bereits eingesammelt
-// ---> Leben // 
 
-// Statusbar soll immer fest oben links sichtbar sein 
-// dazu brauchen wir eine neue Klasse 
 
-// Aufbau des Spiels:
 
-// World *1 ---> danach kommt 
-// Drawable Object als übergeordnete Klasse von MoveAbleObject und Statusbar
-// untergeordnete Klasse von MoveAbleObject sind:
-// Character ..
-// Chicken ..
-// Cloud ...
-// backgroundObject..
+
+
+
+

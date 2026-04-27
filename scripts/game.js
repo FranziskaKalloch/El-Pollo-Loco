@@ -47,3 +47,4 @@ window.addEventListener('keyup', (event) => {
     keyboard.DOWN = false;
   }
 });
+

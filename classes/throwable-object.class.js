@@ -1,4 +1,4 @@
-class ThrowableObject extends MoveAbleObject {
+class ThrowableObject extends MoveableObject {
 
     // Bottles
     // - Methoden -> Throw() 
@@ -9,6 +9,8 @@ class ThrowableObject extends MoveAbleObject {
 
     constructor() {
         super(); 
+
+
     }
 
 

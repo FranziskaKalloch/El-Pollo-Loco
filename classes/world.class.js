@@ -53,8 +53,6 @@ class World {
       this.addToMap(background);
     }
 
-    this.addToMap(this.statusBar);
-
     for (const cloud of this.clouds) {
       this.addToMap(cloud); 
     }
@@ -74,6 +72,8 @@ class World {
 
     // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);
+
+     this.addToMap(this.statusBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
 
     // draw() wird immer wieder aufgerufen
     let start = this;
