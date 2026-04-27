@@ -1,6 +1,10 @@
 class World {
   //character = new Character();
   //level = level1
+  healthBar = new Statusbar("health");
+  coinBar = new Statusbar("coins");
+  bottleBar = new Statusbar("bottles");
+  endbossBar = new Statusbar("bossHealth"); 
 
   enemies = [new Chicken(), new Chicken(), new Chicken()];
   clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
@@ -28,6 +32,9 @@ class World {
 
 
   constructor(canvas, keyboard) {
+    this.coinBar.x = 20;
+    this.coinBar.y = 55; 
+
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
@@ -73,7 +80,8 @@ class World {
     // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);
 
-     this.addToMap(this.statusBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
+     this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
+     this.addToMap(this.coinBar);
 
     // draw() wird immer wieder aufgerufen
     let start = this;
@@ -93,6 +101,7 @@ class World {
     this.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isHurt()) {
         this.character.hit(); 
+        this.healthBar.setBar(this.character.energy);
         console.log(this.character.energy);
       }
     });

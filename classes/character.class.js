@@ -62,6 +62,7 @@ class Character extends MoveableObject {
 
   deadAnimationStarted = false; 
   deadFrameCounter = 0; 
+  coins = 0; 
 
 
   constructor(world) {
@@ -162,12 +163,17 @@ jump() {
     }, 1000 / 25);
   }
 
+   checkCoolDown() {
+
+  }
+
   
   throw() {}
 
-  checkCoolDown() {
-
+  collectCoins() {
+    this.Character.coins += 20; 
   }
+ 
 }
 
 // Aufgaben:
