@@ -50,6 +50,7 @@ class World {
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.character = new Character(this);
+    this.sound = new Sounds(); 
     this.draw(); 
     this.checkCollisions();
   }
@@ -123,6 +124,7 @@ class World {
     this.coins.forEach((coin, index) => { // 
      if(this.character.isColliding(coin)) {
       console.log('coin gesammelt')
+      this.sound.play('coin'); 
       this.coins.splice(index,1); // Coin wird aus dem Array gelöscht -> also eingesammelt 
       this.collectedCoins++; // coins counter geht hoch 
       console.log('coin eingesammelt: ', this.collectedCoins)
