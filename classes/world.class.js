@@ -76,9 +76,13 @@ class World {
       this.addToMap(cloud); 
     }
 
-     for(const coin of this.coins) {
-      this.addToMap(coin); 
+   for (const coin of this.coins) {
+    if (coin.isCollected) {
+      this.drawRotatingCoin(coin);
+    } else {
+      this.addToMap(coin);
     }
+  }
 
     if (this.character.otherDirection == false) {
       this.addToMap(this.character); 
@@ -107,13 +111,42 @@ class World {
     });  // hier wird die Methode so häufig augerufen, wie es die Grafikkarte hergibt - 10 bis 60 pro sekunde, je nachdem.
   }
 
+  drawRotatingCoin(coin) {
+  let ctx = this.ctx;
+
+  let animationTime = Date.now() - coin.startTime;
+  let angle = animationTime * 0.02; // Geschwindigkeit der Drehung
+
+  ctx.save();
+
+  // Mittelpunkt berechnen
+  let centerX = coin.x + coin.width / 2;
+  let centerY = coin.y + coin.height / 2;
+
+  // Zum Mittelpunkt verschieben
+  ctx.translate(centerX, centerY);
+
+  // Drehen
+  ctx.rotate(angle);
+
+  // Bild zeichnen (verschoben zurück)
+  ctx.drawImage(
+    coin.img,
+    -coin.width / 2,
+    -coin.height / 2,
+    coin.width,
+    coin.height
+  );
+
+  ctx.restore();
+}
+
 
   // Game Loop/Überwachung: passiert gerade irgendwo im Spiel eine Kollision?
   // läuft dauerhaft (setInterval), geht durch alle Gegner,
   // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
   // das ist der Wächter
  checkCollisions() {
-  let percentage; 
   setInterval(() => {
     this.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isHurt()) {
@@ -121,21 +154,44 @@ class World {
         this.healthBar.setBar(this.character.energy);
       }
     });
-    this.coins.forEach((coin, index) => { // 
-     if(this.character.isColliding(coin)) {
-      console.log('coin gesammelt')
-      this.sound.play('coin'); 
-      this.coins.splice(index,1); // Coin wird aus dem Array gelöscht -> also eingesammelt 
-      this.collectedCoins++; // coins counter geht hoch 
-      console.log('coin eingesammelt: ', this.collectedCoins)
-      percentage = this.collectedCoins / this.maxCoins * 100; 
-      this.coinBar.setBar(percentage)
-      };  
-  }) 
+     this.collectCoins(); 
   }, 1000);
  }
+ 
+ collectCoins() {
+  for (let index = this.coins.length - 1; index >= 0; index--) {
+    let coin = this.coins[index];
+    if (this.character.isColliding(coin) && !coin.isCollected) {
+      coin.isCollected = true;
+      coin.startTime = Date.now();
+      this.sound.play('coin');
+      this.collectedCoins++;
+      let percentage = (this.collectedCoins / this.maxCoins) * 100;
+      this.coinBar.setBar(percentage);
+    }
+    if (coin.isCollected) {
+      let finished = this.animateCoin(coin);
+      if (finished) {
+        this.coins.splice(index, 1);
+      }
+    }
+  }
+}
+
+ animateCoin(coin) {
+  let animationTime = Date.now() - coin.startTime; 
+    if( animationTime < 1000) {
+      coin.y -= 10;  //→ bewege ihn nach oben
+      return false; 
+  //→ rotiere ihn
+    } 
+    return true;  // Animation ist fertig, du darfst sie löschen
+      // löschen
+    }
 
   }
+
+ 
 
 // Jeder Coin = 20
 // also - maxCoin = 5; 

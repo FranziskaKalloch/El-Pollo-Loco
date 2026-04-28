@@ -9,11 +9,9 @@ class Coins extends DrawableObject {
         this.width = 100;
         this.height = 100; 
         
-    }
+    } 
 
-  
- 
-coins = 0; 
-
+isCollected = false;
+startTime = 0;
 
 }  
