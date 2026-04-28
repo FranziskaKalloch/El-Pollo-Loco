@@ -1,10 +1,20 @@
 class World {
   //character = new Character();
   //level = level1
+   statusBar = new Statusbar(); 
   healthBar = new Statusbar("health");
   coinBar = new Statusbar("coins");
   bottleBar = new Statusbar("bottles");
   endbossBar = new Statusbar("bossHealth"); 
+
+  coins = [
+    new Coins(), 
+    new Coins(), 
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+  ]; 
 
   enemies = [new Chicken(), new Chicken(), new Chicken()];
   clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
@@ -28,9 +38,7 @@ class World {
   ctx;
   keyboard;
   camera_x = 0; // startwert
-  statusBar = new Statusbar(); 
-
-
+ 
   constructor(canvas, keyboard) {
     this.coinBar.x = 20;
     this.coinBar.y = 55; 
@@ -52,8 +60,8 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    // hier wollen wir den komplette Auschnitt des Canvas verschieben
+ 
+     // hier wollen wir den komplette Auschnitt des Canvas verschieben
     this.ctx.translate(this.camera_x, 0); // translate bedeutete, dass wir etwas verschieben wollen
 
     for (const background of this.backgroundObjects) {
@@ -62,6 +70,10 @@ class World {
 
     for (const cloud of this.clouds) {
       this.addToMap(cloud); 
+    }
+
+     for(const coin of this.coins) {
+      this.addToMap(coin); 
     }
 
     if (this.character.otherDirection == false) {
@@ -79,6 +91,7 @@ class World {
 
     // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);
+    
 
      this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
      this.addToMap(this.coinBar);

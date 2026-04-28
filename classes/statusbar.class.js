@@ -31,13 +31,13 @@ constructor(type) {
     this.loadImages(this.imagesHealth); 
     this.loadImages(this.imagesCoins); 
     
-
   if (this.type === "health") {
     this.setBar(100);
   }
   if (this.type === "coins") {
    this.setBar(0); 
   }
+  
 }
 
 setBar(percentage) { // diese Funktion bekommt von Außen einen Wert (100,80,60..)
