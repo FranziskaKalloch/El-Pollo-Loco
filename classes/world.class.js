@@ -1,7 +1,7 @@
 class World {
   //character = new Character();
   //level = level1
-   statusBar = new Statusbar(); 
+  statusBar = new Statusbar(); 
   healthBar = new Statusbar("health");
   coinBar = new Statusbar("coins");
   bottleBar = new Statusbar("bottles");
@@ -38,6 +38,8 @@ class World {
   ctx;
   keyboard;
   camera_x = 0; // startwert
+
+  coin = 0; 
  
   constructor(canvas, keyboard) {
     this.coinBar.x = 20;
@@ -110,15 +112,31 @@ class World {
   // das ist der Wächter
  checkCollisions() {
   setInterval(() => {
-    console.log('check Kollision läuft');
     this.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isHurt()) {
         this.character.hit(); 
         this.healthBar.setBar(this.character.energy);
-        console.log(this.character.energy);
       }
     });
+    this.coins.forEach((coin, index) => { 
+     if(this.character.isColliding(coin)) {
+      console.log('coin gesammelt')
+      this.coins.splice(index,1); 
+     };  
+  })
   }, 1000);
-}
+ }
 
-}
+  }
+
+ 
+
+
+//  this.coins.forEach((coin) => {
+//        if(this.character.isColliding(coin)) {
+ //         console.log('Kollidiert mit einem Coin')
+ //         this.coinBar.setBar(this.character.coins); 
+ //         this.coin++;
+ //         this.coins.splice(index)
+ //       }
+  //  })
