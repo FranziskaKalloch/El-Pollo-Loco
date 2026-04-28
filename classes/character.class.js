@@ -73,6 +73,7 @@ class Character extends MoveableObject {
     this.loadImages(this.imagesJumping); // daher wird sie zweimal aufgerufen
     this.loadImages(this.imagesHurt); 
     this.loadImages(this.imagesDead); 
+    this.sound = new Sounds(); 
     this.animate();
     this.gravity();
     this.jump();
@@ -145,7 +146,7 @@ playDeadAnimation() {
   let imageIndex = Math.min(this.currentImage, currentImages.length - 1);
   let path = currentImages[imageIndex];
   this.img = this.imageCache[path];
-  
+
   // langsamer abspielen
   this.deadFrameCounter++;
     if (this.deadFrameCounter % 5 === 0 && this.currentImage < currentImages.length - 1) {
@@ -159,7 +160,7 @@ jump() {
         // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
         this.speedY = -30; // nach oben // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
         this.currentImage = 0;
-        console.log('Ich springe');
+        this.sound.play('jump'); 
       }
     }, 1000 / 25);
   }
