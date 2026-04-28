@@ -39,7 +39,8 @@ class World {
   keyboard;
   camera_x = 0; // startwert
 
-  coin = 0; 
+  collectedCoins = 0; 
+  maxCoins = 5; 
  
   constructor(canvas, keyboard) {
     this.coinBar.x = 20;
@@ -49,7 +50,7 @@ class World {
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.character = new Character(this);
-    this.draw();
+    this.draw(); 
     this.checkCollisions();
   }
 
@@ -111,6 +112,7 @@ class World {
   // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
   // das ist der Wächter
  checkCollisions() {
+  let percentage; 
   setInterval(() => {
     this.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isHurt()) {
@@ -118,25 +120,28 @@ class World {
         this.healthBar.setBar(this.character.energy);
       }
     });
-    this.coins.forEach((coin, index) => { 
+    this.coins.forEach((coin, index) => { // 
      if(this.character.isColliding(coin)) {
       console.log('coin gesammelt')
-      this.coins.splice(index,1); 
-     };  
-  })
+      this.coins.splice(index,1); // Coin wird aus dem Array gelöscht -> also eingesammelt 
+      this.collectedCoins++; // coins counter geht hoch 
+      console.log('coin eingesammelt: ', this.collectedCoins)
+      percentage = this.collectedCoins / this.maxCoins * 100; 
+      this.coinBar.setBar(percentage)
+      };  
+  }) 
   }, 1000);
  }
 
   }
 
- 
+// Jeder Coin = 20
+// also - maxCoin = 5; 
+// 1 Coin = 20;
+// 2 Coin = 40;
+// 3 Coin = 60;
+// 4 Coin = 80;
+// 5 Coin = 100; 
 
-
-//  this.coins.forEach((coin) => {
-//        if(this.character.isColliding(coin)) {
- //         console.log('Kollidiert mit einem Coin')
- //         this.coinBar.setBar(this.character.coins); 
- //         this.coin++;
- //         this.coins.splice(index)
- //       }
-  //  })
+// Prozentrechnung: 
+// collected / max * 100 
