@@ -37,9 +37,24 @@ imagesBottleOnGround = [
 rotateBottle() {
     let currentImage = 0; 
     setInterval(() => {
+        if (this.hasHitGround) {
+            return;
+        }
         currentImage++;
         let index = currentImage % this.imagesBottleRotation.length; 
         this.loadImage(this.imagesBottleRotation[index]); 
     },1000/10);   
+}
+
+animateSplash() {
+    let currentImage = 0; 
+    let interval = setInterval(() => {
+        let index = this.imagesBottleSplash[currentImage];
+         currentImage++;
+         this.loadImage(index);
+        if(currentImage >= this.imagesBottleSplash.length) {
+            clearInterval(interval); 
+        }
+    }, 1000/10);
 }
 }
