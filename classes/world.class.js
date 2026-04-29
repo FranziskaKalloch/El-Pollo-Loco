@@ -28,6 +28,7 @@ class World {
     new SalsaBottle(),
     new SalsaBottle(),
    ]
+   throwableItems = []; // geworfene Bottles 
 
   backgroundObjects = [
     new Background('img/5_background/layers/air.png', 0, 0),
@@ -53,6 +54,8 @@ class World {
   maxCoins = 5; 
   collectedBottles = 0; 
   maxBottles = 5; 
+
+  canThrow = true; 
  
   constructor(canvas, keyboard) {
     this.coinBar.x = 10;
@@ -68,6 +71,7 @@ class World {
     this.sound = new Sounds(); 
     this.draw(); 
     this.checkCollisions();
+    this.checkThrowableObject(); 
   }
 
  
@@ -101,6 +105,10 @@ class World {
 
   for(const bottle of this.bottles) {
     this.addToMap(bottle); 
+  }
+
+  for(const item of this.throwableItems) {
+    this.addToMap(item); 
   }
 
     if (this.character.otherDirection == false) {
@@ -201,12 +209,13 @@ class World {
 collectBottles() {
   for (let index = this.bottles.length - 1; index >= 0; index--) {
     let bottle = this.bottles[index];
-    if(this.character.isColliding(bottle) && this.collectedBottles <= this.maxBottles) {
+    if(this.character.isColliding(bottle) && this.collectedBottles < this.maxBottles) {
       this.collectedBottles++;
       this.sound.play('bottles');
       let percentage = (this.collectedBottles / this.maxBottles) * 100;
+       this.bottles.splice(index, 1);  
       this.bottleBar.setBar(percentage); 
-      this.bottles.splice(index, 1); 
+     
     }
 }
 }
@@ -222,10 +231,31 @@ collectBottles() {
       // löschen
     }
 
+
+    checkThrowableObject() {
+      setInterval(() => {
+        if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
+        console.log('ich werfe');
+        let bottle = new SalsaBottle();
+        bottle.loadImage(bottle.imagesBottleRotation[0])
+        this.canThrow = false; 
+        this.throwableItems.push(bottle); 
+        bottle.throw(this.character.x + 70, this.character.y + 125); 
+        this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
+        let percentage = (this.collectedBottles / this.maxBottles) * 100;
+        this.bottlesBar.setBar(percentage);
+       
+    }
+      if(!this.keyboard.D) {
+        this.canThrow = true;  
+      }
+      }, 1000/60); 
+    }
+
   }
 
  
-
+  
 // Jeder Coin = 20
 // also - maxCoin = 5; 
 // 1 Coin = 20;

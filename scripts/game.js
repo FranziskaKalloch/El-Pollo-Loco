@@ -11,7 +11,9 @@ function init() {
   ctx = canvas.getContext('2d');
 
   console.log('My character is', world.character);
+ 
 }
+
 
 window.addEventListener('keydown', (event) => {
   if (event.key == 'ArrowUp') {
@@ -29,9 +31,10 @@ window.addEventListener('keydown', (event) => {
   if (event.key == 'ArrowDown') {
     keyboard.DOWN = true;
   }
-  if(event.key == 'D') {
+  if(event.code == 'KeyD') {
     keyboard.D = true; 
   }
+  console.log(event); 
 });
 
 window.addEventListener('keyup', (event) => {
@@ -50,8 +53,10 @@ window.addEventListener('keyup', (event) => {
   if (event.key == 'ArrowDown') {
     keyboard.DOWN = false;
   }
-  if(event.key == 'D') {
+  if(event.code == 'KeyD') {
     keyboard.D = false; 
   }
 });
+
+
 

@@ -25,11 +25,14 @@ imagesBottleOnGround = [
     constructor() {
         super(); 
         this.loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
-        this.loadImages(this.imagesBottleOnGround);
-        this.y = 350 ;
-        this.x = 200 + Math.random() * 2000; 
+        this.loadImages(this.imagesBottleOnGround); 
+        this.y = 350;
+        this.x = 200 + Math.random() * 2000;
         this.width = 80;
         this.height = 100; 
     }
+
+    // * Wenn x und y übergeben werden → geworfene Bottle startet dort
+   // * Wenn nichts übergeben wird → Boden-Bottle bekommt Zufallsposition
 
 }

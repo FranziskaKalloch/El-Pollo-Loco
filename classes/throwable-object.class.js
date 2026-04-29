@@ -3,22 +3,17 @@ class ThrowableObject extends MoveableObject {
 speedY = 30; 
 speedX = 20;
 
-    // Bottles
-    // - Methoden -> Throw() 
-	//- speedY = 30; 
-	//- speedX = 20;
-	//- Keyboard braucht eine Taste zum werfen 'D'
-	// - in World ein Array für Throwable objects
-
     constructor() {
         super(); 
-
     }
 
-    throw() {
-
+    throw(x,y) {
+        this.x = x;
+        this.y = y;
     }
+    // wenn bottle.throw() aufgerufen wird, dann werden dort die Koordinaten reingepackt
 
+   
 }
 
 // Aufgabe:
