@@ -51,6 +51,8 @@ class World {
 
   collectedCoins = 0; 
   maxCoins = 5; 
+  collectedBottles = 0; 
+  maxBottles = 5; 
  
   constructor(canvas, keyboard) {
     this.coinBar.x = 10;
@@ -172,6 +174,7 @@ class World {
       }
     });
      this.collectCoins(); 
+     this.collectBottles(); 
   }, 1000);
  }
  
@@ -193,6 +196,19 @@ class World {
       }
     }
   }
+}
+
+collectBottles() {
+  for (let index = this.bottles.length - 1; index >= 0; index--) {
+    let bottle = this.bottles[index];
+    if(this.character.isColliding(bottle) && this.collectedBottles <= this.maxBottles) {
+      this.collectedBottles++;
+      this.sound.play('bottles');
+      let percentage = (this.collectedBottles / this.maxBottles) * 100;
+      this.bottleBar.setBar(percentage); 
+      this.bottles.splice(index, 1); 
+    }
+}
 }
 
  animateCoin(coin) {
