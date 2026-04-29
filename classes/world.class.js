@@ -19,8 +19,15 @@ class World {
   enemies = [new Chicken(), new Chicken(), new Chicken()];
   clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
   bottles = [
+    new SalsaBottle(), 
     new SalsaBottle(),
-  ]
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+   ]
 
   backgroundObjects = [
     new Background('img/5_background/layers/air.png', 0, 0),
@@ -110,6 +117,7 @@ class World {
 
      this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
      this.addToMap(this.coinBar);
+     this.addToMap(this.bottleBar); 
 
     // draw() wird immer wieder aufgerufen
     let start = this;
@@ -147,7 +155,6 @@ class World {
 
   ctx.restore();
 }
-
 
   // Game Loop/Überwachung: passiert gerade irgendwo im Spiel eine Kollision?
   // läuft dauerhaft (setInterval), geht durch alle Gegner,

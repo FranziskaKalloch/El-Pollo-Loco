@@ -24,12 +24,12 @@ imagesBottleOnGround = [
 
     constructor() {
         super(); 
-        this.loadImage('img/6_salsa_bottle/salsa_bottle.png');
+        this.loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
+        this.loadImages(this.imagesBottleOnGround);
+        this.y = 350 ;
+        this.x = 200 + Math.random() * 2000; 
         this.width = 80;
         this.height = 100; 
-
     }
-
-
 
 }
