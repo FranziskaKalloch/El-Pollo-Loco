@@ -35,7 +35,10 @@ class MoveableObject extends DrawableObject {
   }
 
   isAboveGround() {
+    if(this instanceof ThrowableObject) {
+      return true }
     return this.y < 150; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
+  
   } // gibt ein true zurück // Ja Pepe ist in der Luft
 
   

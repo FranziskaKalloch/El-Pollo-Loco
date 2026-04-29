@@ -240,10 +240,10 @@ collectBottles() {
         bottle.loadImage(bottle.imagesBottleRotation[0])
         this.canThrow = false; 
         this.throwableItems.push(bottle); 
-        bottle.throw(this.character.x + 70, this.character.y + 125); 
+        bottle.throw(this.character.x + 100,  this.character.y + 60); 
         this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
         let percentage = (this.collectedBottles / this.maxBottles) * 100;
-        this.bottlesBar.setBar(percentage);
+        this.bottleBar.setBar(percentage);
        
     }
       if(!this.keyboard.D) {

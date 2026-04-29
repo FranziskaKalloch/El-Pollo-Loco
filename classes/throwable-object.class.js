@@ -1,7 +1,7 @@
 class ThrowableObject extends MoveableObject {
 
-speedY = 30; 
-speedX = 20;
+speedY; 
+speedX = 8; 
 
     constructor() {
         super(); 
@@ -10,6 +10,14 @@ speedX = 20;
     throw(x,y) {
         this.x = x;
         this.y = y;
+
+        this.speedY = -20; 
+         this.gravity(); 
+        setInterval(() => {
+            this.x += this.speedX;
+        }, 1000/60);
+       
+
     }
     // wenn bottle.throw() aufgerufen wird, dann werden dort die Koordinaten reingepackt
 
@@ -17,21 +25,11 @@ speedX = 20;
 }
 
 // Aufgabe:
-//	- thow(100,150) x und y koordinate angeben
+//	- throw(100,150) x und y koordinate angeben
 //	- this.height = ?
 //	- this.width = ? 
 	
-//	- throw(x,y) {
-//		this.y = y;
-//		this.x = x;
-	
-//		this.speedY = 30;
-//		this.gravity(); 
-//		setInterval( () => {
-//		this.x += 10; 
-//		} 25); 
-//		}
-//		
+		
 		
 //		in isAboveGround() {
 //		if(!this instanceOf ThrowableObject) ) {
