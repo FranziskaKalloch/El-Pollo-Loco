@@ -53,8 +53,11 @@ class World {
   maxCoins = 5; 
  
   constructor(canvas, keyboard) {
-    this.coinBar.x = 20;
-    this.coinBar.y = 55; 
+    this.coinBar.x = 10;
+    this.coinBar.y = 50; 
+
+    this.bottleBar.x = 10;
+    this.bottleBar.y = 100; 
 
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
