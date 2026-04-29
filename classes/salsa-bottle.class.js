@@ -31,8 +31,15 @@ imagesBottleOnGround = [
         this.width = 80;
         this.height = 100; 
     }
-
-    // * Wenn x und y übergeben werden → geworfene Bottle startet dort
+     // * Wenn x und y übergeben werden → geworfene Bottle startet dort
    // * Wenn nichts übergeben wird → Boden-Bottle bekommt Zufallsposition
 
+rotateBottle() {
+    let currentImage = 0; 
+    setInterval(() => {
+        currentImage++;
+        let index = currentImage % this.imagesBottleRotation.length; 
+        this.loadImage(this.imagesBottleRotation[index]); 
+    },1000/10);   
+}
 }

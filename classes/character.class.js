@@ -156,8 +156,7 @@ playDeadAnimation() {
 
 jump() {
     setInterval(() => {
-      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
+      if (this.world.keyboard.SPACE && !this.isAboveGround()) { // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
         this.speedY = -30; // nach oben // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
         this.currentImage = 0;
         this.sound.play('jump'); 
