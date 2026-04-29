@@ -18,6 +18,9 @@ class World {
 
   enemies = [new Chicken(), new Chicken(), new Chicken()];
   clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
+  bottles = [
+    new SalsaBottle(),
+  ]
 
   backgroundObjects = [
     new Background('img/5_background/layers/air.png', 0, 0),
@@ -82,6 +85,10 @@ class World {
     } else {
       this.addToMap(coin);
     }
+  }
+
+  for(const bottle of this.bottles) {
+    this.addToMap(bottle); 
   }
 
     if (this.character.otherDirection == false) {

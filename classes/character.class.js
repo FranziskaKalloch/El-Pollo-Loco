@@ -169,8 +169,6 @@ jump() {
 
   }
 
-  
-  throw() {}
 
   collectCoins() {
     this.Character.coins += 20; 
