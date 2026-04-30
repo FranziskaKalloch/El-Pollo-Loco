@@ -41,6 +41,8 @@ offset = {
   right: 25,
 }
 
+splashStartTime; 
+
 
 
 rotateBottle() {

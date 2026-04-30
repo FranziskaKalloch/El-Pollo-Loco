@@ -185,7 +185,8 @@ class World {
     });
      this.collectCoins(); 
      this.collectBottles(); 
-       this.removeDeadEnemies(); 
+     this.removeDeadEnemies(); 
+     this.removeBottles(); 
   }, 1000);
  }
 
@@ -200,6 +201,7 @@ checkBottleCollision() {
           item.speedX = 0
           item.speedY = 0 
           item.acceleration = 0
+          item.splashStartTime = Date.now(); 
           item.loadImage(item.imagesBottleSplash[0]);
           item.animateSplash()
         }
@@ -210,18 +212,26 @@ checkBottleCollision() {
 
   removeDeadEnemies() {
     for (let index = this.enemies.length - 1; index >= 0; index--) {
-    let enemy = this.enemies[index];
-       if(enemy.isKilled && Date.now() - enemy.deathTime > 4000) {
-        this.enemies.splice(index,1)
-       } 
-    }
+      let enemy = this.enemies[index];
+        if(enemy.isKilled && Date.now() - enemy.deathTime > 4000) {
+         this.enemies.splice(index,1)
+        } 
+      }
   };
    
     // Date.now() = akutelle Zeit
     // deathTime() = Zeitpunkt des Todes 
     // Differenz berechnen: 
     // Date.now() - deathTime > 1000 = Wie lange ist er schon Tod?
- 
+ removeBottles() {
+        for (let index = this.throwableItems.length - 1; index >= 0; index--) {
+          let bottle = this.throwableItems[index];
+            if(bottle.hasHitGround && Date.now() - bottle.splashStartTime > 4000) {
+              this.throwableItems.splice(index, 1);
+            }
+    }
+  }
+
 
  
  collectCoins() {
@@ -260,38 +270,37 @@ collectBottles() {
 
  animateCoin(coin) {
   let animationTime = Date.now() - coin.startTime; 
-    if( animationTime < 1000) {
-      coin.y -= 10;  //→ bewege ihn nach oben
-      return false; 
-  //→ rotiere ihn
-    } 
-    return true;  // Animation ist fertig, du darfst sie löschen
+      if( animationTime < 1000) {
+        coin.y -= 10;  //→ bewege ihn nach oben
+        return false; 
+      } 
+  return true;  // Animation ist fertig, du darfst sie löschen
       // löschen
-    }
+}
 
 
     checkThrowableObject() {
       setInterval(() => {
         if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
-        console.log('ich werfe');
-        let bottle = new SalsaBottle();
-        bottle.loadImage(bottle.imagesBottleRotation[0])
-        this.canThrow = false; 
-        this.throwableItems.push(bottle); 
-        bottle.throw(this.character.x + 100,  this.character.y + 60); 
-        this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
-        let percentage = (this.collectedBottles / this.maxBottles) * 100;
-        this.bottleBar.setBar(percentage);    
-    }
-      if(!this.keyboard.D) {
-        this.canThrow = true;  
-      }
+          console.log('ich werfe');
+          let bottle = new SalsaBottle();
+          bottle.loadImage(bottle.imagesBottleRotation[0])
+          this.canThrow = false; 
+          this.throwableItems.push(bottle); 
+          bottle.throw(this.character.x + 100,  this.character.y + 60); 
+          this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
+          let percentage = (this.collectedBottles / this.maxBottles) * 100;
+          this.bottleBar.setBar(percentage);    
+        }
+          if(!this.keyboard.D) {
+            this.canThrow = true;  
+          }
       }, 1000/60); 
     }
 
   }
 
- 
+
   
 // Jeder Coin = 20
 // also - maxCoin = 5; 
@@ -302,4 +311,4 @@ collectBottles() {
 // 5 Coin = 100; 
 
 // Prozentrechnung: 
-// collected / max * 100 
+// collected / max * 100
