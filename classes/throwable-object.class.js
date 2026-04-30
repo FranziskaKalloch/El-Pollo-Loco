@@ -9,7 +9,6 @@ hasHitGround = false;
     }
 
 throw(x,y) { // Startposition der geworfenen Bottle
-    
     this.x = x;
     this.y = y;
 
@@ -25,6 +24,8 @@ throw(x,y) { // Startposition der geworfenen Bottle
         console.log('Aufprall')
         this.hasHitGround = true; 
         this.animateSplash(); 
+
+
     clearInterval(throwInterval)
         this.speedX = 0;
         this.speedY = 0;

@@ -165,7 +165,6 @@ jump() {
   }
 
    checkCoolDown() {
-
   }
 
 

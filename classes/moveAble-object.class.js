@@ -49,8 +49,6 @@ class MoveableObject extends DrawableObject {
     this.x < object.x + object.width &&
     this.y < object.y + object.height;
   }
-
-
 // Konsequenz/Reaktion
 // ... was passiert, wenn eine Kollision passiert ist?
 // Leben abziehen
@@ -70,7 +68,6 @@ hit() {
 // ich bin gerade verletzt und darf keinen neuen Schade für x sekunden bekommen 
 isHurt() {  
   let timeSinceLastHit = Date.now() - this.lastHit; 
-  console.log('"Ich BIN gerade noch im Hurt-Zustand"')
   return timeSinceLastHit < 1000; 
 }
  

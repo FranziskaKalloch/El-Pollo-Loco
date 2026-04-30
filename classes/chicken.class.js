@@ -11,7 +11,7 @@ class Chicken extends MoveableObject {
 
   constructor(y) {
     super(); // super() ruft zuerst den Konstruktor der Elternklasse auf
-    this.x = 200 + Math.random() * 500; // Jedes Chicken bekommt eine zufällig Zahl zugewiesen // gibt eine Zahl zwischen 0 und 500
+    this.x = 300 + Math.random() * 2000; // Jedes Chicken bekommt eine zufällig Zahl zugewiesen // gibt eine Zahl zwischen 0 und 500
     this.y = 350;
     this.width = 100;
     this.height = 100;

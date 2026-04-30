@@ -72,6 +72,7 @@ class World {
     this.draw(); 
     this.checkCollisions();
     this.checkThrowableObject(); 
+    this.checkBottleCollision();
   }
 
  
@@ -185,6 +186,19 @@ class World {
      this.collectBottles(); 
   }, 1000);
  }
+
+checkBottleCollision() {
+  setInterval(() => {
+    this.throwableItems.forEach((item, index) => {
+      this.enemies.forEach((enemy) => {
+        if (item.isColliding(enemy)) {
+          console.log('kollision erfolgt');
+        }
+      });
+    });
+  }, 1000 / 60);
+}
+
  
  collectCoins() {
   for (let index = this.coins.length - 1; index >= 0; index--) {
@@ -243,8 +257,7 @@ collectBottles() {
         bottle.throw(this.character.x + 100,  this.character.y + 60); 
         this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
         let percentage = (this.collectedBottles / this.maxBottles) * 100;
-        this.bottleBar.setBar(percentage);
-       
+        this.bottleBar.setBar(percentage);    
     }
       if(!this.keyboard.D) {
         this.canThrow = true;  
