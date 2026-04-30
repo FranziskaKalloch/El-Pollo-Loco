@@ -11,6 +11,13 @@ class MoveableObject extends DrawableObject {
   acceleration = 2;
   energy = 100; 
   lastHit = 0; 
+
+  offset = {
+    top: 20,
+    bottom: 20,
+    left: 20,
+    right: 20,
+  }
  
  
 
@@ -44,10 +51,10 @@ class MoveableObject extends DrawableObject {
   
   // reine Physik/Geometrie - berühren sich zwei Objekte!
   isColliding(object) {
-    return this.x + this.width > object.x && 
-    this.y + this.height > object.y &&
-    this.x < object.x + object.width &&
-    this.y < object.y + object.height;
+    return this.x + this.width - this.offset.right > object.x + object.offset.left&& 
+    this.y + this.height - this.offset.bottom > object.y + object.offset.top && // this unten + object oben
+    this.x + this.offset.left < object.x + object.width - object.offset.right &&
+    this.y +this.offset.top < object.y + object.height - object.offset.bottom;
   }
 // Konsequenz/Reaktion
 // ... was passiert, wenn eine Kollision passiert ist?

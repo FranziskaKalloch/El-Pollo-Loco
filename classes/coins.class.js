@@ -11,6 +11,13 @@ class Coins extends DrawableObject {
         
     } 
 
+offset = {
+  top: 10,
+  bottom: 10,
+  left: 10,
+  right: 10,
+}
+
 isCollected = false;
 startTime = 0;
 
