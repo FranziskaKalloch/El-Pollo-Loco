@@ -23,6 +23,7 @@ class Chicken extends MoveableObject {
 
   currentImage = 0;
   isKilled = false;
+  deathTime; 
 
   offset = {
     top: 25,
@@ -53,7 +54,7 @@ class Chicken extends MoveableObject {
       }
     }, 100);
   }
-
+ 
   moveLeft() {
     setInterval(() => {
       if(this.isKilled) {
@@ -62,6 +63,8 @@ class Chicken extends MoveableObject {
       this.x -= this.speed;
     }, 1000 / 60);
   }
+
+
 
 
 }

@@ -185,6 +185,7 @@ class World {
     });
      this.collectCoins(); 
      this.collectBottles(); 
+       this.removeDeadEnemies(); 
   }, 1000);
  }
 
@@ -193,8 +194,8 @@ checkBottleCollision() {
     this.throwableItems.forEach((item, index) => {
       this.enemies.forEach((enemy, index) => {
         if (item.isColliding(enemy) && !item.hasHitGround) {
-          console.log('kollision erfolgt');
           enemy.isKilled = true; 
+          enemy.deathTime = Date.now(); // Todeszeitpunkt 
           item.hasHitGround = true; 
           item.speedX = 0
           item.speedY = 0 
@@ -206,6 +207,21 @@ checkBottleCollision() {
      });
   }, 1000 / 60);
 }
+
+  removeDeadEnemies() {
+    for (let index = this.enemies.length - 1; index >= 0; index--) {
+    let enemy = this.enemies[index];
+       if(enemy.isKilled && Date.now() - enemy.deathTime > 4000) {
+        this.enemies.splice(index,1)
+       } 
+    }
+  };
+   
+    // Date.now() = akutelle Zeit
+    // deathTime() = Zeitpunkt des Todes 
+    // Differenz berechnen: 
+    // Date.now() - deathTime > 1000 = Wie lange ist er schon Tod?
+ 
 
  
  collectCoins() {
@@ -226,7 +242,7 @@ checkBottleCollision() {
       }
     }
   }
-}
+};
 
 collectBottles() {
   for (let index = this.bottles.length - 1; index >= 0; index--) {
