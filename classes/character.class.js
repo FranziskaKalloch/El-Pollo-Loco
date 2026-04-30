@@ -118,21 +118,28 @@ class Character extends MoveableObject {
 }
 
   move() {
-    if (this.world.keyboard.RIGHT) {
-      this.x += 10;
-      this.otherDirection = false; // Bild nicht gespiegelt / schaut nach rechts
-      this.world.camera_x = -this.x + 100; // Kamera wird verschoben - gegenteilig zum Laufen
-    }
-    if (this.world.keyboard.LEFT && this.x > 0) {
-      this.x -= 10;
-      this.otherDirection = true; // Bild ist gespiegelt / schaut nach links
-      // das spiegeln an sich, passiert in draw()
-      this.world.camera_x = -this.x + 100;
-    }
-    if (this.world.camera_x > 0) {
-      this.world.camera_x = 0;
-    }
+  // 👉 Nach rechts laufen
+  if (this.world.keyboard.RIGHT && this.x + this.width < this.world.levelEndX) {
+    this.x += 10;
+    this.otherDirection = false;
   }
+  // 👉 Nach links laufen
+  if (this.world.keyboard.LEFT && this.x > 0) {
+    this.x -= 10;
+    this.otherDirection = true;
+  }
+  // 👉 Kamera folgt immer nach Bewegung
+  this.world.camera_x = -this.x + 100;
+
+  // 👉 Linke Grenze (Start)
+  if (this.world.camera_x > 0) {
+    this.world.camera_x = 0;
+  }
+  // 👉 Rechte Grenze (Level-Ende)
+  if (this.world.camera_x < -(this.world.levelEndX - this.world.canvas.width)) {
+    this.world.camera_x = -(this.world.levelEndX - this.world.canvas.width);
+  }
+}
 
 
 playDeadAnimation() {

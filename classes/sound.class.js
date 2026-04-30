@@ -8,6 +8,8 @@ class Sounds {
         this.throwSound = new Audio('audio/whoosh.mp3'); 
         this.punchSound = new Audio('audio/punch.mp3');
         this.jumpOnEnemy = new Audio('audio/jumpOnEnemy.ogg');
+        this.bottleBrokenSound = new Audio('audio/broken-bottle2.mp3');
+        this.endBossDeath = new Audio('audio/boss-dead.mp3'); 
         this.coinSound.volume = 1.0;  
         this.jumpSound.volume = 0.5; 
     }

@@ -1,6 +1,4 @@
 class World {
-  //character = new Character();
-  //level = level1
   statusBar = new Statusbar(); 
   healthBar = new Statusbar("health");
   coinBar = new Statusbar("coins");
@@ -16,8 +14,6 @@ class World {
     new Coins(),
   ]; 
 
-  enemies = [new Chicken(), new Chicken(), new Chicken()];
-  clouds = [new Cloud(0), new Cloud(250), new Cloud(450)];
   bottles = [
     new SalsaBottle(), 
     new SalsaBottle(),
@@ -28,22 +24,8 @@ class World {
     new SalsaBottle(),
     new SalsaBottle(),
    ]
-   throwableItems = []; // geworfene Bottles 
-
-  backgroundObjects = [
-    new Background('img/5_background/layers/air.png', 0, 0),
-    new Background('img/5_background/layers/3_third_layer/1.png', 0, 0),
-    new Background('img/5_background/layers/2_second_layer/1.png', 0, 0),
-    new Background('img/5_background/layers/1_first_layer/1.png', 0, 0),
-    new Background('img/5_background/layers/air.png', 720, 0),
-    new Background('img/5_background/layers/3_third_layer/2.png', 720, 0),
-    new Background('img/5_background/layers/2_second_layer/2.png', 720, 0),
-    new Background('img/5_background/layers/1_first_layer/2.png', 720, 0),
-    new Background('img/5_background/layers/air.png', 1440, 0),
-    new Background('img/5_background/layers/3_third_layer/1.png', 1440, 0),
-    new Background('img/5_background/layers/2_second_layer/1.png', 1440, 0),
-    new Background('img/5_background/layers/1_first_layer/1.png', 1440, 0),
-  ];
+  
+  throwableItems = []; // geworfene Bottles 
 
   canvas;
   ctx;
@@ -59,6 +41,12 @@ class World {
   isKilled  = false; 
  
   constructor(canvas, keyboard) {
+    this.level = level1;
+    this.enemies = this.level.enemies;
+    this.clouds = this.level.clouds;
+    this.backgroundObjects = this.level.backgroundObjects; 
+    this.levelEndX = this.levelEndX;
+
     this.coinBar.x = 10;
     this.coinBar.y = 50; 
 
@@ -145,7 +133,7 @@ class World {
   let ctx = this.ctx;
 
   let animationTime = Date.now() - coin.startTime;
-  let angle = animationTime * 0.02; // Geschwindigkeit der Drehung
+  let angle = animationTime * 0.01; // Geschwindigkeit der Drehung
 
   ctx.save();
 
