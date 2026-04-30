@@ -198,6 +198,7 @@ checkBottleCollision() {
           enemy.isKilled = true; 
           enemy.deathTime = Date.now(); // Todeszeitpunkt 
           item.hasHitGround = true; 
+          this.sound.play('punch');
           item.speedX = 0
           item.speedY = 0 
           item.acceleration = 0
@@ -231,7 +232,6 @@ checkBottleCollision() {
             }
     }
   }
-
 
  
  collectCoins() {
@@ -283,6 +283,7 @@ collectBottles() {
       setInterval(() => {
         if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
           console.log('ich werfe');
+          this.sound.play('throw'); 
           let bottle = new SalsaBottle();
           bottle.loadImage(bottle.imagesBottleRotation[0])
           this.canThrow = false; 
