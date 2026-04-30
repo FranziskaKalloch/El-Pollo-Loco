@@ -56,6 +56,7 @@ class World {
   maxBottles = 5; 
 
   canThrow = true; 
+  isKilled  = false; 
  
   constructor(canvas, keyboard) {
     this.coinBar.x = 10;
@@ -190,12 +191,19 @@ class World {
 checkBottleCollision() {
   setInterval(() => {
     this.throwableItems.forEach((item, index) => {
-      this.enemies.forEach((enemy) => {
-        if (item.isColliding(enemy)) {
+      this.enemies.forEach((enemy, index) => {
+        if (item.isColliding(enemy) && !item.hasHitGround) {
           console.log('kollision erfolgt');
+          enemy.isKilled = true; 
+          item.hasHitGround = true; 
+          item.speedX = 0
+          item.speedY = 0 
+          item.acceleration = 0
+          item.loadImage(item.imagesBottleSplash[0]);
+          item.animateSplash()
         }
       });
-    });
+     });
   }, 1000 / 60);
 }
 

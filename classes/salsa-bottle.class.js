@@ -34,6 +34,15 @@ imagesBottleOnGround = [
      // * Wenn x und y übergeben werden → geworfene Bottle startet dort
    // * Wenn nichts übergeben wird → Boden-Bottle bekommt Zufallsposition
 
+offset = {
+  top: 20,
+  bottom: 20,
+  left: 25,
+  right: 25,
+}
+
+
+
 rotateBottle() {
     let currentImage = 0; 
     setInterval(() => {

@@ -22,7 +22,14 @@ class Chicken extends MoveableObject {
   }
 
   currentImage = 0;
-  isDead = false;
+  isKilled = false;
+
+  offset = {
+    top: 25,
+    bottom: 10,
+    left: 35,
+    right: 35, 
+}
 
   loadToCache() {
     for (let i = 0; i < this.imagesWalking.length; i++) {
@@ -35,6 +42,10 @@ class Chicken extends MoveableObject {
   animate() {
     this.moveLeft();
     setInterval(() => {
+      if(this.isKilled) {
+      this.loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
+      return;
+    } // Walking Animation
       this.img = this.imageCache[this.currentImage];
       this.currentImage++;
       if (this.currentImage >= this.imageCache.length) {
@@ -45,7 +56,12 @@ class Chicken extends MoveableObject {
 
   moveLeft() {
     setInterval(() => {
+      if(this.isKilled) {
+        return; 
+      }
       this.x -= this.speed;
     }, 1000 / 60);
   }
+
+
 }
