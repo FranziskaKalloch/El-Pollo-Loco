@@ -235,6 +235,7 @@ checkBottleCollision() {
       coin.startTime = Date.now();
       this.sound.play('coin');
       this.collectedCoins++;
+      let percentage = (this.collectedCoins / this.maxCoins) * 100;
       percentage = Math.min(100, Math.round(percentage / 20) * 20);
       this.coinBar.setBar(percentage);
     }
@@ -253,10 +254,10 @@ collectBottles() {
     if(this.character.isColliding(bottle) && this.collectedBottles < this.maxBottles) {
       this.collectedBottles++;
       this.sound.play('bottles');
+      let percentage = (this.collectedBottles / this.maxBottles) * 100;
       percentage = Math.min(100, Math.round(percentage / 20) * 20);
-       this.bottles.splice(index, 1);  
       this.bottleBar.setBar(percentage); 
-     
+      this.bottles.splice(index, 1);  
     }
 }
 }
@@ -284,7 +285,8 @@ collectBottles() {
           bottle.throw(this.character.x + 100,  this.character.y + 60); 
           this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
           let percentage = (this.collectedBottles / this.maxBottles) * 100;
-          this.bottleBar.setBar(percentage);    
+          percentage = Math.min(100, Math.round(percentage / 20) * 20);
+          this.bottleBar.setBar(percentage);   
         }
           if(!this.keyboard.D) {
             this.canThrow = true;  

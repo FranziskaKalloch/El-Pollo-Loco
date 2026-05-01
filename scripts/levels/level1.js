@@ -8,7 +8,6 @@ for(let i = 0; i < 7; i++) {
      imageNumber = 1;
     } else {
     imageNumber = 2;
-
   }
   backgroundObjects.push(new Background('img/5_background/layers/air.png', x, 0)); 
   backgroundObjects.push(new Background(`img/5_background/layers/3_third_layer/${imageNumber}.png`, x, 0));
@@ -16,13 +15,16 @@ for(let i = 0; i < 7; i++) {
   backgroundObjects.push(new Background(`img/5_background/layers/1_first_layer/${imageNumber}.png`, x, 0));
 }
 
+let chickens = [];
+for(let i = 0; i < 6; i++) {
+  let x = 800 + (i * 650) + Math.random() * 200; // Startwert + (i * Abstand) + zuflligkeit
+  chickens.push(new Chicken(x)); 
+  
+}
+
 const level1 = new Level(
 
-  [
-    new Chicken(), 
-    new Chicken(), 
-    new Chicken(), 
-  ],
+  chickens,
 
   [
     new Cloud(0), 
