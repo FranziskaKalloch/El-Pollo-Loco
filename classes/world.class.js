@@ -33,9 +33,9 @@ class World {
   camera_x = 0; // startwert
 
   collectedCoins = 0; 
-  maxCoins = 5; 
+  maxCoins = 6; 
   collectedBottles = 0; 
-  maxBottles = 5; 
+  maxBottles = 6; 
 
   canThrow = true; 
   isKilled  = false; 
@@ -45,7 +45,7 @@ class World {
     this.enemies = this.level.enemies;
     this.clouds = this.level.clouds;
     this.backgroundObjects = this.level.backgroundObjects; 
-    this.levelEndX = this.levelEndX;
+    this.levelEndX = this.level.levelEndX;
 
     this.coinBar.x = 10;
     this.coinBar.y = 50; 
@@ -68,6 +68,11 @@ class World {
   // Hilfsfunktion...
   // Das ist die Funktion mit der alle Objekte gezeichnet werden 
   addToMap(object) {
+    if (!object.img) {
+    console.log('Objekt ohne img:', object);
+    return;
+
+  }
     this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
   }
 
@@ -230,7 +235,7 @@ checkBottleCollision() {
       coin.startTime = Date.now();
       this.sound.play('coin');
       this.collectedCoins++;
-      let percentage = (this.collectedCoins / this.maxCoins) * 100;
+      percentage = Math.min(100, Math.round(percentage / 20) * 20);
       this.coinBar.setBar(percentage);
     }
     if (coin.isCollected) {
@@ -248,7 +253,7 @@ collectBottles() {
     if(this.character.isColliding(bottle) && this.collectedBottles < this.maxBottles) {
       this.collectedBottles++;
       this.sound.play('bottles');
-      let percentage = (this.collectedBottles / this.maxBottles) * 100;
+      percentage = Math.min(100, Math.round(percentage / 20) * 20);
        this.bottles.splice(index, 1);  
       this.bottleBar.setBar(percentage); 
      

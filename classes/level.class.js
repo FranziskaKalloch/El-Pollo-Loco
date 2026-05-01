@@ -11,4 +11,6 @@ class Level {
     this.levelEndX = levelEndX;
 }
 
+
+
 }
