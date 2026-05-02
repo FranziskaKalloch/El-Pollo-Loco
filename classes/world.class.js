@@ -14,16 +14,6 @@ class World {
     new Coins(),
   ]; 
 
-  bottles = [
-    new SalsaBottle(), 
-    new SalsaBottle(),
-    new SalsaBottle(),
-    new SalsaBottle(),
-    new SalsaBottle(),
-    new SalsaBottle(),
-    new SalsaBottle(),
-    new SalsaBottle(),
-   ]
   
   throwableItems = []; // geworfene Bottles 
 
@@ -33,9 +23,9 @@ class World {
   camera_x = 0; // startwert
 
   collectedCoins = 0; 
-  maxCoins = 6; 
+  maxCoins = 5; 
   collectedBottles = 0; 
-  maxBottles = 6; 
+  maxBottles = 5; 
 
   canThrow = true; 
   isKilled  = false; 
@@ -43,6 +33,7 @@ class World {
   constructor(canvas, keyboard) {
     this.level = level1;
     this.enemies = this.level.enemies;
+    this.bottles = this.level.bottles;
     this.clouds = this.level.clouds;
     this.backgroundObjects = this.level.backgroundObjects; 
     this.levelEndX = this.level.levelEndX;

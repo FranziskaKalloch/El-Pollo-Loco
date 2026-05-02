@@ -1,6 +1,6 @@
 let backgroundObjects = [];
+
 for(let i = 0; i < 7; i++) {
-  console.log(i); 
   let x = i * 720; 
 
   let imageNumber;
@@ -16,27 +16,58 @@ for(let i = 0; i < 7; i++) {
 }
 
 let chickens = [];
+
 for(let i = 0; i < 6; i++) {
   let x = 800 + (i * 650) + Math.random() * 200; // Startwert + (i * Abstand) + zuflligkeit
   chickens.push(new Chicken(x)); 
-  
 }
 
+let bottles = [];
+
+for(let i = 0; i < 10; i++ ){
+  let x = 300 + (i * 350) + Math.random() * 150; 
+  bottles.push(new SalsaBottle(x)); 
+}
+
+let clouds = []; // ich brauche 20 Blöcke von Clouds
+
+for(let i = 0; i <= 21; i++) {
+  let x = i * 250; 
+  clouds.push(new Cloud(x)); 
+}
+
+
 const level1 = new Level(
-
   chickens,
-
-  [
-    new Cloud(0), 
-    new Cloud(250), 
-    new Cloud(450)
-  ],
-
-   backgroundObjects,
-
+  bottles, 
+  clouds, 
+  backgroundObjects,
   5000,  // Länge des Levels
-  
-  /*
+);
+
+/*
+bottles = [
+    new SalsaBottle(), 
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+    new SalsaBottle(),
+   ]
+  */
+
+
+// Welche Gegner gibt es?
+// Welche Coins gibt es?
+// Welche Bottles gibt es?
+// Welche Backgrounds gibt es?
+// Wo endet das Level?
+
+/*
   [
     new Background('img/5_background/layers/air.png', 0, 0),
     new Background('img/5_background/layers/3_third_layer/1.png', 0, 0),
@@ -73,13 +104,3 @@ const level1 = new Level(
   ],
   // Aufgabe ---> SChleife erstellen und jedes Mal aufssummieren!
 */ 
-);
-
-
-// Welche Gegner gibt es?
-// Welche Coins gibt es?
-// Welche Bottles gibt es?
-// Welche Backgrounds gibt es?
-// Wo endet das Level?
-
-

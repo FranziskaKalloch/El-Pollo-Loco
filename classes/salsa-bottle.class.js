@@ -22,12 +22,12 @@ imagesBottleOnGround = [
 ]
 
 
-    constructor() {
+    constructor(x) {
         super(); 
         this.loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png')
         this.loadImages(this.imagesBottleOnGround); 
         this.y = 350;
-        this.x = 200 + Math.random() * 2000;
+        this.x = x; 
         this.width = 80;
         this.height = 100; 
     }
