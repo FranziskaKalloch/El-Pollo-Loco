@@ -43,12 +43,85 @@ class Endboss extends MoveableObject {
   constructor() {
     super();
     this.x = 400;
-    this.y = 0; 
+    this.y = -15; 
     this.width = 350;
     this.height = 500;
+    this.speed = 0.1; 
     this.loadImage('img/4_enemie_boss_chicken/1_walk/G1.png');
-    //this.loadImages(imagesWalking); 
+    this.loadImages(this.imagesWalking)
+    this.loadImages(this.imagesAlert); 
+    this.loadImages(this.imagesAttack);
+    this.loadImages(this.imagesHurt);  
+    this.loadImages(this.imagesDead)
+    this.animate(); 
   }
 
-  // animation
+isAlert = true;
+isAttacking = false;
+isKilled = false;
+
+
+  animate() {
+    setInterval(() => { 
+      this.updateImages(); 
+    }, 100);
+  }
+
+updateImages() {
+  if (this.isDead()) {
+    this.playDeadAnimation();
+    return;
+  } else {
+    this.playLoopAnimation();
+  }
+}
+
+playLoopAnimation() {
+  let currentImages;
+  if (this.isHurt()) {
+    currentImages = this.imagesHurt;
+  } else if (this.isAttacking) {
+    currentImages = this.imagesAttack;
+  } else if (this.isAlert) {
+    currentImages = this.imagesAlert;
+  } else {
+    currentImages = this.imagesWalking;
+  }
+  let imageIndex = this.currentImage % currentImages.length;
+  let path = currentImages[imageIndex];
+  this.img = this.imageCache[path];
+  this.currentImage++;
+
+  if (this.isAttacking && this.currentImage >= this.imagesAttack.length) {
+    this.isAttacking = false;
+    this.isAlert = true;
+    this.currentImage = 0;
+  }
+}
+
+   playDeadAnimation() {
+    let currentImages = this.imagesDead[0]; 
+    // Start der DeadAnimation 
+
+  }
+
+  moveLeft() {
+    setInterval(() => {
+      this.x -= this.speed;
+    }, 1000 / 60);
+  }
+
+
+  alert() {
+    let currentImages = this.imagesAlert[0]; 
+  }
+
+  attack() {
+  this.isAttacking = true;
+  this.isAlert = false;
+  this.currentImage = 0;
+}
+
+  //isHurt() und isDead() wird von MoveableObject geerbt
+
 }

@@ -18,8 +18,6 @@ class MoveableObject extends DrawableObject {
     left: 20,
     right: 20,
   }
- 
- 
 
   constructor() {
     super(); 
