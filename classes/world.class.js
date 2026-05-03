@@ -33,6 +33,7 @@ class World {
   constructor(canvas, keyboard) {
     this.level = level1;
     this.enemies = this.level.enemies;
+    this.endboss = this.level.endboss; 
     this.bottles = this.level.bottles;
     this.clouds = this.level.clouds;
     this.backgroundObjects = this.level.backgroundObjects; 
@@ -109,6 +110,8 @@ class World {
     for (const enemy of this.enemies) {
       this.addToMap(enemy); 
     }
+
+    this.addToMap(this.endboss); 
 
     // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);

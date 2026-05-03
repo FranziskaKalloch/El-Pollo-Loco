@@ -23,6 +23,7 @@ class MoveableObject extends DrawableObject {
 
   constructor() {
     super(); 
+    
   }
 
   // Gravitation darf wirken wenn:
