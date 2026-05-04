@@ -3,7 +3,7 @@ class World {
   healthBar = new Statusbar("health");
   coinBar = new Statusbar("coins");
   bottleBar = new Statusbar("bottles");
-  endbossBar = new Statusbar("bossHealth"); 
+  endbossBar = new Statusbar("boss"); 
 
   coins = [
     new Coins(), 
@@ -43,6 +43,9 @@ class World {
 
     this.bottleBar.x = 10;
     this.bottleBar.y = 100; 
+
+    this.endbossBar.x = 480;
+    this.endbossBar.y = 5; 
 
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
@@ -120,7 +123,11 @@ class World {
      this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
      this.addToMap(this.coinBar);
      this.addToMap(this.bottleBar); 
+     if (this.character.x > 4000) {
+      this.addToMap(this.endbossBar);
 
+}
+ 
     // draw() wird immer wieder aufgerufen
     let start = this;
     requestAnimationFrame(function () {  // die function wird ausgeführt, sobald alles dadrüber gezeichnet wurde

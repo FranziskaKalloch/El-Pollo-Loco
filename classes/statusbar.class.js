@@ -27,6 +27,16 @@ imagesSalsaBottle = [
      "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
 ];
 
+imagesEndboss = [
+  'img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
+  'img/7_statusbars/2_statusbar_endboss/blue/blue20.png',
+  'img/7_statusbars/2_statusbar_endboss/blue/blue40.png',
+  'img/7_statusbars/2_statusbar_endboss/blue/blue60.png',
+  'img/7_statusbars/2_statusbar_endboss/blue/blue80.png',
+  'img/7_statusbars/2_statusbar_endboss/blue/blue100.png',
+];
+
+
 x = 10;
 y = 0; 
 width = 230;
@@ -40,6 +50,8 @@ constructor(type) {
     this.loadImages(this.imagesHealth); 
     this.loadImages(this.imagesCoins); 
     this.loadImages(this.imagesSalsaBottle);
+    this.loadImages(this.imagesEndboss); 
+  
     
   if (this.type === "health") {
     this.setBar(100);
@@ -50,6 +62,9 @@ constructor(type) {
   if(this.type === 'bottles') {
     this.setBar(0); 
   }
+  if(this.type === 'boss') {
+    this.setBar(100); 
+   }
   
 }
 
@@ -83,6 +98,9 @@ let index;
   }
   if (this.type === "bottles") {
     return this.imagesSalsaBottle[index];
+  }
+  if (this.type === "boss") {
+    return this.imagesEndboss[index]; 
   }
 }
 }

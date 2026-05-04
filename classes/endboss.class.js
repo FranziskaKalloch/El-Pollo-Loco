@@ -43,7 +43,7 @@ class Endboss extends MoveableObject {
   constructor(world) {
     super();
     this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
-    this.x = 700;
+    this.x = 2000;
     this.y = -15; 
     this.width = 350;
     this.height = 500;
@@ -57,17 +57,15 @@ class Endboss extends MoveableObject {
     this.animate(); 
   }
 
-isAlert = false;
-isAttacking = false;
-isKilled = false;
-leftLimit = 500;
-rightLimit = 1000; 
+state = 'walking'; 
+leftLimit = 1600;
+rightLimit = 2200; 
 movingRight = false; 
 
 
 animate() {
     setInterval(() => {   
-     // this.checkAttackRange(); 
+      this.checkAttackRange(); 
       this.moveBox(); 
       this.updateImages(); 
     }, 100);
@@ -84,23 +82,25 @@ updateImages() {
 
 playLoopAnimation() {
   let currentImages;
-  if (this.isHurt()) {
+  if(this.state === 'dead') {
+    currentImages = this.imagesDead;
+  } else if(this.state === 'hurt') {
     currentImages = this.imagesHurt;
-  } else if (this.isAttacking) {
+  } else if(this.state === 'attack') {
     currentImages = this.imagesAttack;
-  } else if (this.isAlert) {
+  } else if(this.state === 'alert') {
     currentImages = this.imagesAlert;
   } else {
     currentImages = this.imagesWalking;
   }
+
   let imageIndex = this.currentImage % currentImages.length;
   let path = currentImages[imageIndex];
   this.img = this.imageCache[path];
   this.currentImage++;
 
-  if (this.isAttacking && this.currentImage >= this.imagesAttack.length) {
-    this.isAttacking = false;
-    this.isAlert = true;
+  if (this.state === 'attack' && this.currentImage >= this.imagesAttack.length) {
+    this.state = 'walking';
     this.currentImage = 0;
   }
 }
@@ -112,9 +112,11 @@ playLoopAnimation() {
   }
 
   moveBox() {
+      if(this.state === 'attack') { // Dann bleibt der boss während der Attacke stehen
+        return; 
+      }
       if(!this.movingRight) {
         this.x -= this.speed;
-        console.log('Boss bewegt sich');
       } else {
         this.x += this.speed; 
       }
@@ -127,11 +129,12 @@ playLoopAnimation() {
   }
 
   alert() {
+
   }
 
   checkAttackRange() {
     let distance = this.x - this.world.character.x; // Unterschied zwischen Boss und Character (500 - 300 = Abstand 200)
-    if(distance < 200 && !this.isAttacking) {
+    if(distance < 200 && this.state !== 'attack') {
       this.attack(); 
     }
 
@@ -144,8 +147,7 @@ playLoopAnimation() {
   }
 
   attack() {
-  this.isAttacking = true;
-  this.isAlert = false;
+  this.state = 'attack';
   this.currentImage = 0;
 }
 
