@@ -67,6 +67,10 @@ movingRight = false;
 lastAttack = 0; 
 attackCooldown = 3000; 
 
+deadAnimationStarted = false; 
+deadAnimationFinished = false; 
+deadFrameCounter = 0; 
+
 
 animate() {
     setInterval(() => {   
@@ -114,10 +118,25 @@ playLoopAnimation() {
   }
 }
 
-   playDeadAnimation() {
-    let currentImages = this.imagesDead[0]; 
-    // Start der DeadAnimation 
+playDeadAnimation() {
+  let currentImages = this.imagesDead; 
+      if (!this.deadAnimationStarted) {
+      this.currentImage = 0;
+      this.deadAnimationStarted = true;
+      this.deadFrameCounter = 0;
+    }
+    let imageIndex = Math.min(this.currentImage, currentImages.length - 1);
+    let path = currentImages[imageIndex];
+    this.img = this.imageCache[path];
 
+    // langsamer abspielen
+    this.deadFrameCounter++;
+      if (this.deadFrameCounter % 5 === 0 && this.currentImage < currentImages.length - 1) {
+        this.currentImage++;
+    }
+    if (this.currentImage >= currentImages.length - 1) {
+      this.deadAnimationFinished = true;
+  }
   }
 
   moveBox() {

@@ -220,6 +220,10 @@ setInterval(() => {
       item.hasHitGround = true;
       this.endboss.state = 'hurt'; 
       this.endboss.hit(); 
+      if(this.endboss.isDead()) {
+        this.endboss.state = 'dead';
+        this.sound.play('bossDeath'); 
+      } else {
       this.sound.play('punch');
       this.endbossBar.setBar(this.endboss.energy);
       item.speedX = 0
@@ -228,7 +232,8 @@ setInterval(() => {
       item.splashStartTime = Date.now(); 
       item.loadImage(item.imagesBottleSplash[0]);
       item.animateSplash()
-    }
+      }
+    } 
   })
 }, 1000 / 60);
 }
@@ -334,13 +339,14 @@ checkGameState() {
     this.gameOver = true; 
     document.getElementById('gameOverScreen').showModal(); 
   }
-  if(this.endboss.isDead() && !this.gameWon) {
+  if(this.endboss.deadAnimationFinished && !this.gameWon) {
     this.gameWon = true; 
     document.getElementById('winScreen').showModal(); 
+    this.sound.play('won'); 
   }
 }
 
-  }
+}
 
 
   
