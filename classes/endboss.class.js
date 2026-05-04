@@ -42,6 +42,7 @@ class Endboss extends MoveableObject {
 
   constructor() {
     super();
+    this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
     this.x = 400;
     this.y = -15; 
     this.width = 350;
@@ -64,6 +65,7 @@ isKilled = false;
   animate() {
     setInterval(() => { 
       this.updateImages(); 
+      this.checkAttackRange(); 
     }, 100);
   }
 
@@ -116,6 +118,20 @@ playLoopAnimation() {
     let currentImages = this.imagesAlert[0]; 
   }
 
+  checkAttackRange() {
+    let distance = this.x - this.world.character.x; // Unterschied zwischen Boss und Character (500 - 300 = Abstand 200)
+    if(distance < 100 && !this.isAttacking) {
+      this.attack(); 
+    }
+
+
+// 1. Character holen -> hier die world verlinken und in world einen Endboss erstellen und die world mitgeben
+// 2. Distanz berechnen ---> endboss.x - character.x
+// 3. prüfen: nah genug? distance < Schwellenwert
+// 4. prüfen: greift er gerade schon an?
+// 5. wenn nicht → attack()
+  }
+
   attack() {
   this.isAttacking = true;
   this.isAlert = false;
@@ -125,3 +141,15 @@ playLoopAnimation() {
   //isHurt() und isDead() wird von MoveableObject geerbt
 
 }
+
+
+// Zugriff auf Pepe
+// -- der Endboss muss wissen, wo der Character ist!
+
+// Distanz berechnen
+// .. Unterschied zwischen den x-Werten
+// -- also wie weit ist Pepe vom Boss entfernt
+
+// Entscheidung 
+// ... wenn Distanz < x dann attack() 
+// --- attack() darf nicht dauerhaft gespammt werden 
