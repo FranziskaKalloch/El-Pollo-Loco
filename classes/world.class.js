@@ -57,6 +57,7 @@ class World {
     this.checkCollisions();
     this.checkThrowableObject(); 
     this.checkBottleCollision();
+    this.checkEndbossBottleCollision();
   }
 
  
@@ -123,6 +124,7 @@ class World {
      this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
      this.addToMap(this.coinBar);
      this.addToMap(this.bottleBar); 
+
      if (this.character.x > 4000) {
       this.addToMap(this.endbossBar);
 
@@ -203,6 +205,26 @@ checkBottleCollision() {
       });
      });
   }, 1000 / 60);
+}
+
+checkEndbossBottleCollision() {
+setInterval(() => {
+  this.throwableItems.forEach((item, index) => {
+    if(item.isColliding(this.endboss) && !item.hasHitGround) {
+      item.hasHitGround = true;
+      this.endboss.state = 'hurt'; 
+      this.endboss.hit(); 
+      this.sound.play('punch');
+      this.endbossBar.setBar(this.endboss.energy);
+      item.speedX = 0
+      item.speedY = 0 
+      item.acceleration = 0
+      item.splashStartTime = Date.now(); 
+      item.loadImage(item.imagesBottleSplash[0]);
+      item.animateSplash()
+    }
+  })
+}, 1000 / 60);
 }
 
   removeDeadEnemies() {
