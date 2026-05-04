@@ -59,7 +59,6 @@ class World {
     this.checkBottleCollision();
     this.checkEndbossBottleCollision();
   }
-
  
   // Hilfsfunktion...
   // Das ist die Funktion mit der alle Objekte gezeichnet werden 
@@ -296,26 +295,26 @@ collectBottles() {
 }
 
 
-    checkThrowableObject() {
-      setInterval(() => {
-        if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
-          console.log('ich werfe');
-          this.sound.play('throw'); 
-          let bottle = new SalsaBottle();
-          bottle.loadImage(bottle.imagesBottleRotation[0])
-          this.canThrow = false; 
-          this.throwableItems.push(bottle); 
-          bottle.throw(this.character.x + 100,  this.character.y + 60); 
-          this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
-          let percentage = (this.collectedBottles / this.maxBottles) * 100;
-          percentage = Math.min(100, Math.round(percentage / 20) * 20);
-          this.bottleBar.setBar(percentage);   
-        }
-          if(!this.keyboard.D) {
-            this.canThrow = true;  
-          }
-      }, 1000/60); 
+checkThrowableObject() {
+  setInterval(() => {
+    if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
+      console.log('ich werfe');
+      this.sound.play('throw'); 
+      let bottle = new SalsaBottle();
+      bottle.loadImage(bottle.imagesBottleRotation[0])
+      this.canThrow = false; 
+      this.throwableItems.push(bottle); 
+      bottle.throw(this.character.x + 100,  this.character.y + 60); 
+      this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
+      let percentage = (this.collectedBottles / this.maxBottles) * 100;
+      percentage = Math.min(100, Math.round(percentage / 20) * 20);
+      this.bottleBar.setBar(percentage);   
     }
+    if(!this.keyboard.D) {
+      this.canThrow = true;  
+    }
+  }, 1000/60); 
+}
 
   }
 

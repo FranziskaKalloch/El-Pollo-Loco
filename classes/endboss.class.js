@@ -75,9 +75,11 @@ updateImages() {
   if (this.isDead()) {
     this.playDeadAnimation();
     return;
-  } else {
-    this.playLoopAnimation();
   }
+  if(this.state === 'hurt' && !this.isHurt()) {
+    this.state = 'walking';
+  }
+  this.playLoopAnimation();
 }
 
 playLoopAnimation() {
@@ -137,8 +139,6 @@ playLoopAnimation() {
     if(distance < 200 && this.state !== 'attack') {
       this.attack(); 
     }
-
-
 // 1. Character holen -> hier die world verlinken und in world einen Endboss erstellen und die world mitgeben
 // 2. Distanz berechnen ---> endboss.x - character.x
 // 3. prüfen: nah genug? distance < Schwellenwert

@@ -76,7 +76,6 @@ isHurt() {
   let timeSinceLastHit = Date.now() - this.lastHit; 
   return timeSinceLastHit < 1000; 
 }
- 
 
  isDead() {
   return this.energy === 0; 
