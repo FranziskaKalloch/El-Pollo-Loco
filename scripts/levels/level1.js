@@ -39,7 +39,6 @@ for(let i = 0; i <= 21; i++) {
 
 const level1 = new Level(
   chickens,
-  new Endboss(),
   bottles, 
   clouds, 
   backgroundObjects,

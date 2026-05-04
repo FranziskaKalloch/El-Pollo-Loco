@@ -33,7 +33,6 @@ class World {
   constructor(canvas, keyboard) {
     this.level = level1;
     this.enemies = this.level.enemies;
-    this.endboss = this.level.endboss; 
     this.bottles = this.level.bottles;
     this.clouds = this.level.clouds;
     this.backgroundObjects = this.level.backgroundObjects; 
@@ -48,7 +47,8 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.keyboard = keyboard;
-    this.character = new Character(this);
+    this.character = new Character(this); // Erstelle einen Character & gebe ihm diese world mit
+    this.endboss = new Endboss(this);  // Erstelle einen Endboss & gib ihm DIESE World mit - somit kann der Endboss auf die ganze world zugreifen
     this.sound = new Sounds(); 
     this.draw(); 
     this.checkCollisions();
