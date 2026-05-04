@@ -10,6 +10,7 @@ class Sounds {
         this.jumpOnEnemy = new Audio('audio/jumpOnEnemy.ogg');
         this.bottleBrokenSound = new Audio('audio/broken-bottle2.mp3');
         this.endBossDeath = new Audio('audio/boss-dead.mp3'); 
+        this.hurtSound = new Audio('audio/hurt-pepe.wav');
         this.coinSound.volume = 1.0;  
         this.jumpSound.volume = 0.5; 
     }
@@ -32,6 +33,9 @@ class Sounds {
     }
      if(type === 'jumpOnEnemy') {
         this.jumpOnEnemy.play(); 
+    }
+    if(type === 'hurt') {
+        this.hurtSound.play(); 
     }
  }
 

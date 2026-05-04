@@ -43,7 +43,7 @@ class Endboss extends MoveableObject {
   constructor(world) {
     super();
     this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
-    this.x = 1000;
+    this.x = 4000;
     this.groundY = -10;
     this.y = this.groundY; 
     this.width = 350;
@@ -60,12 +60,12 @@ class Endboss extends MoveableObject {
   }
 
 state = 'walking'; 
-leftLimit = 700;
-rightLimit = 1200; 
+leftLimit = 3800;
+rightLimit = 4500; 
 movingRight = false; 
 
 lastAttack = 0; 
-attackCooldown = 1500; 
+attackCooldown = 3000; 
 
 
 animate() {
@@ -169,7 +169,7 @@ playLoopAnimation() {
 
 moveDuringAttack() {
     if(this.state === 'attack') {
-      this.x -= 15; // nach vorne zu Pepe 
+      this.x -= 20; // nach vorne zu Pepe 
     }
   }
 

@@ -29,6 +29,9 @@ class World {
 
   canThrow = true; 
   isKilled  = false; 
+
+  gameOver = false; 
+  gameWon = false; 
  
   constructor(canvas, keyboard) {
     this.level = level1;
@@ -70,6 +73,7 @@ class World {
   }
     this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
   }
+
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -176,12 +180,15 @@ class World {
       if (this.character.isColliding(enemy) && !this.character.isHurt()) {
         this.character.hit(); 
         this.healthBar.setBar(this.character.energy);
+        this.sound.play('hurt'); 
       }
     });
      this.collectCoins(); 
      this.collectBottles(); 
+     this.checkEndbossAttack(); 
      this.removeDeadEnemies(); 
      this.removeBottles(); 
+     this.checkGameState(); 
   }, 1000);
  }
 
@@ -226,6 +233,14 @@ setInterval(() => {
 }, 1000 / 60);
 }
 
+checkEndbossAttack() {
+  if(this.endboss.state === 'attack' && this.character.isColliding(this.endboss) && !this.character.isHurt()) {
+    this.character.hit(); 
+    this.healthBar.setBar(this.character.energy);
+    this.sound.play('hurt'); 
+  }
+}
+
   removeDeadEnemies() {
     for (let index = this.enemies.length - 1; index >= 0; index--) {
       let enemy = this.enemies[index];
@@ -247,7 +262,6 @@ setInterval(() => {
             }
     }
   }
-
  
  collectCoins() {
   for (let index = this.coins.length - 1; index >= 0; index--) {
@@ -294,7 +308,6 @@ collectBottles() {
       // löschen
 }
 
-
 checkThrowableObject() {
   setInterval(() => {
     if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
@@ -314,6 +327,17 @@ checkThrowableObject() {
       this.canThrow = true;  
     }
   }, 1000/60); 
+}
+
+checkGameState() {
+  if(this.character.isDead() && !this.gameOver) {
+    this.gameOver = true; 
+    document.getElementById('gameOverScreen').showModal(); 
+  }
+  if(this.endboss.isDead() && !this.gameWon) {
+    this.gameWon = true; 
+    document.getElementById('winScreen').showModal(); 
+  }
 }
 
   }

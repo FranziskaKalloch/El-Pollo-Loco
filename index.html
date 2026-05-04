@@ -29,5 +29,24 @@
   <body onload="init()">
     <h1>El Pollo Loco</h1>
     <canvas id="canvas" width="720" height="480"> </canvas>
+    <dialog id="startScreen">
+      <h2>El Pollo Loco!</h2>
+      <div>
+        <button id="startButton">Spiel starten</button>
+        <button id="instructionsButton">Anleitung</button>
+      </div>
+    </dialog>
+     <dialog id="gameOverScreen">
+    <img src="img/game-over.png" alt="Game Over" class="game-over-image" />
+      <div>
+        <button id="restartButton">Nochmal spielen</button>
+      </div>
+    </dialog>
+      <dialog id="winScreen">
+    <img src="img/You won, you lost/You won A.png" alt="You Win" class="win-image" />
+      <div>
+        <button id="playAgainButton">Nochmal spielen</button>
+      </div>
+    </dialog>
   </body>
 </html>
