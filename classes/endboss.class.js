@@ -43,8 +43,9 @@ class Endboss extends MoveableObject {
   constructor(world) {
     super();
     this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
-    this.x = 2000;
-    this.y = -15; 
+    this.x = 1000;
+    this.groundY = -10;
+    this.y = this.groundY; 
     this.width = 350;
     this.height = 500;
     this.speed = 2; 
@@ -55,17 +56,22 @@ class Endboss extends MoveableObject {
     this.loadImages(this.imagesHurt);  
     this.loadImages(this.imagesDead)
     this.animate(); 
+    this.gravity(); 
   }
 
 state = 'walking'; 
-leftLimit = 1600;
-rightLimit = 2200; 
+leftLimit = 700;
+rightLimit = 1200; 
 movingRight = false; 
+
+lastAttack = 0; 
+attackCooldown = 1500; 
 
 
 animate() {
     setInterval(() => {   
       this.checkAttackRange(); 
+      this.moveDuringAttack(); 
       this.moveBox(); 
       this.updateImages(); 
     }, 100);
@@ -79,6 +85,7 @@ updateImages() {
   if(this.state === 'hurt' && !this.isHurt()) {
     this.state = 'walking';
   }
+  
   this.playLoopAnimation();
 }
 
@@ -130,13 +137,12 @@ playLoopAnimation() {
       }
   }
 
-  alert() {
-
-  }
-
   checkAttackRange() {
     let distance = this.x - this.world.character.x; // Unterschied zwischen Boss und Character (500 - 300 = Abstand 200)
-    if(distance < 200 && this.state !== 'attack') {
+    if(distance < 200 && // Pepe ist nah genug
+      this.state === 'walking' && // Boss ist bereit
+      Date.now() - this.lastAttack > this.attackCooldown &&
+      !this.isAboveGround()) { // Boss steht am Boden 
       this.attack(); 
     }
 // 1. Character holen -> hier die world verlinken und in world einen Endboss erstellen und die world mitgeben
@@ -148,11 +154,26 @@ playLoopAnimation() {
 
   attack() {
   this.state = 'attack';
+  this.lastAttack = Date.now(); 
   this.currentImage = 0;
+  this.speedY = -30; // nach oben
+  // 1. Attack-Sprung bauen
+  //  * nur wenn state === "attack"
+  //  * Boss springt nach links
+  //  * währenddessen keine Box-Bewegung
+//2. Danach Alert-Zone
+  //  * wenn Pepe im letzten Levelabschnitt ist
+  //  * Boss spielt kurz Alert
+  //  * danach wieder Walking oder Attack
 }
 
-  //isHurt() und isDead() wird von MoveableObject geerbt
+moveDuringAttack() {
+    if(this.state === 'attack') {
+      this.x -= 15; // nach vorne zu Pepe 
+    }
+  }
 
+  //isHurt() und isDead() wird von MoveableObject geerbt
 }
 
 

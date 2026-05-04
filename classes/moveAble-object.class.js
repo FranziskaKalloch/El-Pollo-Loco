@@ -1,6 +1,7 @@
 class MoveableObject extends DrawableObject {
   x = 120;
   y = 150;
+  groundY = 150; 
   height = 300;
   width = 150;
 
@@ -23,7 +24,6 @@ class MoveableObject extends DrawableObject {
     super(); 
     
   }
-
   // Gravitation darf wirken wenn:
   // 1. Pepe bereits in der Luft ist
   // ODER
@@ -34,7 +34,7 @@ class MoveableObject extends DrawableObject {
         this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
         this.speedY = this.speedY + this.acceleration; //
       } else {
-        this.y = 150; // „Bleib optisch hier stehen.“
+        this.y = this.groundY; // „Bleib optisch hier stehen.“
         this.speedY = 0; // „Die Fallbewegung ist wirklich beendet.“
       }
     }, 1000 / 25);
@@ -43,7 +43,7 @@ class MoveableObject extends DrawableObject {
   isAboveGround() {
     if(this instanceof ThrowableObject) {
       return true }
-    return this.y < 150; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
+    return this.y < this.groundY; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
   
   } // gibt ein true zurück // Ja Pepe ist in der Luft
 
