@@ -2,6 +2,8 @@ class Sounds {
 
 
     constructor(type) {
+        this.backgroundMusic = new Audio('audio/mexico-music.mp3');
+        this.backgroundMusic.loop = true; 
         this.coinSound = new Audio('audio/coin-fall.wav');
         this.jumpSound = new Audio('audio/cartoon-jump.mp3'); 
         this.bottleSound = new Audio('audio/bottle-pop.mp3');
@@ -13,8 +15,9 @@ class Sounds {
         this.hurtSound = new Audio('audio/hurt-pepe.wav');
         this.wonSound = new Audio('audio/you-won.mp3');
         this.gameOverSound = new Audio('audio/game-over.wav');
+
+        this.backgroundMusic.volume = 0.5;
         this.coinSound.volume = 1.0;  
-        this.jumpSound.volume = 0.5; 
     }
 
  play(type) {
@@ -48,7 +51,16 @@ class Sounds {
     if(type === 'gameOver') {
         this.gameOverSound.play();
     }
-
  }
+
+ playBackgroundMusic() {
+    this.backgroundMusic.play(); 
+ }
+
+stopBackgroundMusic() {
+  this.backgroundMusic.pause();
+  this.backgroundMusic.currentTime = 0;
+
+}
 
 }
