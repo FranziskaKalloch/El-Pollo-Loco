@@ -13,6 +13,7 @@ imagesDead = [
     constructor(x,y) {
         console.log('SmallChicken x:', x);
         super(x,y); 
+        this.x = x;
         this.imageCache = [];
         this.loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadToCache();

@@ -17,11 +17,14 @@ for(let i = 0; i < 7; i++) {
 
 let enemies = [];
 
-for(let i = 0; i < 10; i++) {
-  let x = 800 + (i * 650) + Math.random() * 200; // Startwert + (i * Abstand) + zuflligkeit
-  enemies.push(new Chicken(x)); 
-  enemies.push(new SmallChicken(x + 400));
-  //console.log(enemies); 
+for (let i = 0; i < 10; i++) {
+  let x = 800 + i * 600 + Math.random() * 300;
+
+  if (Math.random() < 0.5) {
+    enemies.push(new Chicken(x));
+  } else {
+    enemies.push(new SmallChicken(x));
+  }
 }
 
 let bottles = [];
