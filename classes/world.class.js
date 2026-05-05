@@ -182,7 +182,7 @@ class World {
  checkCollisions() {
   setInterval(() => {
     this.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+      if (this.character.isColliding(enemy) && !this.character.isHurt() && !enemy.isKilled) {
         this.character.hit(); 
         this.healthBar.setBar(this.character.energy);
         this.sound.play('hurt'); 
