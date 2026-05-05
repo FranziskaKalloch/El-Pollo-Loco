@@ -34,6 +34,10 @@ for(let i = 0; i < 10; i++ ){
   bottles.push(new SalsaBottle(x)); 
 }
 
+bottles.push(new SalsaBottle(4000));
+bottles.push(new SalsaBottle(4250));
+bottles.push(new SalsaBottle(4450));
+
 let clouds = []; // ich brauche 20 Blöcke von Clouds
 
 for(let i = 0; i <= 21; i++) {
