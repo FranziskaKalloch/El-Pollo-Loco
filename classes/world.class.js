@@ -362,12 +362,12 @@ collectBottles() {
 checkGameState() {
   if(this.character.isDead() && !this.gameOver) {
     this.gameOver = true; 
-    document.getElementById('gameOverScreen').show(); 
+    document.getElementById("gameOverScreen");
     this.sound.play('gameOver'); 
   }
   if(this.endboss.deadAnimationFinished && !this.gameWon) {
     this.gameWon = true; 
-    document.getElementById('winScreen').show(); 
+    document.getElementById("winScreen"); 
     this.sound.play('won'); 
   }
 }

@@ -58,8 +58,8 @@ class Sounds {
  }
 
 stopBackgroundMusic() {
-  this.backgroundMusic.pause();
-  this.backgroundMusic.currentTime = 0;
+  this.backgroundMusic.pause(); // Musik anhalten // sie stoppt sofort und merkt sich die aktuelle stelle
+  this.backgroundMusic.currentTime = 0; // setzt die Musik wieder auf den Anfang
 
 }
 
