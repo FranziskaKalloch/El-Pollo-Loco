@@ -71,6 +71,8 @@ deadAnimationStarted = false;
 deadAnimationFinished = false; 
 deadFrameCounter = 0; 
 
+isActivated = false; 
+
 
 animate() {
     setInterval(() => {   
@@ -115,6 +117,12 @@ playLoopAnimation() {
   if (this.state === 'attack' && this.currentImage >= this.imagesAttack.length) {
     this.state = 'walking';
     this.currentImage = 0;
+  }
+}
+
+checkActivation() {
+  if(this.world.character.x > 3300) {
+    this.isActivated = true; 
   }
 }
 

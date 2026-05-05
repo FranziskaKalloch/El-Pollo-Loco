@@ -128,7 +128,7 @@ class World {
      this.addToMap(this.coinBar);
      this.addToMap(this.bottleBar); 
 
-     if (this.character.x > 4000) {
+     if (this.character.x > 3300) {
       this.addToMap(this.endbossBar);
     }
 
