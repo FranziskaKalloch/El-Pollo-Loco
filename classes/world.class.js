@@ -14,7 +14,7 @@ class World {
     new Coins(),
   ]; 
 
-  
+  gameStarted = false; 
   throwableItems = []; // geworfene Bottles 
 
   canvas;
