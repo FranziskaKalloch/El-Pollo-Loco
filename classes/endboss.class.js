@@ -43,7 +43,7 @@ class Endboss extends MoveableObject {
   constructor(world) {
     super();
     this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
-    this.x = 4000;
+    this.x = 4700;
     this.groundY = -10;
     this.y = this.groundY; 
     this.width = 350;
@@ -60,8 +60,8 @@ class Endboss extends MoveableObject {
   }
 
 state = 'walking'; 
-leftLimit = 3800;
-rightLimit = 4200; 
+leftLimit = 4600;
+rightLimit = 4800; 
 movingRight = false; 
 
 lastAttack = 0; 
@@ -76,6 +76,12 @@ isActivated = false;
 
 animate() {
     setInterval(() => {   
+      this.checkActivation(); 
+      if(!this.isActivated) {
+        this.updateImages(); 
+        return
+      }
+
       this.checkAttackRange(); 
       this.moveDuringAttack(); 
       this.moveBox(); 
@@ -121,9 +127,14 @@ playLoopAnimation() {
 }
 
 checkActivation() {
-  if(this.world.character.x > 3300) {
+  if(this.world.character.x > 3800) {
     this.isActivated = true; 
-  }
+  } 
+  console.log(
+  'Pepe x:', this.world.character.x,
+  'Boss x:', this.x,
+  'Boss aktiv:', this.isActivated
+);
 }
 
 playDeadAnimation() {
@@ -166,10 +177,11 @@ playDeadAnimation() {
 
   checkAttackRange() {
     let distance = this.x - this.world.character.x; // Unterschied zwischen Boss und Character (500 - 300 = Abstand 200)
-    if(distance < 200 && // Pepe ist nah genug
+    if(distance < 400 && // Pepe ist nah genug
       this.state === 'walking' && // Boss ist bereit
       Date.now() - this.lastAttack > this.attackCooldown &&
-      !this.isAboveGround()) { // Boss steht am Boden 
+      !this.isAboveGround() && // Boss steht am Boden 
+      Math.random() < 0.7) { 
       this.attack(); 
     }
 // 1. Character holen -> hier die world verlinken und in world einen Endboss erstellen und die world mitgeben
