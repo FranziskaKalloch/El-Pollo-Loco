@@ -150,7 +150,7 @@ playDeadAnimation() {
 
     // langsamer abspielen
     this.deadFrameCounter++;
-      if (this.deadFrameCounter % 5 === 0 && this.currentImage < currentImages.length - 1) {
+      if (this.deadFrameCounter % 15 === 0 && this.currentImage < currentImages.length - 1) {
         this.currentImage++;
     }
     if (this.currentImage >= currentImages.length - 1) {

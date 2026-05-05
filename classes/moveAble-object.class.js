@@ -28,7 +28,7 @@ class MoveableObject extends DrawableObject {
   // 1. Pepe bereits in der Luft ist
   // ODER
   // 2. Pepe gerade nach oben springt (speedY < 0)
-  gravity() {
+gravity() {
     setInterval(() => {
       if (this.isAboveGround() || this.speedY < 0) {
         this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
@@ -40,7 +40,7 @@ class MoveableObject extends DrawableObject {
     }, 1000 / 25);
   }
 
-  isAboveGround() {
+isAboveGround() {
     if(this instanceof ThrowableObject) {
       return true }
     return this.y < this.groundY; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
@@ -49,7 +49,7 @@ class MoveableObject extends DrawableObject {
 
   
   // reine Physik/Geometrie - berühren sich zwei Objekte!
-  isColliding(object) {
+isColliding(object) {
     return this.x + this.width - this.offset.right > object.x + object.offset.left&& 
     this.y + this.height - this.offset.bottom > object.y + object.offset.top && // this unten + object oben
     this.x + this.offset.left < object.x + object.width - object.offset.right &&

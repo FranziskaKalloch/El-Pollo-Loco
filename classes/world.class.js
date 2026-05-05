@@ -181,6 +181,8 @@ class World {
   // das ist der Wächter
  checkCollisions() {
   setInterval(() => {
+    this.checkJumpOnEnemy(); 
+
     this.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !this.character.isHurt() && !enemy.isKilled) {
         this.character.hit(); 
@@ -194,7 +196,7 @@ class World {
      this.removeDeadEnemies(); 
      this.removeBottles(); 
      this.checkGameState(); 
-  }, 1000);
+  }, 1000 / 60);
  }
 
 checkBottleCollision() {
@@ -241,6 +243,19 @@ setInterval(() => {
     } 
   })
 }, 1000 / 60);
+}
+
+// noch prüfen, ob Pepe von oben kommt 
+// this.character.y + this.character.height < enemy.y + enemy.height / 2
+checkJumpOnEnemy() {
+  this.enemies.forEach((enemy) => {
+    if(this.character.isColliding(enemy) && !enemy.isKilled && this.character.speedY > 0 && 
+      this.character.y + this.character.height < enemy.y + enemy.height) {
+      enemy.isKilled = true; // Enemy ist Tod 
+      this.character.speedY = -15; // Pepe bekommt einen Bounce nach oben
+      this.sound.play('jumpOnEnemy'); 
+    }
+  })  
 }
 
 checkEndbossAttack() {

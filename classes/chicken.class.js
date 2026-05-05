@@ -28,8 +28,8 @@ class Chicken extends MoveableObject {
   offset = {
     top: 25,
     bottom: 10,
-    left: 35,
-    right: 35, 
+    left: 30,
+    right: 30, 
 }
 
   loadToCache() {
