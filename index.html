@@ -26,29 +26,64 @@
     <script src="./scripts/game.js" defer></script>
   </head>
   <body onload="init()">
+
+  <body>
     <div class="main-container">
-  <div>
-    <h1>El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
-  </div>
 
-  <div id="startScreen" class="start-screen">
-    <div>
-      <button id="startButton">Spiel starten</button>
-    <button id="instructionsButton">Anleitung</button>
+    <!-- 🔥 STARTSCREEN -->
+    <div id="startScreen" class="start-screen">
+      <h1>El Pollo Loco</h1>
+
+      <div class="start-menu">
+        <button id="startButton" class="menu-button">
+          <img src="img/start-icon.png" alt="Start Icon" class="start-icons" / >
+        </button>
+
+        <button id="instructionsButton" class="menu-button">
+          <img src="img/instructions_icon.png" alt="Instructions Icon" class="introduction-icons" / >
+        </button>
+
+        <button id="settingsButton" class="menu-button">
+          <img src="img/settings_icon.png" alt="Settings Icon" class="settings-icons" / >
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div id="gameOverScreen" class="hidden">
-    <img src="img/game-over.png" alt="Game Over" class="game-over-image" />
-    <button id="restartButton">Nochmal spielen</button>
-  </div>
 
-  <div id="winScreen" class="hidden">
-    <img src="img/You won, you lost/You won A.png" alt="You Win" class="win-image" />
-    <button id="playAgainButton">Nochmal spielen</button>
+    <!-- 🎮 GAME (anfangs versteckt) -->
+    <div id="gameContainer" class="hidden">
+      <canvas id="canvas" width="720" height="480"></canvas>
+    </div>
+
+
+    <!-- 💀 GAME OVER -->
+    <div id="gameOverScreen" class="hidden">
+      <img src="img/game-over.png" alt="Game Over" />
+      <button id="restartButton">Nochmal spielen</button>
+    </div>
+
+
+    <!-- 🏆 WIN -->
+    <div id="winScreen" class="hidden">
+      <img src="img/You won, you lost/You won A.png" alt="You Win" />
+      <button id="playAgainButton">Nochmal spielen</button>
+    </div>
+
+
+    <!-- ⚙️ SETTINGS DIALOG -->
+    <dialog id="settingsDialog">
+      <h2>Settings</h2>
+
+      <label>
+        Musiklautstärke
+        <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.5" />
+      </label>
+
+      <button id="closeSettingsButton">Schließen</button>
+    </dialog>
+
   </div>
-</div>
+</body>
     
     
   </body>

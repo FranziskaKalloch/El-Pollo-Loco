@@ -12,30 +12,63 @@
   src: url('./fonts/Rye-Regular.ttf') format('truetype');
 }
 
-button {
-  font-family: 'Bangers';
-  font-size: 24px;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #ffcc00;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
 body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
+  min-height: 100vh;
+
   background-image: url('img/background.image.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
   font-family: 'Rye';
   font-size: 32px; 
   letter-spacing: 3px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.start-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px; 
+}
+
+button {
+  background: none;
+  border: none; 
+  padding: none;
+  cursor: pointer;
+}
+
+.start-icons {
+  width: 200px;
+  height: 400px;
+}
+
+.introduction-icons {
+  width: 200px;
+  height: 200px;
+}
+
+.settings-icons {
+  width: 150px;
+  height: 200px;
+}
+
+
 
 canvas {
   background-color: black;
