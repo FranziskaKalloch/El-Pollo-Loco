@@ -12,6 +12,7 @@ class Sounds {
         this.bossDeath = new Audio('audio/boss-dead.mp3'); 
         this.hurtSound = new Audio('audio/hurt-pepe.wav');
         this.wonSound = new Audio('audio/you-won.mp3');
+        this.gameOverSound = new Audio('audio/game-over.wav');
         this.coinSound.volume = 1.0;  
         this.jumpSound.volume = 0.5; 
     }
@@ -43,6 +44,9 @@ class Sounds {
     }
     if(type === 'won') {
         this.wonSound.play();
+    }
+    if(type === 'gameOver') {
+        this.gameOverSound.play();
     }
 
  }

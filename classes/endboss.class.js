@@ -61,7 +61,7 @@ class Endboss extends MoveableObject {
 
 state = 'walking'; 
 leftLimit = 3800;
-rightLimit = 4500; 
+rightLimit = 4200; 
 movingRight = false; 
 
 lastAttack = 0; 

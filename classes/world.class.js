@@ -130,6 +130,11 @@ class World {
 
      if (this.character.x > 4000) {
       this.addToMap(this.endbossBar);
+    }
+
+    this.checkGameState(); 
+    if (this.gameOver || this.gameWon) {
+      return;
 
 }
  
@@ -337,11 +342,12 @@ checkThrowableObject() {
 checkGameState() {
   if(this.character.isDead() && !this.gameOver) {
     this.gameOver = true; 
-    document.getElementById('gameOverScreen').showModal(); 
+    document.getElementById('gameOverScreen').show(); 
+    this.sound.play('gameOver'); 
   }
   if(this.endboss.deadAnimationFinished && !this.gameWon) {
     this.gameWon = true; 
-    document.getElementById('winScreen').showModal(); 
+    document.getElementById('winScreen').show(); 
     this.sound.play('won'); 
   }
 }
