@@ -191,7 +191,7 @@ playDeadAnimation() {
 // 5. wenn nicht → attack()
   }
 
-  attack() {
+attack() {
   this.state = 'attack';
   this.lastAttack = Date.now(); 
   this.currentImage = 0;
@@ -207,10 +207,10 @@ playDeadAnimation() {
 }
 
 moveDuringAttack() {
-    if(this.state === 'attack') {
-      this.x -= 20; // nach vorne zu Pepe 
-    }
+  if(this.state === 'attack') {
+    this.x -= 20; // nach vorne zu Pepe 
   }
+}
 
   //isHurt() und isDead() wird von MoveableObject geerbt
 }

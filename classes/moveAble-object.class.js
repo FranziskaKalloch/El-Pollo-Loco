@@ -13,7 +13,7 @@ class MoveableObject extends DrawableObject {
   energy = 100; 
   lastHit = 0; 
 
-  offset = {
+  offset = { 
     top: 20,
     bottom: 20,
     left: 20,

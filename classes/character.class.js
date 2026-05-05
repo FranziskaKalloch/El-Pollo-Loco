@@ -120,14 +120,19 @@ class Character extends MoveableObject {
   move() {
   // 👉 Nach rechts laufen
   if (this.world.keyboard.RIGHT && this.x + this.width < this.world.levelEndX) {
-    this.x += 10;
+    if(this.isAboveGround()) {
+    this.x += 15;
+    } else {
+      this.x += 11;
+    }
     this.otherDirection = false;
-  }
+  } 
+
   // 👉 Nach links laufen
   if (this.world.keyboard.LEFT && this.x > 0) {
-    this.x -= 10;
+    this.x -= 11;
     this.otherDirection = true;
-  }
+  } 
   // 👉 Kamera folgt immer nach Bewegung
   this.world.camera_x = -this.x + 100;
 
