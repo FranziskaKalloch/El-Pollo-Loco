@@ -15,11 +15,13 @@ for(let i = 0; i < 7; i++) {
   backgroundObjects.push(new Background(`img/5_background/layers/1_first_layer/${imageNumber}.png`, x, 0));
 }
 
-let chickens = [];
+let enemies = [];
 
-for(let i = 0; i < 6; i++) {
+for(let i = 0; i < 10; i++) {
   let x = 800 + (i * 650) + Math.random() * 200; // Startwert + (i * Abstand) + zuflligkeit
-  chickens.push(new Chicken(x)); 
+  enemies.push(new Chicken(x)); 
+  enemies.push(new SmallChicken(x + 400));
+  //console.log(enemies); 
 }
 
 let bottles = [];
@@ -38,7 +40,7 @@ for(let i = 0; i <= 21; i++) {
 
 
 const level1 = new Level(
-  chickens,
+  enemies,
   bottles, 
   clouds, 
   backgroundObjects,

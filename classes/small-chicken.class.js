@@ -11,12 +11,14 @@ imagesDead = [
 ]
 
     constructor(x,y) {
+        console.log('SmallChicken x:', x);
         super(x,y); 
         this.imageCache = [];
         this.loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadToCache();
-        this.width = 60;
-        this.height = 60;
+        this.width = 80;
+        this.height = 80;
+        this.y = 370; 
+        this.speed = 0.3 + Math.random() * 0.5;
     }
-
 }
