@@ -8,9 +8,10 @@ hasHitGround = false;
         super(); 
     }
 
-throw(x,y) { // Startposition der geworfenen Bottle
+throw(x,y, direction) { // Startposition der geworfenen Bottle
     this.x = x;
     this.y = y;
+    this.speedX = direction; 
 
     this.speedY = -20; // -15 flacher wurf // -25 höherer Bogen 
     this.gravity(); //startet die Gravitation aus MoveableObject, Achtung: acceleration kommt von MoveableObject & beeinflusst auch Pepe
@@ -19,9 +20,8 @@ throw(x,y) { // Startposition der geworfenen Bottle
     // Bewegung nach vorne
     // 1000/60 = ca. 60x pro Sekunde
    let throwInterval = setInterval(() => {
-        this.x += this.speedX;
+    this.x += this.speedX;
         if(this.y >= 350 && !this.hasHitGround) {
-        console.log('Aufprall')
         this.hasHitGround = true; 
         this.animateSplash(); 
 

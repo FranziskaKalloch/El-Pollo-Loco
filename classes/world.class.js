@@ -251,6 +251,32 @@ checkEndbossAttack() {
   }
 }
 
+checkThrowableObject() {
+  setInterval(() => {
+    let direction;
+    if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
+      this.sound.play('throw'); 
+      let bottle = new SalsaBottle();
+      bottle.loadImage(bottle.imagesBottleRotation[0])
+      this.canThrow = false; 
+      this.throwableItems.push(bottle); 
+      if(this.character.otherDirection) {
+        direction = -5; 
+      } else {
+        direction = 5; 
+      }
+      bottle.throw(this.character.x + 100,  this.character.y + 60, direction); // der Wurf von Pepe 
+      this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
+      let percentage = (this.collectedBottles / this.maxBottles) * 100;
+      percentage = Math.min(100, Math.round(percentage / 20) * 20);
+      this.bottleBar.setBar(percentage);   
+    }
+    if(!this.keyboard.D) {
+      this.canThrow = true;  
+    }
+  }, 1000/60); 
+}
+
   removeDeadEnemies() {
     for (let index = this.enemies.length - 1; index >= 0; index--) {
       let enemy = this.enemies[index];
@@ -316,27 +342,6 @@ collectBottles() {
       } 
   return true;  // Animation ist fertig, du darfst sie löschen
       // löschen
-}
-
-checkThrowableObject() {
-  setInterval(() => {
-    if(this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
-      console.log('ich werfe');
-      this.sound.play('throw'); 
-      let bottle = new SalsaBottle();
-      bottle.loadImage(bottle.imagesBottleRotation[0])
-      this.canThrow = false; 
-      this.throwableItems.push(bottle); 
-      bottle.throw(this.character.x + 100,  this.character.y + 60); 
-      this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
-      let percentage = (this.collectedBottles / this.maxBottles) * 100;
-      percentage = Math.min(100, Math.round(percentage / 20) * 20);
-      this.bottleBar.setBar(percentage);   
-    }
-    if(!this.keyboard.D) {
-      this.canThrow = true;  
-    }
-  }, 1000/60); 
 }
 
 checkGameState() {
