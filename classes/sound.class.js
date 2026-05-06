@@ -69,7 +69,7 @@ class Sounds {
 
 playStartScreenMusic() {
     this.startScreenSound.loop = true;
-    this.startScreenSound.volume = 0.0;
+    this.startScreenSound.volume = 0.2;
     this.startScreenSound.play(); 
 }
 
