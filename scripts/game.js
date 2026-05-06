@@ -15,6 +15,8 @@ function init() {
 }
 
 
+
+
 window.addEventListener('keydown', (event) => {
   if (event.key == 'ArrowUp') {
     keyboard.UP = true;
@@ -57,6 +59,10 @@ window.addEventListener('keyup', (event) => {
     keyboard.D = false; 
   }
 });
+
+
+
+
 
 
 
