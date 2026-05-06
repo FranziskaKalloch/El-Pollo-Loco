@@ -75,20 +75,24 @@
     <!-- Introduction DIALOG -->
     <dialog id="introductionDialog">
       <div class="header">
-         <h2>Anleitung</h2>
+        <h2>Anleitung</h2>
         <p>Willkommen bei El Pollo Loco!</p>
          <p>In diesem Spiel schlüpfst du in die Rolle eines verrückten Huhns, das durch verschiedene Level voller Herausforderungen und Feinde navigieren muss. Dein Ziel ist es, alle Level zu meistern und den Endboss zu besiegen!</p>
       </div>
-      <div>
-        <p><strong>Steuerung:</strong></p>
+      <div class="controller">
+        <h2>Steuerung</h2>
         <ul>
-          <li><strong>Pfeiltasten</strong>: Bewegen</li>
-          <li><strong>Leertaste</strong>: Springen</li>
-          <li><strong>D</strong>: Werfen</li>
+          <li><strong>Bewegen</strong>: Pfeiltasten</li>
+          <li><strong>Springen</strong>: Leertaste</li>
+          <li><strong>Werfen</strong>: D</li>
         </ul>
+      </div>
+      <div class="content">
         <p>Sammle Münzen und Salsa-Flaschen, um deine Punktzahl zu erhöhen und Gegner zu besiegen. Pass auf die Feinde auf und nutze deine Fähigkeiten, um sie zu besiegen!</p>
       </div>
-      <button id="closeIntroductionButton">Schließen</button>
+      <div class="footer">
+        <button id="closeIntroductionButton" class="btn">Schließen</button> 
+      </div>
     </dialog>
 
     <!-- ⚙️ SETTINGS DIALOG -->
@@ -100,7 +104,7 @@
         <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.5" />
       </label>
 
-      <button id="closeSettingsButton">Schließen</button>
+      <button id="closeSettingsButton" class="btn">Schließen</button>
     </dialog>
 
   </div>

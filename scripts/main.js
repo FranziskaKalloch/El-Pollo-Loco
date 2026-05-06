@@ -29,7 +29,7 @@ function startGame() {
 
 
 
-function Introduction() {
+function manageIntroduction() {
   let introButton = document.getElementById("instructionsButton");
   let closeIntro = document.getElementById("closeIntroductionButton");
   introButton.addEventListener("click", () => {
@@ -37,12 +37,28 @@ function Introduction() {
     openDialog(introduction);
   });
   closeIntro.addEventListener("click", () => {
+    sound.play("click");
     closeDialog(introduction);
   });
 }
 
+function manageSettings() {
+  let settingsButton = document.getElementById("settingsButton");
+  let closeSettingsButton = document.getElementById("closeSettingsButton");
+
+  settingsButton.addEventListener("click", () => {
+    sound.play("click");
+    openDialog(settings);
+  });
+
+  closeSettingsButton.addEventListener("click", () => {
+    sound.play("click");
+    closeDialog(settings);
+  });
+}
+
 function openDialog(dialog) {
-  dialog.showModal();
+  dialog.show();
 }
 
 function closeDialog(dialog) {
@@ -50,4 +66,5 @@ function closeDialog(dialog) {
 }
 
 startGame(); 
-Introduction(); 
+manageIntroduction();
+manageSettings(); 
