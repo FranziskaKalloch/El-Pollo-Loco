@@ -133,7 +133,7 @@ dialog {
   background-image: url('img/pergament.png'); 
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
 
   flex-direction: column;
   justify-content: center;
@@ -146,9 +146,9 @@ dialog {
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 
   width: 1000px;
-  height: 950px;
-  max-width: 90vw;
-  max-height: 90vh;
+  height: 900px;
+  max-width: unset;
+  max-height: unset;
   overflow-y: auto;
 
   /* Dialog zentrieren */

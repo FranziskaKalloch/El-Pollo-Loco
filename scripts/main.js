@@ -58,7 +58,7 @@ function manageSettings() {
 }
 
 function openDialog(dialog) {
-  dialog.show();
+  dialog.showModal();
 }
 
 function closeDialog(dialog) {
