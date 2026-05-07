@@ -73,7 +73,7 @@ class Sounds {
     }
   }
 
-  setSoundMuted() {
+  setSoundMuted(isMuted) {
     this.soundMuted = isMuted;
   }
 
@@ -84,7 +84,7 @@ class Sounds {
     this.startScreenSound.muted = isMuted;
   }
 
-  setMusicVolume() {
+  setMusicVolume(volume) {
     this.musicVolume = volume;
     this.backgroundMusic.volume = volume;
     this.startScreenSound.volume = volume;

@@ -232,4 +232,31 @@ li {
   transition: all 0.2s ease;
 }
 
+.btn:hover {
+  background: linear-gradient(
+    to bottom,
+    rgba(107, 48, 18, 0.5),
+    rgba(156, 77, 28, 0.5)
+  );
+
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.3),
+    0 6px 12px rgba(0,0,0,0.5);
+
+  transform: translateY(-2px);
+}
+
+.btn-muted {
+  background: rgb(243, 169, 68);
+}
+
+.btn-muted:hover {
+  background: rgba(243, 169, 68, 0.5);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.3),
+    0 6px 12px rgba(0,0,0,0.5);
+
+  transform: translateY(-2px);
+}
+
 

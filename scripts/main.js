@@ -9,6 +9,8 @@ let gameOverScreen = document.getElementById('gameOverScreen');
 let winScreen = document.getElementById('winScreen'); 
 let introduction = document.getElementById("introductionDialog");
 let settings = document.getElementById("settingsDialog"); 
+let soundButton = document.getElementById("toggleSoundButton");
+let musicButton = document.getElementById("toggleMusicButton"); 
 const sound = new Sounds(); 
 
 sound.playStartScreenMusic(); 
@@ -65,6 +67,47 @@ function closeDialog(dialog) {
   dialog.close();
 }
 
+// Slider holen
+// input EventListener setzen
+// den aktuellen .value auslesen
+// diesen Wert an die Methode weitergeben
+function manageMusicVolume() {
+  let slider = document.getElementById('musicVolume'); 
+  slider.addEventListener('input', () => {
+    let sliderValue = Number(slider.value);
+    console.log(sliderValue); 
+    sound.setMusicVolume(sliderValue);
+  })
+}
+
+function muteSoundsAndMusic() {
+  soundButton.addEventListener('click', () => {
+    if (sound.soundMuted) {
+      sound.setSoundMuted(false);
+      sound.play('click');
+    } else {
+      sound.play('click');
+      sound.setSoundMuted(true);
+    }
+    setButtonColor(soundButton, sound.soundMuted);
+  });
+  musicButton.addEventListener('click', () => {
+    sound.play('click');
+    sound.setMusicMuted(!sound.musicMuted);
+    setButtonColor(musicButton, sound.musicMuted);
+  });
+}
+
+function setButtonColor(button, isMuted) {
+  if (isMuted) {
+    button.classList.add('btn-muted');
+  } else {
+    button.classList.remove('btn-muted');
+  }
+}
+
 startGame(); 
 manageIntroduction();
 manageSettings(); 
+manageMusicVolume();
+muteSoundsAndMusic(); 
