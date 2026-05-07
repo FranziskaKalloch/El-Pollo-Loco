@@ -11,6 +11,10 @@ let introduction = document.getElementById("introductionDialog");
 let settings = document.getElementById("settingsDialog"); 
 let soundButton = document.getElementById("toggleSoundButton");
 let musicButton = document.getElementById("toggleMusicButton"); 
+let settingsButton = document.getElementById("settingsButton");
+let gameSettingsButton = document.getElementById("gameSettingsButton");
+let closeSettingsButton = document.getElementById("closeSettingsButton");
+let gamePaused = false; 
 const sound = new Sounds(); 
 
 sound.playStartScreenMusic(); 
@@ -45,17 +49,21 @@ function manageIntroduction() {
 }
 
 function manageSettings() {
-  let settingsButton = document.getElementById("settingsButton");
-  let closeSettingsButton = document.getElementById("closeSettingsButton");
-
   settingsButton.addEventListener("click", () => {
     sound.play("click");
+    openDialog(settings);
+  });
+
+  gameSettingsButton.addEventListener("click", () => {
+    sound.play("click");
+    gamePaused = true;
     openDialog(settings);
   });
 
   closeSettingsButton.addEventListener("click", () => {
     sound.play("click");
     closeDialog(settings);
+    gamePaused = false;
   });
 }
 
@@ -75,7 +83,6 @@ function manageMusicVolume() {
   let slider = document.getElementById('musicVolume'); 
   slider.addEventListener('input', () => {
     let sliderValue = Number(slider.value);
-    console.log(sliderValue); 
     sound.setMusicVolume(sliderValue);
   })
 }

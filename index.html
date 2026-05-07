@@ -55,6 +55,9 @@
 
     <!-- 🎮 GAME (anfangs versteckt) -->
     <div id="gameContainer" class="hidden">
+      <button id="gameSettingsButton" class="menu-button wiggle game-settings-button">
+          <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
+        </button>
       <canvas id="canvas" width="720" height="480"></canvas>
     </div>
 
@@ -106,7 +109,7 @@
 
       <label>
         Musiklautstärke
-        <input id="musicVolume" oninputtype="range" min="0" max="1" step="0.1" value="0.5" />
+        <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.5" />
       </label>
 
       <button id="closeSettingsButton" class="btn">Schließen</button>
