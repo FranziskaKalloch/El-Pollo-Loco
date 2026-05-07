@@ -29,6 +29,31 @@ function startGame() {
   });
 }
 
+function restartGame() {
+  gameOverScreen.classList.add("hidden");
+  winScreen.classList.add("hidden");
+  game.classList.remove("hidden");
+  startScreen.classList.add("hidden");
+  gamePaused = false;
+  sound.stopBackgroundMusic();
+  sound.playBackgroundMusic();
+  init();
+}
+
+function showMainMenu() {
+  gameOverScreen.classList.add("hidden");
+  winScreen.classList.add("hidden");
+  game.classList.add("hidden");
+  startScreen.classList.remove("hidden");
+}
+
+function playGameAgain() {
+  restartButton.addEventListener("click", restartGameWithSound);
+  playAgainButton.addEventListener("click", restartGameWithSound);
+  menuButton.addEventListener("click", showMenuWithSound);
+  backToMenuButton.addEventListener("click", showMenuWithSound);
+}
+
 function manageIntroduction() {
   let introButton = document.getElementById("instructionsButton");
   let closeIntro = document.getElementById("closeIntroductionButton");
@@ -40,6 +65,16 @@ function manageIntroduction() {
     sound.play("click");
     closeDialog(introduction);
   });
+}
+
+function restartGameWithSound() {
+  sound.play("click");
+  restartGame();
+}
+
+function showMenuWithSound() {
+  sound.play("click");
+  showMainMenu();
 }
 
 function manageSettings() {
@@ -107,8 +142,10 @@ function setButtonColor(button, isMuted) {
   }
 }
 
+
 startGame();
 manageIntroduction();
 manageSettings();
 manageMusicVolume();
 muteSoundsAndMusic();
+playGameAgain(); 

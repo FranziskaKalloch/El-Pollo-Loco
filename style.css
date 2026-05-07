@@ -122,14 +122,46 @@ canvas {
   z-index: 5; 
 } 
 
-#gameOverScreen, #winScreen {
-  width: 720px; 
-  height: 480px;
-  }
-
 .hidden {
   display: none !important; 
 }
+
+.game-settings-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+/* ENDSCREENS */
+
+.endscreen {
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; 
+  padding-bottom: 40px; 
+
+  width: 100%;
+  height: 100vh;
+}
+
+
+/* WINCREEN */
+.win-screen {
+  background-image: url('img/win-screen.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* GAME OVER SCREEN */
+
+.game-over-screen {
+  background-image: url('img/background-image-gameover.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 
 /* DIALOG */
 dialog {
@@ -271,11 +303,5 @@ li {
   transform: translateY(-2px);
 }
 
-.game-settings-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-}
 
 

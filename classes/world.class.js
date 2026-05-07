@@ -55,7 +55,7 @@ class World {
     this.keyboard = keyboard;
     this.character = new Character(this); // Erstelle einen Character & gebe ihm diese world mit
     this.endboss = new Endboss(this); // Erstelle einen Endboss & gib ihm DIESE World mit - somit kann der Endboss auf die ganze world zugreifen
-    this.sound = new Sounds();
+    this.sound = sound;
     this.gameLoop();
   }
 
@@ -158,7 +158,10 @@ class World {
   }
 
   gameLoop() {
-    if (!gamePaused && !this.gameOver && !this.gameWon) {
+    if (this.gameOver && this.gameWon) {
+      return;
+    }
+    if (!gamePaused) {
       this.update();
     }
     this.draw();
@@ -185,6 +188,9 @@ class World {
   // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
   // das ist der Wächter
   checkCollisions() {
+    if (this.gameOver || this.gameWon) {
+      return;
+    }
     this.checkJumpOnEnemy();
     this.enemies.forEach((enemy) => {
       if (
@@ -263,6 +269,9 @@ class World {
   }
 
   checkEndbossAttack() {
+    if (this.gameOver || this.gameWon) {
+      return;
+    }
     if (
       this.endboss.state === "attack" &&
       this.character.isColliding(this.endboss) &&
@@ -371,13 +380,17 @@ class World {
   checkGameState() {
     if (this.character.isDead() && !this.gameOver) {
       this.gameOver = true;
-      document.getElementById("gameOverScreen");
       this.sound.play("gameOver");
+      gameOverScreen.classList.remove("hidden");
+      game.classList.add("hidden");
+      this.sound.stopBackgroundMusic();
     }
     if (this.endboss.deadAnimationFinished && !this.gameWon) {
       this.gameWon = true;
-      document.getElementById("winScreen");
       this.sound.play("won");
+      winScreen.classList.remove("hidden");
+      game.classList.add("hidden");
+      this.sound.stopBackgroundMusic();
     }
   }
 }

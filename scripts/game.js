@@ -21,6 +21,7 @@ window.addEventListener('keydown', (event) => {
     keyboard.LEFT = true;
   }
   if (event.code == 'Space') {
+    event.preventDefault();
     keyboard.SPACE = true;
   }
   if (event.key == 'ArrowDown') {

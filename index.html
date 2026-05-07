@@ -64,16 +64,20 @@
 
 
     <!-- 💀 GAME OVER -->
-    <div id="gameOverScreen" class="hidden">
-      <img src="img/game-over.png" alt="Game Over" />
-      <button id="restartButton">Nochmal spielen</button>
+    <div id="gameOverScreen" class="endscreen hidden game-over-screen">
+      <div class="end-screen-button-container">
+        <button id="restartButton" class="btn">Nochmal spielen</button>
+        <button id="menuButton" class="btn">Zum Hauptmenü</button>
+      </div>
     </div>
 
 
     <!-- 🏆 WIN -->
-    <div id="winScreen" class="hidden">
-      <img src="img/You won, you lost/You won A.png" alt="You Win" />
-      <button id="playAgainButton">Nochmal spielen</button>
+    <div id="winScreen" class="endscreen hidden win-screen">
+      <div class="end-screen-button-container">
+        <button id="playAgainButton" class="btn">Nochmal spielen</button>
+        <button id="backToMenuButton" class="btn">Zum Hauptmenü</button>
+      </div>
     </div>
 
     <!-- Introduction DIALOG -->
@@ -89,6 +93,7 @@
           <li><strong>Bewegen</strong>: Pfeiltasten</li>
           <li><strong>Springen</strong>: Leertaste</li>
           <li><strong>Werfen</strong>: D</li>
+          <li><strong>Pause</strong>: P</li>
         </ul>
       </div>
       <div class="content">
