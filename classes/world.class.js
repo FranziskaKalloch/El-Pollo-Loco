@@ -67,9 +67,7 @@ class World {
   // Das ist die Funktion mit der alle Objekte gezeichnet werden 
   addToMap(object) {
     if (!object.img) {
-    console.log('Objekt ohne img:', object);
-    return;
-
+     return;
   }
     this.ctx.drawImage(object.img, object.x, object.y, object.width, object.height);
   }
@@ -77,7 +75,6 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
- 
      // hier wollen wir den komplette Auschnitt des Canvas verschieben
     this.ctx.translate(this.camera_x, 0); // translate bedeutete, dass wir etwas verschieben wollen
 
@@ -92,52 +89,53 @@ class World {
    for (const coin of this.coins) {
     if (coin.isCollected) {
       this.drawRotatingCoin(coin);
-    } else {
+      } else {
       this.addToMap(coin);
+      }
     }
-  }
 
   for(const bottle of this.bottles) {
     this.addToMap(bottle); 
   }
 
-  for(const item of this.throwableItems) {
-    this.addToMap(item); 
+  for (const item of this.throwableItems) {
+    this.addToMap(item);
+  }
+  if (this.character.otherDirection == false) {
+    this.addToMap(this.character);
+  } else {
+    this.ctx.save();
+    this.ctx.scale(-1, 1);
+    this.ctx.drawImage(
+      this.character.img,
+      -this.character.x - this.character.width,
+      this.character.y,
+      this.character.width,
+      this.character.height,
+    );
+    this.ctx.restore();
   }
 
-    if (this.character.otherDirection == false) {
-      this.addToMap(this.character); 
-    } else {
-      this.ctx.save();
-      this.ctx.scale(-1, 1);
-      this.ctx.drawImage(this.character.img, -this.character.x - this.character.width, this.character.y, this.character.width, this.character.height);
-      this.ctx.restore();
-    }
+  for (const enemy of this.enemies) {
+    this.addToMap(enemy);
+  }
 
-    for (const enemy of this.enemies) {
-      this.addToMap(enemy); 
-    }
-
-    this.addToMap(this.endboss); 
-
-    // Hier wird alles wieder rückgängig gemacht -> Zuerst
-    this.ctx.translate(-this.camera_x, 0);
+  this.addToMap(this.endboss);
+  // Hier wird alles wieder rückgängig gemacht -> Zuerst
+  this.ctx.translate(-this.camera_x, 0);
     
+    this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
+    this.addToMap(this.coinBar);
+    this.addToMap(this.bottleBar); 
 
-     this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
-     this.addToMap(this.coinBar);
-     this.addToMap(this.bottleBar); 
-
-     if (this.character.x > 3300) {
+    if (this.character.x > 3300) {
       this.addToMap(this.endbossBar);
     }
 
     this.checkGameState(); 
     if (this.gameOver || this.gameWon) {
       return;
-
-}
- 
+    }
     // draw() wird immer wieder aufgerufen
     let start = this;
     requestAnimationFrame(function () {  // die function wird ausgeführt, sobald alles dadrüber gezeichnet wurde
@@ -147,39 +145,37 @@ class World {
 
   drawRotatingCoin(coin) {
   let ctx = this.ctx;
-
   let animationTime = Date.now() - coin.startTime;
   let angle = animationTime * 0.01; // Geschwindigkeit der Drehung
-
   ctx.save();
-
   // Mittelpunkt berechnen
   let centerX = coin.x + coin.width / 2;
   let centerY = coin.y + coin.height / 2;
-
   // Zum Mittelpunkt verschieben
   ctx.translate(centerX, centerY);
-
   // Drehen
   ctx.rotate(angle);
-
   // Bild zeichnen (verschoben zurück)
   ctx.drawImage(
     coin.img,
     -coin.width / 2,
     -coin.height / 2,
     coin.width,
-    coin.height
+    coin.height,
   );
-
   ctx.restore();
 }
 
+startEnemies() {
+  this.enemies.forEach((enemy) => {
+    enemy.animate();
+  })
+}
   // Game Loop/Überwachung: passiert gerade irgendwo im Spiel eine Kollision?
   // läuft dauerhaft (setInterval), geht durch alle Gegner,
   // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
   // das ist der Wächter
- checkCollisions() {
+checkCollisions() {
   setInterval(() => {
     this.checkJumpOnEnemy(); 
 

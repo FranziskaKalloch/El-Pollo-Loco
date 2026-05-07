@@ -4,14 +4,11 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
-
-  canvas = document.getElementById('canvas');
+  canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-
-  ctx = canvas.getContext('2d');
-
-  console.log('My character is', world.character);
- 
+  ctx = canvas.getContext("2d");
+  world.startEnemies();
+  console.log("My character is", world.character);
 }
 
 

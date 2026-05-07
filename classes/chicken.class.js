@@ -16,9 +16,9 @@ class Chicken extends MoveableObject {
     this.width = 100;
     this.height = 100;
     this.speed = 0.15 + Math.random() * 0.3;
-    this.loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+    this.loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadToCache();
-    this.animate();
+    // this.animate(); // Chickens werden sofort erstellt und laufen los .. wenn es rausgenommen wird, laufen die Chickens erstmal nicht automatisch los!
   }
 
   currentImage = 0;
