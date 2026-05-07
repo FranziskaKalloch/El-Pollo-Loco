@@ -113,8 +113,10 @@ class Character extends MoveableObject {
       currentImages = this.imagesJumping;
     } else if (idleImages) {
       currentImages = idleImages;
-    } else {
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
       currentImages = this.imagesWalking;
+    } else {
+      currentImages = [this.imagesIdle[0]];
     }
 
     let imageIndex = this.currentImage % currentImages.length;
