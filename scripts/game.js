@@ -7,12 +7,8 @@ function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
   ctx = canvas.getContext("2d");
-  world.startEnemies();
-  console.log("My character is", world.character);
+  world.updateEnemies();
 }
-
-
-
 
 window.addEventListener('keydown', (event) => {
   if (event.key == 'ArrowUp') {
@@ -32,6 +28,11 @@ window.addEventListener('keydown', (event) => {
   }
   if(event.code == 'KeyD') {
     keyboard.D = true; 
+  }
+  if (event.key === "p" || event.key === "P") {
+    gamePaused = !gamePaused;
+    let pauseOverlay = document.getElementById("pauseOverlay");
+    pauseOverlay.classList.toggle("hidden", !gamePaused);
   }
   //console.log(event); 
 });

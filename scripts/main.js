@@ -1,39 +1,33 @@
-// Menülogik
-// Buttons
-// Dialoge
-// Screens
-
-let startScreen = document.getElementById('startScreen');
-let game = document.getElementById('gameContainer'); 
-let gameOverScreen = document.getElementById('gameOverScreen'); 
-let winScreen = document.getElementById('winScreen'); 
+let startScreen = document.getElementById("startScreen");
+let game = document.getElementById("gameContainer");
+let gameOverScreen = document.getElementById("gameOverScreen");
+let winScreen = document.getElementById("winScreen");
 let introduction = document.getElementById("introductionDialog");
-let settings = document.getElementById("settingsDialog"); 
+let settings = document.getElementById("settingsDialog");
 let soundButton = document.getElementById("toggleSoundButton");
-let musicButton = document.getElementById("toggleMusicButton"); 
+let musicButton = document.getElementById("toggleMusicButton");
 let settingsButton = document.getElementById("settingsButton");
 let gameSettingsButton = document.getElementById("gameSettingsButton");
 let closeSettingsButton = document.getElementById("closeSettingsButton");
-let gamePaused = false; 
-const sound = new Sounds(); 
+const sound = new Sounds();
 
-sound.playStartScreenMusic(); 
+let gamePaused = false;
+
+sound.playStartScreenMusic();
 
 function startGame() {
-    let startGame = document.getElementById('startButton');
-    startGame.addEventListener('click', () => {
-        sound.play("click"); 
-        startScreen.classList.add('hidden');
-        game.classList.remove('hidden');
-        sound.stopStartScreenMusic();
-        sound.playBackgroundMusic();
-        console.log("Start wurde geklickt");
-        console.log(document.getElementById("canvas"));
-        init(); 
-    })
+  let startGame = document.getElementById("startButton");
+  startGame.addEventListener("click", () => {
+    sound.play("click");
+    startScreen.classList.add("hidden");
+    game.classList.remove("hidden");
+    sound.stopStartScreenMusic();
+    sound.playBackgroundMusic();
+    console.log("Start wurde geklickt");
+    console.log(document.getElementById("canvas"));
+    init();
+  });
 }
-
-
 
 function manageIntroduction() {
   let introButton = document.getElementById("instructionsButton");
@@ -80,26 +74,26 @@ function closeDialog(dialog) {
 // den aktuellen .value auslesen
 // diesen Wert an die Methode weitergeben
 function manageMusicVolume() {
-  let slider = document.getElementById('musicVolume'); 
-  slider.addEventListener('input', () => {
+  let slider = document.getElementById("musicVolume");
+  slider.addEventListener("input", () => {
     let sliderValue = Number(slider.value);
     sound.setMusicVolume(sliderValue);
-  })
+  });
 }
 
 function muteSoundsAndMusic() {
-  soundButton.addEventListener('click', () => {
+  soundButton.addEventListener("click", () => {
     if (sound.soundMuted) {
       sound.setSoundMuted(false);
-      sound.play('click');
+      sound.play("click");
     } else {
-      sound.play('click');
+      sound.play("click");
       sound.setSoundMuted(true);
     }
     setButtonColor(soundButton, sound.soundMuted);
   });
-  musicButton.addEventListener('click', () => {
-    sound.play('click');
+  musicButton.addEventListener("click", () => {
+    sound.play("click");
     sound.setMusicMuted(!sound.musicMuted);
     setButtonColor(musicButton, sound.musicMuted);
   });
@@ -107,14 +101,14 @@ function muteSoundsAndMusic() {
 
 function setButtonColor(button, isMuted) {
   if (isMuted) {
-    button.classList.add('btn-muted');
+    button.classList.add("btn-muted");
   } else {
-    button.classList.remove('btn-muted');
+    button.classList.remove("btn-muted");
   }
 }
 
-startGame(); 
+startGame();
 manageIntroduction();
-manageSettings(); 
+manageSettings();
 manageMusicVolume();
-muteSoundsAndMusic(); 
+muteSoundsAndMusic();

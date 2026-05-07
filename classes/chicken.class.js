@@ -1,36 +1,37 @@
 class Chicken extends MoveableObject {
   img;
-
   imagesWalking = [
-    'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
-    'img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
-    'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
+    "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
+    "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
+    "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
-  imagesDead = ['img/3_enemies_chicken/chicken_small/2_dead/dead.png'];
+
+  imagesDead = ["img/3_enemies_chicken/chicken_small/2_dead/dead.png"];
   imageCache = [];
 
+  currentImage = 0;
+  isKilled = false;
+  deathTime;
+  lastAnimationTime = 0;
+  animationInterval = 100;
+
+  offset = {
+    top: 25,
+    bottom: 10,
+    left: 30,
+    right: 30,
+  };
+
   constructor(x, y) {
-    super(); // super() ruft zuerst den Konstruktor der Elternklasse auf
-    this.x = x; // Jedes Chicken bekommt eine zufällig Zahl zugewiesen // gibt eine Zahl zwischen 0 und 500
+    super();
+    this.x = x;
     this.y = 350;
     this.width = 100;
     this.height = 100;
     this.speed = 0.15 + Math.random() * 0.3;
     this.loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.loadToCache();
-    // this.animate(); // Chickens werden sofort erstellt und laufen los .. wenn es rausgenommen wird, laufen die Chickens erstmal nicht automatisch los!
   }
-
-  currentImage = 0;
-  isKilled = false;
-  deathTime; 
-
-  offset = {
-    top: 25,
-    bottom: 10,
-    left: 30,
-    right: 30, 
-}
 
   loadToCache() {
     for (let i = 0; i < this.imagesWalking.length; i++) {
@@ -40,28 +41,30 @@ class Chicken extends MoveableObject {
     }
   }
 
-  animate() {
-    this.moveLeft();
-    setInterval(() => {
-      if(this.isKilled) {
-      this.loadImage('img/3_enemies_chicken/chicken_small/2_dead/dead.png');
+  update() {
+    if (this.isKilled) {
+      this.loadImage(this.imagesDead[0]);
       return;
-    } // Walking Animation
-      this.img = this.imageCache[this.currentImage];
-      this.currentImage++;
-      if (this.currentImage >= this.imageCache.length) {
-        this.currentImage = 0;
-      }
-    }, 100);
-  }
- 
-  moveLeft() {
-    setInterval(() => {
-      if(this.isKilled) {
-        return; 
-      }
-      this.x -= this.speed;
-    }, 1000 / 60);
+    }
+    this.moveLeft();
+    this.playWalkingAnimation();
   }
 
+  moveLeft() {
+    this.x -= this.speed;
+  }
+
+  playWalkingAnimation() {
+    let now = Date.now();
+    if (now - this.lastAnimationTime < this.animationInterval) {
+      return;
+    }
+    this.img = this.imageCache[this.currentImage];
+    this.currentImage++;
+
+    if (this.currentImage >= this.imageCache.length) {
+      this.currentImage = 0;
+    }
+    this.lastAnimationTime = now;
+  }
 }
