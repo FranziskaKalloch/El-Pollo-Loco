@@ -1,0 +1,23 @@
+@media (hove: none) and (orientation: portrait){ /*es handelt sich um ein Hand in Hochformat*/
+
+
+
+    /* responsive.buttons: display: block; */
+    /* .desktopbuttons display none*/
+
+
+
+}
+
+@media (hove: none) and (orientation: landscape) {
+
+    /* responsive.buttons: display: block; */
+    /* .desktopbuttons display none*/
+}
+
+/*HOVER: none bedeutet, man steuert ein Gerät mit Touchscreen an 
+orientation: portrait bedeutet, dass das Gerät im Hochformat gehalten wird
+orientation: landscape bedeutet, dass das Gerät im Querformat gehalten wird
+
+
+*/

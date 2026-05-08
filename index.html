@@ -66,8 +66,8 @@
     <!-- 💀 GAME OVER -->
     <div id="gameOverScreen" class="endscreen hidden game-over-screen">
       <div class="end-screen-button-container">
-        <button id="restartButton" class="btn">Nochmal spielen</button>
-        <button id="menuButton" class="btn">Zum Hauptmenü</button>
+        <button class="restart-button btn">Nochmal spielen</button>
+        <button class="menu-btn btn">Zum Hauptmenü</button>
       </div>
     </div>
 
@@ -75,13 +75,13 @@
     <!-- 🏆 WIN -->
     <div id="winScreen" class="endscreen hidden win-screen">
       <div class="end-screen-button-container">
-        <button id="playAgainButton" class="btn">Nochmal spielen</button>
-        <button id="backToMenuButton" class="btn">Zum Hauptmenü</button>
+        <button  class="restart-button btn">Nochmal spielen</button>
+        <button class="menu-btn btn">Zum Hauptmenü</button>
       </div>
     </div>
 
     <!-- Introduction DIALOG -->
-    <dialog id="introductionDialog">
+    <dialog id="introductionDialog" class="dialog-close-outside">
       <div class="header">
         <h2>Anleitung</h2>
         <p>Willkommen bei El Pollo Loco!</p>
@@ -105,7 +105,7 @@
     </dialog>
 
     <!-- ⚙️ SETTINGS DIALOG -->
-    <dialog id="settingsDialog">
+    <dialog id="settingsDialog" class="dialog-close-outside">
       <h2>Einstellungen</h2>
       <div class="button-setting-container">
         <button id="toggleSoundButton" class="btn">Ton an/aus</button>

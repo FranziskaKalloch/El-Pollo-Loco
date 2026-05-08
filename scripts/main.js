@@ -23,8 +23,6 @@ function startGame() {
     game.classList.remove("hidden");
     sound.stopStartScreenMusic();
     sound.playBackgroundMusic();
-    console.log("Start wurde geklickt");
-    console.log(document.getElementById("canvas"));
     init();
   });
 }
@@ -37,7 +35,7 @@ function restartGame() {
   gamePaused = false;
   sound.stopBackgroundMusic();
   sound.playBackgroundMusic();
-  init();
+  init(); 
 }
 
 function showMainMenu() {
@@ -47,11 +45,15 @@ function showMainMenu() {
   startScreen.classList.remove("hidden");
 }
 
-function playGameAgain() {
-  restartButton.addEventListener("click", restartGameWithSound);
-  playAgainButton.addEventListener("click", restartGameWithSound);
-  menuButton.addEventListener("click", showMenuWithSound);
-  backToMenuButton.addEventListener("click", showMenuWithSound);
+function manageScreenButtons() {
+  let menuButton = document.querySelectorAll(".menu-btn");
+  for (let menu of menuButton) {
+    menu.addEventListener("click", showMainMenu);
+  }
+  let restartButton = document.querySelectorAll(".restart-button");
+  for (let restart of restartButton) {
+    restart.addEventListener("click", restartGame);
+  }
 }
 
 function manageIntroduction() {
@@ -104,6 +106,16 @@ function closeDialog(dialog) {
   dialog.close();
 }
 
+function closeDialogOutside() {
+  let dialogRef = document.querySelectorAll(".dialog-close-outside"); // alle Dialoge holen und über alle dialoge loopen, da wir einen Liste zurückbekomme
+  for (let dialog of dialogRef) {
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+  }
+}
 // Slider holen
 // input EventListener setzen
 // den aktuellen .value auslesen
@@ -149,3 +161,4 @@ manageSettings();
 manageMusicVolume();
 muteSoundsAndMusic();
 playGameAgain(); 
+closeDialogOutside();
