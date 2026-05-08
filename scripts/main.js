@@ -50,9 +50,16 @@ function manageScreenButtons() {
   for (let menu of menuButton) {
     menu.addEventListener("click", showMainMenu);
   }
+  for (let menu of menuButton) {
+    menu.addEventListener("click", showMenuWithSound);
+  }
+
   let restartButton = document.querySelectorAll(".restart-button");
   for (let restart of restartButton) {
     restart.addEventListener("click", restartGame);
+  }
+  for (let restart of restartButton) {
+    restart.addEventListener("click", restartGameWithSound);
   }
 }
 
@@ -67,16 +74,6 @@ function manageIntroduction() {
     sound.play("click");
     closeDialog(introduction);
   });
-}
-
-function restartGameWithSound() {
-  sound.play("click");
-  restartGame();
-}
-
-function showMenuWithSound() {
-  sound.play("click");
-  showMainMenu();
 }
 
 function manageSettings() {
@@ -98,23 +95,14 @@ function manageSettings() {
   });
 }
 
-function openDialog(dialog) {
-  dialog.showModal();
+function restartGameWithSound() {
+  sound.play("click");
+  restartGame();
 }
 
-function closeDialog(dialog) {
-  dialog.close();
-}
-
-function closeDialogOutside() {
-  let dialogRef = document.querySelectorAll(".dialog-close-outside"); // alle Dialoge holen und über alle dialoge loopen, da wir einen Liste zurückbekomme
-  for (let dialog of dialogRef) {
-    dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) {
-        dialog.close();
-      }
-    });
-  }
+function showMenuWithSound() {
+  sound.play("click");
+  showMainMenu();
 }
 // Slider holen
 // input EventListener setzen
@@ -154,11 +142,40 @@ function setButtonColor(button, isMuted) {
   }
 }
 
+function openDialog(dialog) {
+  dialog.showModal();
+}
+
+function closeDialog(dialog) {
+  dialog.close();
+}
+
+function closeDialogOutside() {
+  let dialogRef = document.querySelectorAll(".dialog-close-outside"); // alle Dialoge holen und über alle dialoge loopen, da wir einen Liste zurückbekomme
+  for (let dialog of dialogRef) {
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+  }
+}
+
+function manageFullScreen() {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.msRequestFullScreen) {
+    element.msRequestFullScreen();
+  } else if (element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
 
 startGame();
 manageIntroduction();
 manageSettings();
 manageMusicVolume();
 muteSoundsAndMusic();
-playGameAgain(); 
 closeDialogOutside();
+manageScreenButtons(); 

@@ -29,7 +29,7 @@
   <body>
 
   <body>
-    <div class="main-container">
+    <div class="main-container" id="fullscreen">
 
     <!-- 🔥 STARTSCREEN -->
     <div id="startScreen" class="start-screen">
@@ -59,7 +59,10 @@
       <button id="gameSettingsButton" class="menu-button wiggle game-settings-button">
           <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
         </button>
-      <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="canvas-container">
+          <canvas id="canvas" width="720" height="480"></canvas>
+          <button id="fullscreen-btn"><img src="img/fullscreen-blue.png" alt="Vollbild" /></button>
+        </div>
     </div>
 
 

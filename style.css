@@ -107,8 +107,24 @@ button {
   height: 100vh;
 }
 
+.canvas-container {
+  position: relative; 
+  display: inline-block;
+}
+
 canvas {
   background-color: black;
+}
+
+#fullscreen-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+
+  border: none; 
+  background: none;
+
+  cursor: pointer;
 }
 
 #pauseOverlay {

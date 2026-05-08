@@ -16,20 +16,16 @@ class World {
 
   gameStarted = false;
   throwableItems = []; // geworfene Bottles
-
   canvas;
   ctx;
   keyboard;
   camera_x = 0; // startwert
-
   collectedCoins = 0;
   maxCoins = 5;
   collectedBottles = 0;
   maxBottles = 5;
-
   canThrow = true;
   isKilled = false;
-
   gameOver = false;
   gameWon = false;
 
@@ -211,19 +207,12 @@ class World {
   }
 
   checkBottleCollision() {
-    this.throwableItems.forEach((item, index) => {
-      this.enemies.forEach((enemy, index) => {
+    this.throwableItems.forEach((item) => {
+      this.enemies.forEach((enemy) => {
         if (item.isColliding(enemy) && !item.hasHitGround) {
-          enemy.isKilled = true;
-          enemy.deathTime = Date.now(); // Todeszeitpunkt
-          item.hasHitGround = true;
+          this.killEnemy(enemy);
+          this.handleBottleSplash(item);
           this.sound.play("punch");
-          item.speedX = 0;
-          item.speedY = 0;
-          item.acceleration = 0;
-          item.splashStartTime = Date.now();
-          item.loadImage(item.imagesBottleSplash[0]);
-          item.animateSplash();
         }
       });
     });
@@ -242,15 +231,20 @@ class World {
         } else {
           this.sound.play("punch");
           this.endbossBar.setBar(this.endboss.energy);
-          item.speedX = 0;
-          item.speedY = 0;
-          item.acceleration = 0;
-          item.splashStartTime = Date.now();
-          item.loadImage(item.imagesBottleSplash[0]);
-          item.animateSplash();
+          this.bottleSplash();
         }
       }
     });
+  }
+
+  bottleSplash(item) {
+    item.hasHitGround = true;
+    item.speedX = 0;
+    item.speedY = 0;
+    item.acceleration = 0;
+    item.splashStartTime = Date.now();
+    item.loadImage(item.imagesBottleSplash[0]);
+    item.animateSplash();
   }
   // noch prüfen, ob Pepe von oben kommt
   // this.character.y + this.character.height < enemy.y + enemy.height / 2
@@ -285,27 +279,36 @@ class World {
   }
 
   checkThrowableObject() {
-    let direction;
     if (this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
-      this.sound.play("throw");
-      let bottle = new SalsaBottle();
-      bottle.loadImage(bottle.imagesBottleRotation[0]);
-      this.canThrow = false;
-      this.throwableItems.push(bottle);
-      if (this.character.otherDirection) {
-        direction = -5;
-      } else {
-        direction = 5;
-      }
-      bottle.throw(this.character.x + 100, this.character.y + 60, direction); // der Wurf von Pepe
-      this.collectedBottles--; // eine flasche wird aus dem Inventar abgezogen
-      let percentage = (this.collectedBottles / this.maxBottles) * 100;
-      percentage = Math.min(100, Math.round(percentage / 20) * 20);
-      this.bottleBar.setBar(percentage);
+      this.throwBottle();
     }
+
     if (!this.keyboard.D) {
       this.canThrow = true;
     }
+  }
+
+  throwBottle() {
+    let direction;
+    this.sound.play("throw");
+    let bottle = new SalsaBottle();
+    bottle.loadImage(bottle.imagesBottleRotation[0]);
+    this.canThrow = false;
+    this.throwableItems.push(bottle);
+    if (this.character.otherDirection) {
+      direction = -5;
+    } else {
+      direction = 5;
+    }
+    bottle.throw(this.character.x + 100, this.character.y + 60, direction);
+    this.updateBottleBar();
+  }
+
+  updateBottleBar() {
+    this.collectedBottles--;
+    let percentage = (this.collectedBottles / this.maxBottles) * 100;
+    percentage = Math.min(100, Math.round(percentage / 20) * 20);
+    this.bottleBar.setBar(percentage);
   }
 
   removeDeadEnemies() {
@@ -395,16 +398,3 @@ class World {
     }
   }
 }
-
-
-  
-// Jeder Coin = 20
-// also - maxCoin = 5; 
-// 1 Coin = 20;
-// 2 Coin = 40;
-// 3 Coin = 60;
-// 4 Coin = 80;
-// 5 Coin = 100; 
-
-// Prozentrechnung: 
-// collected / max * 100
