@@ -235,6 +235,7 @@ class World {
         item.hasHitGround = true;
         this.endboss.state = "hurt";
         this.endboss.hit();
+        this.endbossBar.setBar(this.endboss.energy);
         if (this.endboss.isDead()) {
           this.endboss.state = "dead";
           this.sound.play("bossDeath");
