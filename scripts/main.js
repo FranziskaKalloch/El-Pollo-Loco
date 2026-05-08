@@ -161,7 +161,16 @@ function closeDialogOutside() {
   }
 }
 
-function manageFullScreen() {
+function fullScreen() {
+  let fullscreen = document.getElementById("fullscreen");
+  let fullScreenButton = document.getElementById("fullscreen-btn");
+
+  fullScreenButton.addEventListener("click", () => {
+    enterFullscreen(fullscreen);
+  });
+}
+
+function enterFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
   } else if (element.msRequestFullScreen) {
@@ -171,6 +180,13 @@ function manageFullScreen() {
   }
 }
 
+function exitFullScreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullScreen) {
+    document.webkitExitFullScreen();
+  }
+}
 
 startGame();
 manageIntroduction();
