@@ -131,14 +131,6 @@ class Endboss extends MoveableObject {
     if (this.world.character.x > 4100) {
       this.isActivated = true;
     }
-    console.log(
-      "Pepe x:",
-      this.world.character.x,
-      "Boss x:",
-      this.x,
-      "Boss aktiv:",
-      this.isActivated,
-    );
   }
 
   playDeadAnimation() {

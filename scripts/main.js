@@ -12,12 +12,24 @@ let closeSettingsButton = document.getElementById("closeSettingsButton");
 const sound = new Sounds();
 
 let gamePaused = false;
+let intervalIds = [];
 
-sound.playStartScreenMusic();
+function playStartScreenMusic() {
+  startScreen.addEventListener(
+    "click",
+    () => {
+      if (!startScreen.classList.contains("hidden")) {
+        sound.playStartScreenMusic();
+      }
+    },
+    { once: true },
+  );
+}
 
 function startGame() {
   let startGame = document.getElementById("startButton");
   startGame.addEventListener("click", () => {
+    clearAllIntervals();
     sound.play("click");
     startScreen.classList.add("hidden");
     game.classList.remove("hidden");
@@ -28,6 +40,7 @@ function startGame() {
 }
 
 function restartGame() {
+  clearAllIntervals();
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.remove("hidden");
@@ -35,10 +48,16 @@ function restartGame() {
   gamePaused = false;
   sound.stopBackgroundMusic();
   sound.playBackgroundMusic();
-  init(); 
+  init();
+}
+
+function clearAllIntervals() {
+  intervalIds.forEach(clearInterval);
+  intervalIds = [];
 }
 
 function showMainMenu() {
+  settings.close();
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.add("hidden");
@@ -55,9 +74,6 @@ function manageScreenButtons() {
   }
 
   let restartButton = document.querySelectorAll(".restart-button");
-  for (let restart of restartButton) {
-    restart.addEventListener("click", restartGame);
-  }
   for (let restart of restartButton) {
     restart.addEventListener("click", restartGameWithSound);
   }
@@ -144,6 +160,7 @@ function setButtonColor(button, isMuted) {
 
 function openDialog(dialog) {
   dialog.showModal();
+  dialog.scrollTop = 0;
 }
 
 function closeDialog(dialog) {
@@ -188,6 +205,52 @@ function exitFullScreen() {
   }
 }
 
+function bindTouchButtons() {
+  document.getElementById("btnLeft").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    keyboard.LEFT = true;
+  });
+
+  document.getElementById("btnLeft").addEventListener("touchend", (event) => {
+    event.preventDefault();
+    keyboard.LEFT = false;
+  });
+
+  document
+    .getElementById("btnRight")
+    .addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.RIGHT = true;
+    });
+
+  document.getElementById("btnRight").addEventListener("touchend", (event) => {
+    event.preventDefault();
+    keyboard.RIGHT = false;
+  });
+
+  document.getElementById("btnJump").addEventListener("touchstart", (event) => {
+    event.preventDefault();
+    keyboard.SPACE = true;
+  });
+
+  document.getElementById("btnJump").addEventListener("touchend", (event) => {
+    event.preventDefault();
+    keyboard.SPACE = false;
+  });
+
+  document
+    .getElementById("btnThrow")
+    .addEventListener("touchstart", (event) => {
+      event.preventDefault();
+      keyboard.D = true;
+    });
+
+  document.getElementById("btnThrow").addEventListener("touchend", (event) => {
+    event.preventDefault();
+    keyboard.D = false;
+  });
+}
+
 startGame();
 manageIntroduction();
 manageSettings();
@@ -195,3 +258,5 @@ manageMusicVolume();
 muteSoundsAndMusic();
 closeDialogOutside();
 manageScreenButtons(); 
+playStartScreenMusic();
+fullScreen(); 

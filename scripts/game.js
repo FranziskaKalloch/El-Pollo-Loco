@@ -8,6 +8,7 @@ function init() {
   world = new World(canvas, keyboard);
   ctx = canvas.getContext("2d");
   world.updateEnemies();
+  bindTouchButtons();
 }
 
 window.addEventListener('keydown', (event) => {

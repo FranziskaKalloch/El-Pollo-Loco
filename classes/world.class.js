@@ -170,6 +170,8 @@ class World {
     this.checkThrowableObject();
     this.checkBottleCollision();
     this.checkEndbossBottleCollision();
+    this.removeDeadEnemies();
+    this.removeBottles();
     this.checkGameState();
   }
 
@@ -202,36 +204,63 @@ class World {
     this.collectCoins();
     this.collectBottles();
     this.checkEndbossAttack();
-    this.removeDeadEnemies();
-    this.removeBottles();
   }
 
   checkBottleCollision() {
     this.throwableItems.forEach((item) => {
       this.enemies.forEach((enemy) => {
-        if (item.isColliding(enemy) && !item.hasHitGround) {
+        if (item.isColliding(enemy) && !item.hasHitGround && !enemy.isKilled) {
           this.killEnemy(enemy);
-          this.handleBottleSplash(item);
+          this.bottleSplash(item);
           this.sound.play("punch");
         }
       });
     });
   }
 
+  killEnemy(enemy) {
+    enemy.isKilled = true;
+    enemy.speed = 0;
+    enemy.deathTime = Date.now();
+  }
+
+  checkJumpOnEnemy() {
+    this.enemies.forEach((enemy) => {
+      if (
+        this.character.isColliding(enemy) &&
+        !enemy.isKilled &&
+        this.character.speedY > 0 &&
+        this.character.y + this.character.height < enemy.y + enemy.height
+      ) {
+        this.killEnemy(enemy);
+        this.character.speedY = -15;
+        this.sound.play("jumpOnEnemy");
+      }
+    });
+  }
+
+  removeDeadEnemies() {
+    for (let index = this.enemies.length - 1; index >= 0; index--) {
+      let enemy = this.enemies[index];
+      if (enemy.isKilled && Date.now() - enemy.deathTime > 3000) {
+        this.enemies.splice(index, 1);
+      }
+    }
+  }
+
   checkEndbossBottleCollision() {
-    this.throwableItems.forEach((item, index) => {
+    this.throwableItems.forEach((item) => {
       if (item.isColliding(this.endboss) && !item.hasHitGround) {
-        item.hasHitGround = true;
+        this.bottleSplash(item);
         this.endboss.state = "hurt";
         this.endboss.hit();
         this.endbossBar.setBar(this.endboss.energy);
+
         if (this.endboss.isDead()) {
           this.endboss.state = "dead";
           this.sound.play("bossDeath");
         } else {
           this.sound.play("punch");
-          this.endbossBar.setBar(this.endboss.energy);
-          this.bottleSplash();
         }
       }
     });
@@ -248,20 +277,6 @@ class World {
   }
   // noch prüfen, ob Pepe von oben kommt
   // this.character.y + this.character.height < enemy.y + enemy.height / 2
-  checkJumpOnEnemy() {
-    this.enemies.forEach((enemy) => {
-      if (
-        this.character.isColliding(enemy) &&
-        !enemy.isKilled &&
-        this.character.speedY > 0 &&
-        this.character.y + this.character.height < enemy.y + enemy.height
-      ) {
-        enemy.isKilled = true; // Enemy ist Tod
-        this.character.speedY = -15; // Pepe bekommt einen Bounce nach oben
-        this.sound.play("jumpOnEnemy");
-      }
-    });
-  }
 
   checkEndbossAttack() {
     if (this.gameOver || this.gameWon) {
@@ -309,15 +324,6 @@ class World {
     let percentage = (this.collectedBottles / this.maxBottles) * 100;
     percentage = Math.min(100, Math.round(percentage / 20) * 20);
     this.bottleBar.setBar(percentage);
-  }
-
-  removeDeadEnemies() {
-    for (let index = this.enemies.length - 1; index >= 0; index--) {
-      let enemy = this.enemies[index];
-      if (enemy.isKilled && Date.now() - enemy.deathTime > 4000) {
-        this.enemies.splice(index, 1);
-      }
-    }
   }
 
   // Date.now() = akutelle Zeit

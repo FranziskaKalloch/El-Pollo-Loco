@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="responsive.css" />
     <link rel="icon" type="image/png" href="img/cactus-favicon.png" />
     <script src="./classes/keyboard.class.js" defer></script>
     <script src="./classes/drawable-object.class.js" defer></script>
@@ -55,14 +56,41 @@
 
     <!-- 🎮 GAME (anfangs versteckt) -->
     <div id="gameContainer" class="hidden">
+
       <h2 id="pauseOverlay" class="hidden">PAUSE</h2>
+
       <button id="gameSettingsButton" class="menu-button wiggle game-settings-button">
           <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
-        </button>
-        <div class="canvas-container">
+      </button>
+
+      <div class="rotate-phone-info">
+        Bitte drehe dein Handy ins Querformat
+      </div>
+
+      <div class="canvas-container">
+      
           <canvas id="canvas" width="720" height="480"></canvas>
-          <button id="fullscreen-btn"><img src="img/fullscreen-blue.png" alt="Vollbild" /></button>
-        </div>
+
+          <button id="fullscreen-btn">
+            <img src="img/fullscreen-blue.png" alt="Vollbild" />
+          </button>
+         
+          <div class="responsive-buttons">
+
+            <div class="left-buttons">
+              <button id="btnLeft">←</button>
+              <button id="btnRight">→</button>
+            </div>
+
+            <div class="right-buttons">
+              <button id="btnJump">↑</button>
+              <button id="btnThrow">D</button>
+            </div>
+
+          </div>
+
+      </div>
+
     </div>
 
 
@@ -122,6 +150,7 @@
       </label>
 
       <button id="closeSettingsButton" class="btn">Schließen</button>
+      <button class="menu-btn btn">Zum Hauptmenü</button>
     </dialog>
 
   </div>

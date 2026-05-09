@@ -1,23 +1,188 @@
-@media (hove: none) and (orientation: portrait){ /*es handelt sich um ein Hand in Hochformat*/
+@media(max-width: 1444px) {
+  .main-container {
+    padding-inline: 68px; 
+  }
+
+  .start-screen {
+  gap: 140px;
+}
+
+.menu {
+  gap: 80px;
+}
+
+h1 {
+  font-size: 72px;
+}
+
+.start-icon {
+  width: 110px;
+  height: 170px;
+}
+
+.settings-icon {
+  width: 90px;
+  height: 90px;
+}
+
+.introduction-icon {
+  width: 85px;
+  height: 95px;
+}
+
+#introductionDialog,
+#settingsDialog {
+  width: 900px;
+  height: 650px;
+
+  padding-inline: 90px;
+  padding-top: 50px;
+  padding-bottom: 40px;
+
+  overflow-y: auto;
+  font-size: 16px; 
+  gap: 12px; 
+}
+
+#introductionDialog h2,
+#settingsDialog h2 {
+  font-size: 28px;
+  margin-bottom: 6px;
+
+}
+
+.controller {
+  gap: 12px;
+  padding-block: 8px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+.footer {
+  margin-top: 8px;
+}
+
+.button-setting-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px; 
+  gap: 16px; 
+}
+
+.game-settings-button {
+  position: absolute;
+  top: 90px;
+}
+
+.endscreen {
+  position: fixed;
+  inset: 0; 
+}
+
+}
 
 
+/*** MOBILE**/
 
-    /* responsive.buttons: display: block; */
-    /* .desktopbuttons display none*/
+@media (hover: none) and (orientation: portrait) {
+  .canvas-container {
+    display: none;
+  }
+
+  .rotate-phone-info {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 32px;
+    font-size: 28px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 9999;
+  }
+
+  .responsive-buttons {
+    display: none;
+  }
+
+  .desktop-buttons {
+    display: none;
+  }
+
+   body {
+    background-size: cover;
+    background-position: center;
+  }
+
+.main-container {
+  padding-top: 64px;
+}
+
+.start-screen {
+  gap: 200px;
+}
+
+.menu {
+  gap: 100px;
+}
+
+.start-icon {
+  width: 130px;
+  height: 210px;
+}
+
+.introduction-icon {
+  width: 100px;
+  height: 110px;  
+}
+
+.settings-icon {
+  width: 110px;
+  height: 110px;
+}
+
+h1 {
+  font-size: 68px;
+}
 
 
 
 }
 
-@media (hove: none) and (orientation: landscape) {
 
-    /* responsive.buttons: display: block; */
-    /* .desktopbuttons display none*/
+@media (hover: none) and (orientation: landscape) and (min-width: 1000px) {
+
+  h1 {
+    font-size: 72px;
+  }
+
+  .start-icon {
+    width: 110px;
+    height: 170px;
+  }
+
+  .settings-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .introduction-icon {
+    width: 85px;
+    height: 95px;
+  }
+
+  .responsive-buttons button {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+  }
+
+  #fullscreen-btn img {
+    width: 48px;
+    height: 48px;
+  }
 }
-
-/*HOVER: none bedeutet, man steuert ein Gerät mit Touchscreen an 
-orientation: portrait bedeutet, dass das Gerät im Hochformat gehalten wird
-orientation: landscape bedeutet, dass das Gerät im Querformat gehalten wird
-
-
-*/

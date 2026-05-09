@@ -4,6 +4,11 @@
   padding: 0;
 } 
 
+.rotate-phone-info {
+  display: none;
+}
+
+
 @font-face {
   font-family: 'Bangers';
   src: url('./fonts/Bangers-Regular.ttf') format('truetype');
@@ -15,6 +20,8 @@
 body {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   min-height: 100vh;
 
   background-image: url('img/background.image.png');
@@ -45,12 +52,14 @@ body {
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
+  gap: 100px; 
 }
 
 h1 {
   display: flex; 
   justify-content: center;
   align-items: center;
+  letter-spacing: 3px;
 }
 
 button {
@@ -97,6 +106,8 @@ button {
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
 }
 
+/* GAME */ 
+
 #gameContainer {
   position: relative; 
   display: flex;
@@ -138,27 +149,33 @@ canvas {
   z-index: 5; 
 } 
 
+.responsive-buttons {
+  display: none;
+}
+
 .hidden {
   display: none !important; 
 }
 
 .game-settings-button {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 82px;
+  right: 0;
   z-index: 10;
 }
 
 /* ENDSCREENS */
 
 .endscreen {
-  position: relative; 
+  position: fixed;
+  inset: 0;
+
   display: flex;
   justify-content: center;
-  align-items: flex-end; 
-  padding-bottom: 40px; 
+  align-items: flex-end;
+  padding-bottom: 40px;
 
-  width: 100%;
+  width: 100vw;
   height: 100vh;
 }
 
