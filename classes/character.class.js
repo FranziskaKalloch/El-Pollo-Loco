@@ -190,6 +190,10 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Handles jump input and starts a new jump.
+   * Prevents continuous jump resets while the space key is held down.
+   */
   jump() {
     setInterval(() => {
       if (gamePaused) {
@@ -207,12 +211,19 @@ class Character extends MoveableObject {
     }, 1000 / 25);
   }
 
+  /**
+   * Resets the jump animation state for a new jump cycle.
+   */
   startJumpAnimation() {
     this.jumpImageIndex = 0;
     this.jumpFrameCounter = 0;
     this.wasInAir = false;
   }
 
+  /**
+   * Plays the jump animation exactly once per jump.
+   * Stops on the last jump frame until Pepe lands again.
+   */
   playJumpAnimationOnce() {
     if (!this.wasInAir) {
       this.jumpImageIndex = 0;

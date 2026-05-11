@@ -20,7 +20,7 @@
 body {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   min-height: 100vh;
 
@@ -352,6 +352,37 @@ li {
   padding: 16px;
   gap: 16px;
 }
+
+.impressum-container {
+  max-width: 1440px; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font-size: 16px; 
+  padding-top: 64px; 
+  gap: 32px;
+}
+
+.impressum-container h1,h2 {
+  color: rgb(233,156,54);
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.impressum {
+  display: flex;
+  gap: 64px; 
+  font-size: 14px;
+  padding: 16px;
+}
+
+a {
+  text-decoration: none;
+  color: white; 
+}
+
 
 
 
