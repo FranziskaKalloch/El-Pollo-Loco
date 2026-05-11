@@ -12,7 +12,7 @@ class ThrowableObject extends MoveableObject {
 
   /**
    * Throws the object from a given start position into a given direction.
-   * Starts gravity, bottle rotation and forward movement until the object hits the ground.
+   * Starts gravity, bottle rotation and forward movement.
    *
    * @param {number} x - The horizontal start position.
    * @param {number} y - The vertical start position.
@@ -22,23 +22,14 @@ class ThrowableObject extends MoveableObject {
     this.x = x;
     this.y = y;
     this.speedX = direction;
+    this.speedY = -20;
 
-    this.speedY = -20; // -15 flacher wurf // -25 höherer Bogen
-    this.gravity(); //startet die Gravitation aus MoveableObject, Achtung: acceleration kommt von MoveableObject & beeinflusst auch Pepe
+    this.gravity();
     this.rotateBottle();
 
-    let throwInterval = setInterval(() => {
-      this.x += this.speedX;
-      if (this.y >= 350 && !this.hasHitGround) {
-        this.hasHitGround = true;
-        this.animateSplash();
-
-        clearInterval(throwInterval);
-        this.speedX = 0;
-        this.speedY = 0;
-        this.acceleration = 0;
-        this.y = 350;
-        this.loadImage(this.imagesBottleSplash[0]); // das erste Bild wird beim Aufprall angezeigt
+    setInterval(() => {
+      if (!this.hasHitGround) {
+        this.x += this.speedX;
       }
     }, 1000 / 60);
   }

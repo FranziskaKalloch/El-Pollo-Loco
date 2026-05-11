@@ -251,8 +251,15 @@ class World {
    */
   checkBottleCollision() {
     this.throwableItems.forEach((item) => {
+      console.log("Bottle check", item.x, item.y, item.hasHitGround);
+      if (item.hasHitGround) {
+        return;
+      }
       this.enemies.forEach((enemy) => {
-        if (item.isColliding(enemy) && !item.hasHitGround && !enemy.isKilled) {
+        if (enemy.isKilled) {
+          return;
+        }
+        if (item.isColliding(enemy)) {
           this.killEnemy(enemy);
           this.bottleSplash(item);
           this.sound.play("punch");
@@ -425,7 +432,7 @@ class World {
    */
   checkBottleGroundCollision() {
     this.throwableItems.forEach((bottle) => {
-      if (bottle.y > 360 && !bottle.hasHitGround) {
+      if (bottle.y + bottle.height > 450 && !bottle.hasHitGround) {
         this.bottleSplash(bottle);
       }
     });
