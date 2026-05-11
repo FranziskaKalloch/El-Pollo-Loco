@@ -25,8 +25,9 @@ class Sounds {
     this.startScreenSound = new Audio("audio/intro-music.mp3");
 
     this.backgroundMusic.volume = 0.5;
-    this.wonSound = 0.4; 
+    this.wonSound = 0.4;
     this.coinSound.volume = 1.0;
+    this.loadSettings();
   }
 
   musicMuted = false;
@@ -90,6 +91,7 @@ class Sounds {
    */
   setSoundMuted(isMuted) {
     this.soundMuted = isMuted;
+    localStorage.setItem("soundMuted", isMuted);
   }
 
   /**
@@ -99,9 +101,9 @@ class Sounds {
    */
   setMusicMuted(isMuted) {
     this.musicMuted = isMuted;
-
     this.backgroundMusic.muted = isMuted;
     this.startScreenSound.muted = isMuted;
+    localStorage.setItem("musicMuted", isMuted);
   }
 
   /**
@@ -145,5 +147,17 @@ class Sounds {
   stopBackgroundMusic() {
     this.backgroundMusic.pause(); // Musik anhalten // sie stoppt sofort und merkt sich die aktuelle stelle
     this.backgroundMusic.currentTime = 0; // setzt die Musik wieder auf den Anfang
+  }
+
+  loadSettings() {
+    let savedSoundMuted = localStorage.getItem("soundMuted");
+    let saveMusicMuted = localStorage.getItem("musicMuted");
+
+    if (savedSoundMuted !== null) {
+      this.soundMuted = saveSoundMuted === "true";
+    }
+    if (savedMusicMuted !== null) {
+      this.setMusicMuted(savedMusicMuted === "true");
+    }
   }
 }
