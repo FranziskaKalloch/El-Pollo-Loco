@@ -1,4 +1,8 @@
 class Sounds {
+  /**
+   * Creates a new sound manager and initializes
+   * all game sound effects and background music.
+   */
   constructor(type) {
     this.backgroundMusic = new Audio("audio/mexico-music.mp3");
     this.backgroundMusic.loop = true;
@@ -28,6 +32,11 @@ class Sounds {
   soundMuted = false;
   musicVolume = 0.5;
 
+  /**
+   * Plays a specific sound effect depending on the provided sound type.
+   *
+   * @param {string} type - The sound type that should be played.
+   */
   play(type) {
     if (this.soundMuted) {
       return;
@@ -73,10 +82,20 @@ class Sounds {
     }
   }
 
+  /**
+   * Enables or disables all sound effects.
+   *
+   * @param {boolean} isMuted - Whether sound effects should be muted.
+   */
   setSoundMuted(isMuted) {
     this.soundMuted = isMuted;
   }
 
+  /**
+   * Enables or disables all music tracks.
+   *
+   * @param {boolean} isMuted - Whether music should be muted.
+   */
   setMusicMuted(isMuted) {
     this.musicMuted = isMuted;
 
@@ -84,27 +103,44 @@ class Sounds {
     this.startScreenSound.muted = isMuted;
   }
 
+  /**
+   * Updates the volume of all music tracks.
+   *
+   * @param {number} volume - The new music volume value.
+   */
   setMusicVolume(volume) {
     this.musicVolume = volume;
     this.backgroundMusic.volume = volume;
     this.startScreenSound.volume = volume;
   }
 
+  /**
+   * Starts the looping start screen music.
+   */
   playStartScreenMusic() {
     this.startScreenSound.loop = true;
     this.startScreenSound.volume = 0.5;
     this.startScreenSound.play();
   }
 
+  /**
+   * Stops the start screen music and resets it to the beginning.
+   */
   stopStartScreenMusic() {
     this.startScreenSound.pause();
     this.startScreenSound.currentTime = 0;
   }
 
+  /**
+   * Starts the looping background music during gameplay.
+   */
   playBackgroundMusic() {
     this.backgroundMusic.play();
   }
 
+  /**
+   * Stops the background music and resets it to the beginning.
+   */
   stopBackgroundMusic() {
     this.backgroundMusic.pause(); // Musik anhalten // sie stoppt sofort und merkt sich die aktuelle stelle
     this.backgroundMusic.currentTime = 0; // setzt die Musik wieder auf den Anfang

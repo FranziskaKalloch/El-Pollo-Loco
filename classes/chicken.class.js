@@ -22,6 +22,13 @@ class Chicken extends MoveableObject {
     right: 30,
   };
 
+  /**
+   * Creates a new chicken enemy with randomized movement speed
+   * and initializes its images and animation cache.
+   *
+   * @param {number} x - The horizontal start position of the chicken.
+   * @param {number} y - The vertical start position of the chicken.
+   */
   constructor(x, y) {
     super();
     this.x = x;
@@ -33,6 +40,9 @@ class Chicken extends MoveableObject {
     this.loadToCache();
   }
 
+  /**
+   * Loads all walking animation images into the image cache.
+   */
   loadToCache() {
     for (let i = 0; i < this.imagesWalking.length; i++) {
       let image = new Image();
@@ -41,6 +51,10 @@ class Chicken extends MoveableObject {
     }
   }
 
+  /**
+   * Updates the chicken state.
+   * Handles movement, walking animation and death image.
+   */
   update() {
     if (this.isKilled) {
       this.loadImage(this.imagesDead[0]);
@@ -50,10 +64,17 @@ class Chicken extends MoveableObject {
     this.playWalkingAnimation();
   }
 
+  /**
+   * Moves the chicken continuously to the left side of the level.
+   */
   moveLeft() {
     this.x -= this.speed;
   }
 
+  /**
+   * Plays the walking animation by switching between cached images.
+   * Controls animation timing using an interval check.
+   */
   playWalkingAnimation() {
     let now = Date.now();
     if (now - this.lastAnimationTime < this.animationInterval) {

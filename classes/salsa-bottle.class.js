@@ -20,6 +20,12 @@ class SalsaBottle extends ThrowableObject {
     "img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
   ];
 
+  /**
+   * Creates a new salsa bottle object.
+   * Initializes its image, position, size and ground bottle images.
+   *
+   * @param {number} x - The horizontal start position of the bottle.
+   */
   constructor(x) {
     super();
     this.loadImage("img/6_salsa_bottle/1_salsa_bottle_on_ground.png");
@@ -41,6 +47,10 @@ class SalsaBottle extends ThrowableObject {
 
   splashStartTime;
 
+  /**
+   * Rotates the bottle continuously while it is flying through the air.
+   * Stops rotating after the bottle hits the ground.
+   */
   rotateBottle() {
     let currentImage = 0;
     setInterval(() => {
@@ -53,6 +63,10 @@ class SalsaBottle extends ThrowableObject {
     }, 1000 / 10);
   }
 
+  /**
+   * Plays the bottle splash animation after impact.
+   * Stops automatically after the last splash image.
+   */
   animateSplash() {
     let currentImage = 0;
     let interval = setInterval(() => {

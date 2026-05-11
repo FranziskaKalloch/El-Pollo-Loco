@@ -1,92 +1,106 @@
 class Statusbar extends DrawableObject {
-
-imagesHealth = [
+  imagesHealth = [
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/40.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/60.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/80.png",
     "img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png",
-]; 
-    
-imagesCoins = [
-     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png",
+  ];
+
+  imagesCoins = [
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/40.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/60.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/80.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png",
-];
+  ];
 
-imagesSalsaBottle = [
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
-     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
-];
+  imagesSalsaBottle = [
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
+  ];
 
-imagesEndboss = [
-  'img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
-  'img/7_statusbars/2_statusbar_endboss/blue/blue20.png',
-  'img/7_statusbars/2_statusbar_endboss/blue/blue40.png',
-  'img/7_statusbars/2_statusbar_endboss/blue/blue60.png',
-  'img/7_statusbars/2_statusbar_endboss/blue/blue80.png',
-  'img/7_statusbars/2_statusbar_endboss/blue/blue100.png',
-];
+  imagesEndboss = [
+    "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue40.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue60.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue80.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
+  ];
 
+  x = 10;
+  y = 0;
+  width = 230;
+  height = 60;
 
-x = 10;
-y = 0; 
-width = 230;
-height = 60; 
-    
-
-constructor(type) {
-    super(); 
-    this.type = type; 
-    this.loadImage('img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png')
-    this.loadImages(this.imagesHealth); 
-    this.loadImages(this.imagesCoins); 
+  /**
+   * Creates a new status bar for health, coins, bottles or the endboss.
+   * Loads all status bar images and sets the initial bar value.
+   *
+   * @param {string} type - The type of status bar.
+   */
+  constructor(type) {
+    super();
+    this.type = type;
+    this.loadImage(
+      "img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
+    );
+    this.loadImages(this.imagesHealth);
+    this.loadImages(this.imagesCoins);
     this.loadImages(this.imagesSalsaBottle);
-    this.loadImages(this.imagesEndboss); 
-  
-    
-  if (this.type === "health") {
-    this.setBar(100);
-  }
-  if (this.type === "coins") {
-   this.setBar(0); 
-  }
-  if(this.type === 'bottles') {
-    this.setBar(0); 
-  }
-  if(this.type === 'boss') {
-    this.setBar(100); 
-   }
-  
-}
+    this.loadImages(this.imagesEndboss);
 
-setBar(percentage) { // diese Funktion bekommt von Außen einen Wert (100,80,60..)
-    this.percentage = percentage; 
+    if (this.type === "health") {
+      this.setBar(100);
+    }
+    if (this.type === "coins") {
+      this.setBar(0);
+    }
+    if (this.type === "bottles") {
+      this.setBar(0);
+    }
+    if (this.type === "boss") {
+      this.setBar(100);
+    }
+  }
+
+  /**
+   * Updates the status bar image based on the given percentage value.
+   *
+   * @param {number} percentage - The current status value in percent.
+   */
+  setBar(percentage) {
+    // diese Funktion bekommt von Außen einen Wert (100,80,60..)
+    this.percentage = percentage;
     let path = this.rightImage();
     this.img = this.imageCache[path];
-    }
+  }
 
-rightImage() {
-let index;
-    if (this.percentage === 100) {
+  /**
+   * Returns the correct status bar image path for the current type and percentage.
+   *
+   * @returns {string} The image path for the current status bar value.
+   */
+  rightImage() {
+  let index;
+  if (this.percentage === 100) {
     index = 5;
-     } else if (this.percentage === 80) {
+  } else if (this.percentage === 80) {
     index = 4;
-    } else if (this.percentage === 60) {
+  } else if (this.percentage === 60) {
     index = 3;
-    } else if (this.percentage === 40) {
+  } else if (this.percentage === 40) {
     index = 2;
-    } else if (this.percentage === 20) {
+  } else if (this.percentage === 20) {
     index = 1;
-    } else if (this.percentage === 0) {
+  } else if (this.percentage === 0) {
     index = 0;
   }
 
@@ -100,7 +114,7 @@ let index;
     return this.imagesSalsaBottle[index];
   }
   if (this.type === "boss") {
-    return this.imagesEndboss[index]; 
+    return this.imagesEndboss[index];
   }
 }
 }
