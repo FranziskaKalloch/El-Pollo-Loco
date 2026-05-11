@@ -134,7 +134,7 @@ class Character extends MoveableObject {
       if (this.isAboveGround()) {
         this.x += 15;
       } else {
-        this.x += 11;
+        this.x += 15;
       }
       this.otherDirection = false;
     }
