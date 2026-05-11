@@ -164,6 +164,7 @@ canvas {
   z-index: 10;
 }
 
+
 /* ENDSCREENS */
 
 .endscreen {
@@ -236,7 +237,14 @@ dialog {
 
   text-align: left; 
   font-size: 16px; 
-  gap: 32px; 
+}
+
+#introductionDialog {
+  gap: 24px; 
+}
+
+#settingsDialog {
+  gap: 62px;
 }
 
 #introductionDialog::backdrop,
@@ -337,6 +345,14 @@ li {
 
   transform: translateY(-2px);
 }
+
+.close-setting-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+}
+
 
 
 

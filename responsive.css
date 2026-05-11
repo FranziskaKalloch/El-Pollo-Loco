@@ -40,8 +40,7 @@ h1 {
   padding-bottom: 40px;
 
   overflow-y: auto;
-  font-size: 16px; 
-  gap: 12px; 
+  font-size: 16px;
 }
 
 #introductionDialog h2,
@@ -62,13 +61,6 @@ li {
 
 .footer {
   margin-top: 8px;
-}
-
-.button-setting-container {
-  display: flex;
-  flex-direction: column;
-  padding: 16px; 
-  gap: 16px; 
 }
 
 .game-settings-button {

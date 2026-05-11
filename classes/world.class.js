@@ -98,6 +98,20 @@ class World {
     for (const item of this.throwableItems) {
       this.addToMap(item);
     }
+
+    // Hier wird alles wieder rückgängig gemacht -> Zuerst
+    this.ctx.translate(-this.camera_x, 0);
+
+    this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
+    this.addToMap(this.coinBar);
+    this.addToMap(this.bottleBar);
+
+    if (this.character.x > 3300) {
+      this.addToMap(this.endbossBar);
+    }
+
+    this.ctx.translate(this.camera_x, 0);
+
     if (this.character.otherDirection == false) {
       this.addToMap(this.character);
     } else {
@@ -113,21 +127,13 @@ class World {
       this.ctx.restore();
     }
 
+      this.addToMap(this.endboss);
+
     for (const enemy of this.enemies) {
       this.addToMap(enemy);
     }
 
-    this.addToMap(this.endboss);
-    // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);
-
-    this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
-    this.addToMap(this.coinBar);
-    this.addToMap(this.bottleBar);
-
-    if (this.character.x > 3300) {
-      this.addToMap(this.endbossBar);
-    }
   }
 
   drawRotatingCoin(coin) {

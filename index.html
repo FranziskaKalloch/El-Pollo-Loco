@@ -21,7 +21,7 @@
      <script src="./classes/sound.class.js" defer></script>
     <script src="./classes/coins.class.js" defer></script>
      <script src="./classes/salsa-bottle.class.js" defer></script>
-    <script src="./classes/Level.class.js" defer></script>
+    <script src="./classes/level.class.js" defer></script>
     <script src="./scripts/levels/level1.js" defer></script>
     <script src="./classes/world.class.js" defer></script>
     <script src="./scripts/game.js" defer></script>
@@ -30,7 +30,7 @@
   <body>
 
   <body>
-    <div class="main-container" id="fullscreen">
+    <div class="main-container">
 
     <!-- 🔥 STARTSCREEN -->
     <div id="startScreen" class="start-screen">
@@ -67,7 +67,7 @@
         Bitte drehe dein Handy ins Querformat
       </div>
 
-      <div class="canvas-container">
+      <div class="canvas-container" id="fullscreen">
       
           <canvas id="canvas" width="720" height="480"></canvas>
 
@@ -141,16 +141,16 @@
       <div class="button-setting-container">
         <button id="toggleSoundButton" class="btn">Ton an/aus</button>
         <button id="toggleMusicButton" class="btn">Musik an/aus</button>
-        <button id="toggleFullscreenButton" class="btn">Vollbild an/aus</button>
       </div>
 
       <label>
         Musiklautstärke
         <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.5" />
       </label>
-
-      <button id="closeSettingsButton" class="btn">Schließen</button>
-      <button class="menu-btn btn">Zum Hauptmenü</button>
+      <div class="close-setting-container">
+       <button id="closeSettingsButton" class="btn">Schließen</button>
+        <button id="settingsMenuButton" class="menu-btn btn hidden">Spiel Beenden</button>
+      </div>
     </dialog>
 
   </div>

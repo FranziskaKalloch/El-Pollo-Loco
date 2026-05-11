@@ -6,7 +6,7 @@ class Chicken extends MoveableObject {
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
 
-  imagesDead = ["img/3_enemies_chicken/chicken_small/2_dead/dead.png"];
+  imagesDead = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
   imageCache = [];
 
   currentImage = 0;

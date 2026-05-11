@@ -14,6 +14,10 @@ const sound = new Sounds();
 let gamePaused = false;
 let intervalIds = [];
 
+/**
+ * Starts the start screen music after the first user interaction.
+ * Music is only played if the start screen is currently visible.
+ */
 function playStartScreenMusic() {
   startScreen.addEventListener(
     "click",
@@ -93,14 +97,17 @@ function manageIntroduction() {
 }
 
 function manageSettings() {
+  let settingsMenubutton = document.getElementById("settingsMenuButton"); 
   settingsButton.addEventListener("click", () => {
     sound.play("click");
+    settingsMenubutton.classList.add("hidden"); 
     openDialog(settings);
   });
 
   gameSettingsButton.addEventListener("click", () => {
     sound.play("click");
     gamePaused = true;
+    settingsMenubutton.classList.remove("hidden"); 
     openDialog(settings);
   });
 
@@ -178,15 +185,25 @@ function closeDialogOutside() {
   }
 }
 
+/**
+* Initializes the fullscreen button for the canvas element.
+*/
 function fullScreen() {
-  let fullscreen = document.getElementById("fullscreen");
+  let canvas = document.getElementById("canvas");
   let fullScreenButton = document.getElementById("fullscreen-btn");
 
   fullScreenButton.addEventListener("click", () => {
-    enterFullscreen(fullscreen);
+    enterFullscreen(canvas);
   });
 }
 
+
+/**
+* Requests fullscreen mode for the given element.
+* Includes browser-specific fallbacks.
+*
+* @param {HTMLElement} element - The element that should enter fullscreen mode.
+*/
 function enterFullscreen(element) {
   if (element.requestFullscreen) {
     element.requestFullscreen();
