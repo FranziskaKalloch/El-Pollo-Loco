@@ -25,6 +25,7 @@ class Sounds {
     this.startScreenSound = new Audio("audio/intro-music.mp3");
 
     this.backgroundMusic.volume = 0.5;
+    this.wonSound = 0.4; 
     this.coinSound.volume = 1.0;
   }
 
