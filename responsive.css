@@ -1,14 +1,7 @@
 @media(max-width: 1444px) {
-  .main-container {
-    padding-inline: 68px; 
-  }
 
   .start-screen {
   gap: 140px;
-}
-
-.menu {
-  gap: 80px;
 }
 
 h1 {
@@ -32,8 +25,8 @@ h1 {
 
 #introductionDialog,
 #settingsDialog {
-  width: 900px;
-  height: 650px;
+  width: 70vw; 
+  height: 80vh; 
 
   padding-inline: 90px;
   padding-top: 50px;
@@ -47,8 +40,8 @@ h1 {
 #settingsDialog h2 {
   font-size: 28px;
   margin-bottom: 6px;
-
 }
+
 
 .controller {
   gap: 12px;
@@ -75,7 +68,6 @@ li {
 
 }
 
-
 /*** MOBILE**/
 
 @media (hover: none) and (orientation: portrait) {
@@ -91,8 +83,8 @@ li {
     align-items: center;
     text-align: center;
     padding: 32px;
-    font-size: 28px;
-    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 32px;
+    background-color: rgb(0, 0, 0);
     color: white;
     z-index: 9999;
   }
@@ -104,67 +96,29 @@ li {
   .desktop-buttons {
     display: none;
   }
+}
 
-   body {
-    background-size: cover;
-    background-position: center;
+
+
+
+@media (hover: none) and (orientation: landscape) and (max-width: 1400px) {
+  #introductionDialog, #settingsDialog {
+    height: 90vh; 
   }
 
-.main-container {
-  padding-top: 64px;
-}
-
-.start-screen {
-  gap: 200px;
-}
-
-.menu {
-  gap: 100px;
-}
-
-.start-icon {
-  width: 130px;
-  height: 210px;
-}
-
-.introduction-icon {
-  width: 100px;
-  height: 110px;  
-}
-
-.settings-icon {
-  width: 110px;
-  height: 110px;
-}
-
-h1 {
-  font-size: 68px;
-}
-
-
-
-}
-
-
-@media (hover: none) and (orientation: landscape) and (min-width: 1000px) {
-
-  h1 {
-    font-size: 72px;
+ .canvas-container {
+    position: relative; 
   }
 
-  .start-icon {
-    width: 110px;
-    height: 170px;
-  }
-
-  .settings-icon {
-    width: 90px;
-    height: 90px;
-  }
-
-  .introduction-icon {
-    width: 85px;
-    height: 95px;
+   .responsive-buttons {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    justify-content: center;
+    padding: 0 24px;
+    z-index: 20;
   }
 
   .responsive-buttons button {
@@ -173,8 +127,111 @@ h1 {
     font-size: 28px;
   }
 
-  #fullscreen-btn img {
-    width: 48px;
-    height: 48px;
+ #gameSettingsButton {
+  position: absolute;
+  top: 0px; 
+  right: -100px;
+  z-index: 10;  
+  cursor: pointer;
+ }
+
+ #fullscreen-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 10px;
+
+  cursor: pointer; 
+}
+
+ 
+}
+
+
+@media (hover: none) and (orientation: landscape) and (max-width: 1000px) {
+  #introductionDialog, #settingsDialog {
+    height: 100dvh; 
+    width: 100vw; 
+    overflow-y: auto;
+    font-size: 14px; 
+    gap: 8px; 
   }
+
+  #settingsDialog {
+    gap: 42px; 
+  }
+
+  .impressum {
+    font-size: 12px; 
+  }
+
+  .start-screen {
+    gap: 24px;
+  }
+
+  h1 {
+    font-size: 72px;
+  }
+
+  .start-icon {
+    width: 90px;
+    height: 150px;
+  }
+
+  .settings-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .introduction-icon {
+    width: 65px;
+    height: 65px;
+  }
+
+  .responsive-buttons {
+    display: flex;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    justify-content: center;
+    padding: 0 24px;
+    z-index: 20;
+  }
+
+  .responsive-buttons button {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
+  }
+
+  .canvas-container {
+    position: relative; 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #canvas {
+    height: 90dvh; 
+  }
+
+  #fullscreen-btn img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+}
+
+@media (hover: none) and (orientation: landscape) and (max-width: 500px) {
+   #introductionDialog, #settingsDialog {
+    height: 100dvh; 
+    width: 100vw; 
+    overflow-y: auto;
+  }
+
 }

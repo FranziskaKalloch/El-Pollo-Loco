@@ -39,6 +39,12 @@ class Endboss extends MoveableObject {
     "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
 
+  /**
+   * Creates a new endboss and initializes its position, size, images,
+   * animation loop and gravity.
+   *
+   * @param {World} world - The game world that contains the character and game state.
+   */
   constructor(world) {
     super();
     this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
@@ -47,7 +53,7 @@ class Endboss extends MoveableObject {
     this.y = this.groundY;
     this.width = 350;
     this.height = 500;
-    this.speed = 2;
+    this.speed = 3;
     this.loadImage("img/4_enemie_boss_chicken/1_walk/G1.png");
     this.loadImages(this.imagesWalking);
     this.loadImages(this.imagesAlert);
@@ -59,12 +65,14 @@ class Endboss extends MoveableObject {
   }
 
   state = "walking";
-  leftLimit = 4200;
+  leftLimit = 3600;
   rightLimit = 4800;
   movingRight = false;
 
   lastAttack = 0;
-  attackCooldown = 3000;
+  attackCooldown = 1800;
+  attackRange = 650;
+  attackSpeed = 22;
 
   deadAnimationStarted = false;
   deadAnimationFinished = false;
@@ -72,6 +80,10 @@ class Endboss extends MoveableObject {
 
   isActivated = false;
 
+  /**
+   * Starts the endboss animation and behavior loop.
+   * Checks activation, attack range, movement and image updates.
+   */
   animate() {
     setInterval(() => {
       this.checkActivation();
@@ -87,6 +99,10 @@ class Endboss extends MoveableObject {
     }, 100);
   }
 
+  /**
+   * Updates the current endboss image depending on its state.
+   * Plays the death animation if the endboss has no energy left.
+   */
   updateImages() {
     if (this.isDead()) {
       this.playDeadAnimation();
@@ -99,6 +115,10 @@ class Endboss extends MoveableObject {
     this.playLoopAnimation();
   }
 
+  /**
+   * Plays the correct loop animation depending on the current endboss state.
+   * Handles walking, alert, attack, hurt and dead animation frames.
+   */
   playLoopAnimation() {
     let currentImages;
     if (this.state === "dead") {
@@ -127,12 +147,19 @@ class Endboss extends MoveableObject {
     }
   }
 
+  /**
+   * Activates the endboss when the character reaches the boss area.
+   */
   checkActivation() {
     if (this.world.character.x > 4100) {
       this.isActivated = true;
     }
   }
 
+  /**
+   * Plays the endboss death animation once and marks it as finished
+   * when the last animation frame is reached.
+   */
   playDeadAnimation() {
     let currentImages = this.imagesDead;
     if (!this.deadAnimationStarted) {
@@ -157,6 +184,10 @@ class Endboss extends MoveableObject {
     }
   }
 
+  /**
+   * Moves the endboss left and right between its movement limits.
+   * Stops regular movement while the endboss is attacking.
+   */
   moveBox() {
     if (this.state === "attack") {
       // Dann bleibt der boss während der Attacke stehen
@@ -175,42 +206,41 @@ class Endboss extends MoveableObject {
     }
   }
 
+  /**
+   * Checks whether the character is close enough for an attack.
+   * Starts an attack if the cooldown is over and the endboss is on the ground.
+   */
   checkAttackRange() {
-    let distance = this.x - this.world.character.x; // Unterschied zwischen Boss und Character (500 - 300 = Abstand 200)
+    let distance = this.x - this.world.character.x;
     if (
-      distance < 400 && // Pepe ist nah genug
-      this.state === "walking" && // Boss ist bereit
+      distance < this.attackRange &&
+      distance > 0 &&
+      this.state === "walking" &&
       Date.now() - this.lastAttack > this.attackCooldown &&
-      !this.isAboveGround() && // Boss steht am Boden
-      Math.random() < 0.9
+      !this.isAboveGround()
     ) {
       this.attack();
     }
-    // 1. Character holen -> hier die world verlinken und in world einen Endboss erstellen und die world mitgeben
-    // 2. Distanz berechnen ---> endboss.x - character.x
-    // 3. prüfen: nah genug? distance < Schwellenwert
-    // 4. prüfen: greift er gerade schon an?
-    // 5. wenn nicht → attack()
   }
 
+  /**
+   * Starts an attack by setting the attack state, resetting the animation
+   * and giving the endboss upward movement.
+   */
   attack() {
     this.state = "attack";
     this.lastAttack = Date.now();
     this.currentImage = 0;
     this.speedY = -30; // nach oben
-    // 1. Attack-Sprung bauen
-    //  * nur wenn state === "attack"
-    //  * Boss springt nach links
-    //  * währenddessen keine Box-Bewegung
-    //2. Danach Alert-Zone
-    //  * wenn Pepe im letzten Levelabschnitt ist
-    //  * Boss spielt kurz Alert
-    //  * danach wieder Walking oder Attack
   }
 
+  /**
+   * Moves the endboss forward during an attack.
+   * Stops the attack when the left movement limit is reached.
+   */
   moveDuringAttack() {
     if (this.state === "attack") {
-      this.x -= 30; // nach vorne zu Pepe
+      this.x -= this.attackSpeed;
     }
     if (this.x < this.leftLimit) {
       this.x = this.leftLimit;

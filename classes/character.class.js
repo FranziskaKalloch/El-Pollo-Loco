@@ -69,6 +69,12 @@ class Character extends MoveableObject {
   coins = 0;
   lastActionTime = Date.now();
 
+  /**
+   * Creates a new character and initializes animations,
+   * sounds, gravity and movement behavior.
+   *
+   * @param {World} world - The game world that contains the character state and controls.
+   */
   constructor(world) {
     super();
     this.world = world;
@@ -85,7 +91,11 @@ class Character extends MoveableObject {
     this.jump();
   }
 
-  // entscheidet + setzt das richtige Bild
+  /**
+   * Updates the current character image.
+   * Plays the death animation if the character is dead,
+   * otherwise plays the regular movement animations.
+   */
   updateImages() {
     // DEAD zuerst behandeln
     if (this.isDead()) {
@@ -97,7 +107,10 @@ class Character extends MoveableObject {
     }
   }
 
-  // steuert den Ablauf
+  /**
+   * Starts the main character animation loop.
+   * Handles movement and image updates continuously.
+   */
   animate() {
     setInterval(() => {
       if (gamePaused) {
@@ -108,6 +121,10 @@ class Character extends MoveableObject {
     }, 100);
   }
 
+  /**
+   * Plays the correct animation depending on the current character state.
+   * Handles hurt, jump, idle and walking animations.
+   */
   playLoopAnimation() {
     let currentImages;
     let idleImages = this.idle();
@@ -134,6 +151,10 @@ class Character extends MoveableObject {
     this.currentImage++;
   }
 
+  /**
+   * Handles character movement and camera positioning.
+   * Controls left and right movement and limits camera boundaries.
+   */
   move() {
     // 👉 Nach rechts laufen
     if (
@@ -168,6 +189,10 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Plays the character death animation once.
+   * Slows down the animation and stops on the final frame.
+   */
   playDeadAnimation() {
     let currentImages = this.imagesDead;
     // Start der Dead Animation
@@ -239,10 +264,19 @@ class Character extends MoveableObject {
     }
   }
 
+  /**
+   * Increases the collected coin amount of the character.
+   */
   collectCoins() {
     this.Character.coins += 20;
   }
 
+  /**
+   * Determines whether the character should play an idle animation.
+   * Returns normal idle or long idle images depending on inactivity time.
+   *
+   * @returns {Array<string>|undefined} The current idle animation images.
+   */
   idle() {
     let currentImages;
 

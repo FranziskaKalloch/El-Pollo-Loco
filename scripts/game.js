@@ -3,6 +3,10 @@ let ctx;
 let world;
 let keyboard = new Keyboard();
 
+/**
+ * Initializes the game canvas, world and rendering context.
+ * Also activates enemy updates and mobile touch controls.
+ */
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
@@ -11,7 +15,11 @@ function init() {
   bindTouchButtons();
 }
 
-window.addEventListener('keydown', (event) => {
+/**
+ * Handles keyboard keydown events.
+ * Activates movement, jump, throw and pause controls.
+ */
+window.addEventListener("keydown", (event) => {
   if (event.key == 'ArrowUp') {
     keyboard.UP = true;
   }
@@ -39,7 +47,11 @@ window.addEventListener('keydown', (event) => {
   //console.log(event); 
 });
 
-window.addEventListener('keyup', (event) => {
+/**
+ * Handles keyboard keyup events.
+ * Stops movement, jump and throw actions when keys are released.
+ */
+window.addEventListener("keyup", (event) => {
   if (event.key == 'ArrowUp') {
     keyboard.UP = false;
   }

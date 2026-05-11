@@ -52,7 +52,7 @@ body {
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
-  gap: 100px; 
+  gap: 140px; 
 }
 
 h1 {
@@ -223,7 +223,7 @@ dialog {
   background-color: transparent;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 
-  width: 1000px;
+  width: 1100px;
   height: 900px;
   max-width: unset;
   max-height: unset;
@@ -239,10 +239,6 @@ dialog {
   font-size: 16px; 
 }
 
-#introductionDialog {
-  gap: 24px; 
-}
-
 #settingsDialog {
   gap: 62px;
 }
@@ -252,10 +248,17 @@ dialog {
   background: rgba(162,58,19, 0.5);
 }
 
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; 
+  gap: 42px; 
+}
+
 .header {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 }
 
 .controller {
@@ -361,10 +364,11 @@ li {
   text-align: left;
   font-size: 16px; 
   padding-top: 64px; 
-  gap: 32px;
+  gap: 40px;
 }
 
-.impressum-container h1,h2 {
+.impressum-container h1,
+.impressum-container h2 {
   color: rgb(233,156,54);
   background-color: rgba(0, 0, 0, 0.6);
   padding: 8px 16px;
@@ -373,6 +377,7 @@ li {
 
 .impressum {
   display: flex;
+  align-items: center;
   gap: 64px; 
   font-size: 14px;
   padding: 16px;

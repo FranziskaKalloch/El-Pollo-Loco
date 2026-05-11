@@ -53,23 +53,21 @@
 
     </div>
 
-
+      <div class="rotate-phone-info">
+        Bitte drehe dein Handy ins Querformat
+      </div>
     <!-- 🎮 GAME (anfangs versteckt) -->
     <div id="gameContainer" class="hidden">
 
       <h2 id="pauseOverlay" class="hidden">PAUSE</h2>
-
-      <button id="gameSettingsButton" class="menu-button wiggle game-settings-button">
-          <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
-      </button>
-
-      <div class="rotate-phone-info">
-        Bitte drehe dein Handy ins Querformat
-      </div>
-
+      
       <div class="canvas-container" id="fullscreen">
       
           <canvas id="canvas" width="720" height="480"></canvas>
+
+           <button id="gameSettingsButton" class="menu-button wiggle game-settings-icon">
+            <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
+          </button>
 
           <button id="fullscreen-btn">
             <img src="img/fullscreen-blue.png" alt="Vollbild" />
@@ -113,6 +111,7 @@
 
     <!-- Introduction DIALOG -->
     <dialog id="introductionDialog" class="dialog-close-outside">
+      <div class="dialog-content">
       <div class="header">
         <h2>Anleitung</h2>
         <p>Willkommen bei El Pollo Loco!</p>
@@ -128,10 +127,11 @@
         </ul>
       </div>
       <div class="content">
-        <p>Sammle Münzen und Salsa-Flaschen, um deine Punktzahl zu erhöhen und Gegner zu besiegen. Pass auf die Feinde auf und nutze deine Fähigkeiten, um sie zu besiegen!</p>
+        <p>Sammle Münzen und Salsa-Flaschen, um deine Punktzahl zu erhöhen und Gegner zu besiegen.</p>
       </div>
       <div class="footer">
         <button id="closeIntroductionButton" class="btn">Schließen</button> 
+      </div>
       </div>
     </dialog>
 
@@ -155,9 +155,7 @@
 
   </div>
   <div class="impressum">
-    <a href="impressum.html" target="_blank"><p>Impressum</p></a>
-    <p>Franziska Kalloch</p>
-    <p>Entwickelt im Rahmen der Dev Akademie</p>
+    <a href="impressum.html" target="_blank">Impressum</a>
   </div>
   </body>
 </html>

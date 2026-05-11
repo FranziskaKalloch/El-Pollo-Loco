@@ -29,6 +29,13 @@ class World {
   gameOver = false;
   gameWon = false;
 
+  /**
+   * Creates a new game world and initializes all level objects,
+   * status bars, enemies, sounds and the main game loop.
+   *
+   * @param {HTMLCanvasElement} canvas - The canvas element used for rendering.
+   * @param {Keyboard} keyboard - The keyboard input controller.
+   */
   constructor(canvas, keyboard) {
     this.level = level1;
     this.enemies = this.level.enemies;
@@ -55,8 +62,12 @@ class World {
     this.gameLoop();
   }
 
-  // Hilfsfunktion...
-  // Das ist die Funktion mit der alle Objekte gezeichnet werden
+  /**
+   * Draws a game object onto the canvas.
+   * Skips rendering if the object has no image assigned.
+   *
+   * @param {DrawableObject} object - The object to draw.
+   */
   addToMap(object) {
     if (!object.img) {
       return;
@@ -70,6 +81,10 @@ class World {
     );
   }
 
+  /**
+   * Draws all game objects and user interface elements onto the canvas.
+   * Handles camera movement, status bars, character rendering and enemies.
+   */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     // hier wollen wir den komplette Auschnitt des Canvas verschieben
@@ -136,6 +151,11 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
   }
 
+  /**
+   * Draws a rotating coin animation after a coin has been collected.
+   *
+   * @param {Coins} coin - The collected coin object.
+   */
   drawRotatingCoin(coin) {
     let ctx = this.ctx;
     let animationTime = Date.now() - coin.startTime;
@@ -159,6 +179,10 @@ class World {
     ctx.restore();
   }
 
+  /**
+   * Starts the main game loop.
+   * Continuously updates and redraws the game using requestAnimationFrame.
+   */
   gameLoop() {
     if (this.gameOver && this.gameWon) {
       return;
@@ -170,6 +194,10 @@ class World {
     requestAnimationFrame(() => this.gameLoop());
   }
 
+  /**
+   * Updates all game mechanics and collision checks.
+   * Handles enemies, throwable objects, bottle collisions and game state updates.
+   */
   update() {
     this.updateEnemies();
     this.checkCollisions();
@@ -182,12 +210,20 @@ class World {
     this.checkGameState();
   }
 
+  /**
+   * Updates all enemies in the current level.
+   * Calls the update method of each enemy object.
+   */
   updateEnemies() {
     this.enemies.forEach((enemy) => {
       enemy.update();
     });
   }
 
+  /**
+   * Checks all character collisions in the game.
+   * Handles enemy hits, coin collection, bottle collection and endboss attacks.
+   */
   checkCollisions() {
     if (this.gameOver || this.gameWon) {
       return;
@@ -209,6 +245,10 @@ class World {
     this.checkEndbossAttack();
   }
 
+  /**
+   * Checks whether thrown bottles collide with enemies.
+   * Kills enemies and triggers the bottle splash animation on impact.
+   */
   checkBottleCollision() {
     this.throwableItems.forEach((item) => {
       this.enemies.forEach((enemy) => {
@@ -221,12 +261,21 @@ class World {
     });
   }
 
+  /**
+   * Marks an enemy as killed and stores the death timestamp.
+   *
+   * @param {MoveableObject} enemy - The enemy that should be defeated.
+   */
   killEnemy(enemy) {
     enemy.isKilled = true;
     enemy.speed = 0;
     enemy.deathTime = Date.now();
   }
 
+  /**
+   * Checks whether the character jumps on top of an enemy.
+   * Defeats the enemy and bounces the character upward after collision.
+   */
   checkJumpOnEnemy() {
     this.enemies.forEach((enemy) => {
       if (
@@ -242,6 +291,9 @@ class World {
     });
   }
 
+  /**
+   * Removes defeated enemies from the game after a delay.
+   */
   removeDeadEnemies() {
     for (let index = this.enemies.length - 1; index >= 0; index--) {
       let enemy = this.enemies[index];
@@ -251,6 +303,10 @@ class World {
     }
   }
 
+  /**
+   * Checks whether thrown bottles collide with the endboss.
+   * Damages the endboss, updates the boss health bar and handles boss death.
+   */
   checkEndbossBottleCollision() {
     this.throwableItems.forEach((item) => {
       if (item.isColliding(this.endboss) && !item.hasHitGround) {
@@ -269,6 +325,12 @@ class World {
     });
   }
 
+  /**
+   * Starts the splash animation for a thrown bottle.
+   * Stops bottle movement and stores the splash start time.
+   *
+   * @param {SalsaBottle} item - The thrown bottle that should splash.
+   */
   bottleSplash(item) {
     item.hasHitGround = true;
     item.speedX = 0;
@@ -281,6 +343,10 @@ class World {
   // noch prüfen, ob Pepe von oben kommt
   // this.character.y + this.character.height < enemy.y + enemy.height / 2
 
+  /**
+   * Checks whether the endboss hits the character during an attack.
+   * Damages the character and updates the health bar.
+   */
   checkEndbossAttack() {
     if (this.gameOver || this.gameWon) {
       return;
@@ -296,6 +362,10 @@ class World {
     }
   }
 
+  /**
+   * Checks whether the throw key is pressed.
+   * Throws a bottle if the character has bottles available.
+   */
   checkThrowableObject() {
     if (this.keyboard.D && this.collectedBottles > 0 && this.canThrow == true) {
       this.throwBottle();
@@ -306,6 +376,10 @@ class World {
     }
   }
 
+  /**
+   * Creates and throws a new salsa bottle.
+   * Sets the throw direction based on the character direction.
+   */
   throwBottle() {
     let direction;
     this.sound.play("throw");
@@ -322,6 +396,10 @@ class World {
     this.updateBottleBar();
   }
 
+  /**
+   * Updates the bottle bar after throwing a bottle.
+   * Reduces the collected bottle amount and recalculates the bar percentage.
+   */
   updateBottleBar() {
     this.collectedBottles--;
     let percentage = (this.collectedBottles / this.maxBottles) * 100;
@@ -329,10 +407,9 @@ class World {
     this.bottleBar.setBar(percentage);
   }
 
-  // Date.now() = akutelle Zeit
-  // deathTime() = Zeitpunkt des Todes
-  // Differenz berechnen:
-  // Date.now() - deathTime > 1000 = Wie lange ist er schon Tod?
+  /**
+   * Removes thrown bottles after their splash animation has finished.
+   */
   removeBottles() {
     for (let index = this.throwableItems.length - 1; index >= 0; index--) {
       let bottle = this.throwableItems[index];
@@ -342,6 +419,10 @@ class World {
     }
   }
 
+  /**
+   * Checks whether thrown bottles hit the ground.
+   * Starts the splash animation when a bottle reaches the ground.
+   */
   checkBottleGroundCollision() {
     this.throwableItems.forEach((bottle) => {
       if (bottle.y > 360 && !bottle.hasHitGround) {
@@ -350,6 +431,10 @@ class World {
     });
   }
 
+  /**
+   * Handles coin collection.
+   * Updates the coin bar and removes collected coins after their animation.
+   */
   collectCoins() {
     for (let index = this.coins.length - 1; index >= 0; index--) {
       let coin = this.coins[index];
@@ -371,6 +456,10 @@ class World {
     }
   }
 
+  /**
+   * Handles bottle collection.
+   * Updates the bottle bar and removes collected bottles from the level.
+   */
   collectBottles() {
     for (let index = this.bottles.length - 1; index >= 0; index--) {
       let bottle = this.bottles[index];
@@ -388,6 +477,12 @@ class World {
     }
   }
 
+  /**
+   * Animates a collected coin by moving it upward.
+   *
+   * @param {Coins} coin - The collected coin to animate.
+   * @returns {boolean} Whether the coin animation is finished.
+   */
   animateCoin(coin) {
     let animationTime = Date.now() - coin.startTime;
     if (animationTime < 1000) {
@@ -398,6 +493,10 @@ class World {
     // löschen
   }
 
+  /**
+   * Checks whether the game is over or won.
+   * Shows the correct end screen and stops the background music.
+   */
   checkGameState() {
     if (this.character.isDead() && !this.gameOver) {
       this.gameOver = true;

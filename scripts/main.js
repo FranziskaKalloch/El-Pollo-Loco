@@ -30,6 +30,11 @@ function playStartScreenMusic() {
   );
 }
 
+/**
+ * Initializes the start button and starts the game.
+ * Resets active intervals, hides the start screen,
+ * starts background music and initializes the game world.
+ */
 function startGame() {
   let startGame = document.getElementById("startButton");
   startGame.addEventListener("click", () => {
@@ -43,6 +48,10 @@ function startGame() {
   });
 }
 
+/**
+ * Restarts the current game session.
+ * Resets screens, intervals, pause state and background music.
+ */
 function restartGame() {
   clearAllIntervals();
   gameOverScreen.classList.add("hidden");
@@ -55,11 +64,17 @@ function restartGame() {
   init();
 }
 
+/**
+ **Clears all active intervals stored in the intervalIds array.
+ */
 function clearAllIntervals() {
   intervalIds.forEach(clearInterval);
   intervalIds = [];
 }
 
+/**
+ * Opens the main menu and hides all active game screens.
+ */
 function showMainMenu() {
   settings.close();
   gameOverScreen.classList.add("hidden");
@@ -68,6 +83,10 @@ function showMainMenu() {
   startScreen.classList.remove("hidden");
 }
 
+/**
+ * Adds click event listeners to menu and restart buttons.
+ * Handles navigation back to the main menu and restarting the game.
+ */
 function manageScreenButtons() {
   let menuButton = document.querySelectorAll(".menu-btn");
   for (let menu of menuButton) {
@@ -83,6 +102,10 @@ function manageScreenButtons() {
   }
 }
 
+/**
+ * Handles opening and closing of the introduction dialog.
+ * Plays a click sound when interacting with the dialog buttons.
+ */
 function manageIntroduction() {
   let introButton = document.getElementById("instructionsButton");
   let closeIntro = document.getElementById("closeIntroductionButton");
@@ -96,6 +119,12 @@ function manageIntroduction() {
   });
 }
 
+
+/**
+ * Handles the settings dialog behavior.
+ * Shows or hides the main menu button depending on whether
+ * the settings dialog was opened from the start screen or during gameplay.
+ */
 function manageSettings() {
   let settingsMenubutton = document.getElementById("settingsMenuButton"); 
   settingsButton.addEventListener("click", () => {
@@ -118,19 +147,26 @@ function manageSettings() {
   });
 }
 
+/**
+ * Plays a click sound and restarts the game.
+ */
 function restartGameWithSound() {
   sound.play("click");
   restartGame();
 }
 
+/**
+ * Plays a click sound and opens the main menu.
+ */
 function showMenuWithSound() {
   sound.play("click");
   showMainMenu();
 }
-// Slider holen
-// input EventListener setzen
-// den aktuellen .value auslesen
-// diesen Wert an die Methode weitergeben
+
+/**
+ * Handles music volume changes via the volume slider.
+ * Updates the background music volume dynamically.
+ */
 function manageMusicVolume() {
   let slider = document.getElementById("musicVolume");
   slider.addEventListener("input", () => {
@@ -139,6 +175,10 @@ function manageMusicVolume() {
   });
 }
 
+/**
+ * Handles muting and unmuting of sound effects and music.
+ * Updates the button appearance depending on the mute state.
+ */
 function muteSoundsAndMusic() {
   soundButton.addEventListener("click", () => {
     if (sound.soundMuted) {
@@ -157,6 +197,12 @@ function muteSoundsAndMusic() {
   });
 }
 
+/**
+ * Updates the visual button style depending on the mute state.
+ *
+ * @param {HTMLElement} button - The button element to update.
+ * @param {boolean} isMuted - Indicates whether the sound is muted.
+ */
 function setButtonColor(button, isMuted) {
   if (isMuted) {
     button.classList.add("btn-muted");
@@ -165,15 +211,28 @@ function setButtonColor(button, isMuted) {
   }
 }
 
+/**
+ * Opens a dialog element and resets its scroll position.
+ *
+ * @param {HTMLDialogElement} dialog - The dialog element to open.
+ */
 function openDialog(dialog) {
   dialog.showModal();
   dialog.scrollTop = 0;
 }
 
+/**
+ * Closes a dialog element.
+ *
+ * @param {HTMLDialogElement} dialog - The dialog element to close.
+ */
 function closeDialog(dialog) {
   dialog.close();
 }
 
+/**
+ * Closes dialogs when the user clicks outside the dialog content area.
+ */
 function closeDialogOutside() {
   let dialogRef = document.querySelectorAll(".dialog-close-outside"); // alle Dialoge holen und über alle dialoge loopen, da wir einen Liste zurückbekomme
   for (let dialog of dialogRef) {
@@ -197,7 +256,6 @@ function fullScreen() {
   });
 }
 
-
 /**
 * Requests fullscreen mode for the given element.
 * Includes browser-specific fallbacks.
@@ -214,6 +272,10 @@ function enterFullscreen(element) {
   }
 }
 
+/**
+ * Exits fullscreen mode.
+ * Includes browser-specific fallback support.
+ */
 function exitFullScreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
@@ -222,6 +284,10 @@ function exitFullScreen() {
   }
 }
 
+/**
+ * Adds touch controls for mobile devices.
+ * Handles movement, jumping and throwing actions via touch events.
+ */
 function bindTouchButtons() {
   document.getElementById("btnLeft").addEventListener("touchstart", (event) => {
     event.preventDefault();
