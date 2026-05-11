@@ -25,7 +25,7 @@ class Sounds {
     this.startScreenSound = new Audio("audio/intro-music.mp3");
 
     this.backgroundMusic.volume = 0.5;
-    this.wonSound = 0.4;
+    this.wonSound.volume = 0.4;
     this.coinSound.volume = 1.0;
     this.loadSettings();
   }
@@ -149,13 +149,17 @@ class Sounds {
     this.backgroundMusic.currentTime = 0; // setzt die Musik wieder auf den Anfang
   }
 
+  /**
+   * Loads saved sound and music settings from local storage.
+   */
   loadSettings() {
     let savedSoundMuted = localStorage.getItem("soundMuted");
-    let saveMusicMuted = localStorage.getItem("musicMuted");
+    let savedMusicMuted = localStorage.getItem("musicMuted");
 
     if (savedSoundMuted !== null) {
-      this.soundMuted = saveSoundMuted === "true";
+      this.soundMuted = savedSoundMuted === "true";
     }
+
     if (savedMusicMuted !== null) {
       this.setMusicMuted(savedMusicMuted === "true");
     }
