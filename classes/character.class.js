@@ -59,6 +59,11 @@ class Character extends MoveableObject {
     "img/2_character_pepe/1_idle/long_idle/I-20.png",
   ];
 
+  canJump = true;
+  jumpFrameCounter = 0;
+  jumpImageIndex = 0;
+  wasInAir = false;
+
   deadAnimationStarted = false;
   deadFrameCounter = 0;
   coins = 0;
@@ -110,7 +115,8 @@ class Character extends MoveableObject {
     if (this.isHurt()) {
       currentImages = this.imagesHurt;
     } else if (this.isAboveGround()) {
-      currentImages = this.imagesJumping;
+      this.playJumpAnimationOnce();
+      return;
     } else if (idleImages) {
       currentImages = idleImages;
     } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
@@ -119,6 +125,9 @@ class Character extends MoveableObject {
       currentImages = [this.imagesIdle[0]];
     }
 
+    this.jumpImageIndex = 0;
+    this.jumpFrameCounter = 0;
+    this.wasInAir = false;
     let imageIndex = this.currentImage % currentImages.length;
     let path = currentImages[imageIndex];
     this.img = this.imageCache[path];
@@ -186,13 +195,37 @@ class Character extends MoveableObject {
       if (gamePaused) {
         return;
       }
-      if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-        // wenn wir die Space Taste drücken und Pepe nicht auf dem Boden ist
-        this.speedY = -30; // nach oben // starte den Sprung: negative Geschwindigkeit = Bewegung nach oben
-        this.currentImage = 0;
+      if (this.world.keyboard.SPACE && !this.isAboveGround() && this.canJump) {
+        this.speedY = -30;
+        this.canJump = false;
+        this.startJumpAnimation();
         this.sound.play("jump");
       }
+      if (!this.world.keyboard.SPACE && !this.isAboveGround()) {
+        this.canJump = true;
+      }
     }, 1000 / 25);
+  }
+
+  startJumpAnimation() {
+    this.jumpImageIndex = 0;
+    this.jumpFrameCounter = 0;
+    this.wasInAir = false;
+  }
+
+  playJumpAnimationOnce() {
+    if (!this.wasInAir) {
+      this.jumpImageIndex = 0;
+      this.jumpFrameCounter = 0;
+      this.wasInAir = true;
+    }
+    let lastIndex = this.imagesJumping.length - 1;
+    let imagePath = this.imagesJumping[this.jumpImageIndex];
+    this.img = this.imageCache[imagePath];
+    this.jumpFrameCounter++;
+    if (this.jumpFrameCounter % 2 === 0 && this.jumpImageIndex < lastIndex) {
+      this.jumpImageIndex++;
+    }
   }
 
   collectCoins() {

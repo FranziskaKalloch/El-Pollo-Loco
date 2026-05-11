@@ -127,7 +127,7 @@ class World {
       this.ctx.restore();
     }
 
-      this.addToMap(this.endboss);
+    this.addToMap(this.endboss);
 
     for (const enemy of this.enemies) {
       this.addToMap(enemy);
@@ -176,6 +176,7 @@ class World {
     this.checkThrowableObject();
     this.checkBottleCollision();
     this.checkEndbossBottleCollision();
+    this.checkBottleGroundCollision();
     this.removeDeadEnemies();
     this.removeBottles();
     this.checkGameState();
@@ -187,10 +188,6 @@ class World {
     });
   }
 
-  // Game Loop/Überwachung: passiert gerade irgendwo im Spiel eine Kollision?
-  // läuft dauerhaft (setInterval), geht durch alle Gegner,
-  // .. fragt immer wieder: "Kollidiert Pepe gerade mit diesem Gegner?"
-  // das ist der Wächter
   checkCollisions() {
     if (this.gameOver || this.gameWon) {
       return;
@@ -343,6 +340,14 @@ class World {
         this.throwableItems.splice(index, 1);
       }
     }
+  }
+
+  checkBottleGroundCollision() {
+    this.throwableItems.forEach((bottle) => {
+      if (bottle.y > 360 && !bottle.hasHitGround) {
+        this.bottleSplash(bottle);
+      }
+    });
   }
 
   collectCoins() {
