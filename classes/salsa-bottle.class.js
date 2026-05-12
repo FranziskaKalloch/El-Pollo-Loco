@@ -35,8 +35,6 @@ class SalsaBottle extends ThrowableObject {
     this.width = 80;
     this.height = 100;
   }
-  // * Wenn x und y übergeben werden → geworfene Bottle startet dort
-  // * Wenn nichts übergeben wird → Boden-Bottle bekommt Zufallsposition
 
   offset = {
     top: 40,
@@ -53,7 +51,7 @@ class SalsaBottle extends ThrowableObject {
    */
   rotateBottle() {
     let currentImage = 0;
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (this.hasHitGround) {
         return;
       }
@@ -61,6 +59,8 @@ class SalsaBottle extends ThrowableObject {
       let index = currentImage % this.imagesBottleRotation.length;
       this.loadImage(this.imagesBottleRotation[index]);
     }, 1000 / 10);
+
+    intervalIds.push(interval);
   }
 
   /**
@@ -77,5 +77,6 @@ class SalsaBottle extends ThrowableObject {
         clearInterval(interval);
       }
     }, 1000 / 10);
+    intervalIds.push(interval);
   }
 }

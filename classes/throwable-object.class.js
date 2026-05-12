@@ -23,14 +23,14 @@ class ThrowableObject extends MoveableObject {
     this.y = y;
     this.speedX = direction;
     this.speedY = -20;
-
     this.gravity();
     this.rotateBottle();
-
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (!this.hasHitGround) {
         this.x += this.speedX;
       }
     }, 1000 / 60);
+
+    intervalIds.push(interval);
   }
 }

@@ -63,7 +63,6 @@ class Character extends MoveableObject {
   jumpFrameCounter = 0;
   jumpImageIndex = 0;
   wasInAir = false;
-
   deadAnimationStarted = false;
   deadFrameCounter = 0;
   coins = 0;
@@ -98,12 +97,10 @@ class Character extends MoveableObject {
    * otherwise plays the regular movement animations.
    */
   updateImages() {
-    // DEAD zuerst behandeln
     if (this.isDead()) {
       this.playDeadAnimation();
       return;
     } else {
-      // normale Animation
       this.playLoopAnimation();
     }
   }
@@ -113,13 +110,15 @@ class Character extends MoveableObject {
    * Handles movement and image updates continuously.
    */
   animate() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (gamePaused) {
         return;
       }
-      this.move(); // move forward & backward
+      this.move();
       this.updateImages();
     }, 100);
+
+    intervalIds.push(interval);
   }
 
   /**
@@ -307,7 +306,7 @@ class Character extends MoveableObject {
    * Prevents continuous jump resets while the space key is held down.
    */
   jump() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (gamePaused) {
         return;
       }
@@ -321,6 +320,7 @@ class Character extends MoveableObject {
         this.canJump = true;
       }
     }, 1000 / 25);
+    intervalIds.push(interval);
   }
 
   /**
@@ -364,6 +364,11 @@ class Character extends MoveableObject {
    * @returns {Array<string>|undefined} The current idle animation images.
    */
   idle() {
+    if (gamePaused || this.isDead() || world.gameWon || world.gameOver) {
+      this.sound.stopSnoreSound();
+      this.isSnoring = false;
+      return;
+    }
     this.checkPlayerActivity();
     let idleTime = Date.now() - this.lastActionTime;
     return this.getIdleImages(idleTime);

@@ -87,8 +87,7 @@ class World {
    */
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // hier wollen wir den komplette Auschnitt des Canvas verschieben
-    this.ctx.translate(this.camera_x, 0); // translate bedeutete, dass wir etwas verschieben wollen
+    this.ctx.translate(this.camera_x, 0); 
 
     for (const background of this.backgroundObjects) {
       this.addToMap(background);
@@ -114,14 +113,14 @@ class World {
       this.addToMap(item);
     }
 
-    // Hier wird alles wieder rückgängig gemacht -> Zuerst
     this.ctx.translate(-this.camera_x, 0);
 
-    this.addToMap(this.healthBar); // Zeichnen ohne Kamera. Die Statusbar bleibt fest oben links und bewegt sich nicht mit
+    this.addToMap(this.healthBar); 
     this.addToMap(this.coinBar);
     this.addToMap(this.bottleBar);
 
-    if (this.character.x > 3800) {
+    let distance = Math.abs(this.character.x - this.endboss.x);
+    if (distance < 900) {
       this.addToMap(this.endbossBar);
     }
 
@@ -159,16 +158,12 @@ class World {
   drawRotatingCoin(coin) {
     let ctx = this.ctx;
     let animationTime = Date.now() - coin.startTime;
-    let angle = animationTime * 0.01; // Geschwindigkeit der Drehung
+    let angle = animationTime * 0.01; 
     ctx.save();
-    // Mittelpunkt berechnen
     let centerX = coin.x + coin.width / 2;
     let centerY = coin.y + coin.height / 2;
-    // Zum Mittelpunkt verschieben
     ctx.translate(centerX, centerY);
-    // Drehen
     ctx.rotate(angle);
-    // Bild zeichnen (verschoben zurück)
     ctx.drawImage(
       coin.img,
       -coin.width / 2,
@@ -251,7 +246,6 @@ class World {
    */
   checkBottleCollision() {
     this.throwableItems.forEach((item) => {
-      console.log("Bottle check", item.x, item.y, item.hasHitGround);
       if (item.hasHitGround) {
         return;
       }
@@ -507,17 +501,20 @@ class World {
   checkGameState() {
     if (this.character.isDead() && !this.gameOver) {
       this.gameOver = true;
+      this.sound.stopSnoreSound();
+      this.sound.stopBackgroundMusic();
       this.sound.play("gameOver");
       gameOverScreen.classList.remove("hidden");
       game.classList.add("hidden");
-      this.sound.stopBackgroundMusic();
+      return; 
     }
     if (this.endboss.deadAnimationFinished && !this.gameWon) {
       this.gameWon = true;
+      this.sound.stopSnoreSound();
+      this.sound.stopBackgroundMusic();
       this.sound.play("won");
       winScreen.classList.remove("hidden");
       game.classList.add("hidden");
-      this.sound.stopBackgroundMusic();
     }
   }
 }

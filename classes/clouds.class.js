@@ -19,17 +19,10 @@ class Cloud extends MoveableObject {
    * Continuously moves the cloud to the left side of the screen.
    */
   animate() {
-    setInterval(() => {
-      this.x -= 0.15; // 60x pro Sekunde wird dieser Pixelwert abgezogen
-    }, 1000 / 60); // Jede Sekunde bewegen die Wolken sich
+    let interval = setInterval(() => {
+      this.x -= 0.15;
+    }, 1000 / 60);
+
+    intervalIds.push(interval);
   }
 }
-
-// Meine Variante
-
-//  moveLeft(x) {
-//    this.x -= 0.2;
-//    if (this.x + this.width < 0) {
-//     this.x = x;
-//    }
-//  }

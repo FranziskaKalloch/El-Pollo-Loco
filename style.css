@@ -129,15 +129,9 @@ canvas {
 
 .pause-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  transform: translate(100%, 200%);
 
-  width: 720px;
-  height: 480px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 10;
 }
 
 .responsive-buttons {

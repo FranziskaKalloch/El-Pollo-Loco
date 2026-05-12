@@ -47,7 +47,7 @@ class Endboss extends MoveableObject {
    */
   constructor(world) {
     super();
-    this.world = world; // Der Endboss bekommt die Welt von außen übergeben, damit wir auf die Elemente dort zugreifen können ---> hier wollen wir den character holen
+    this.world = world;
     this.x = 4700;
     this.groundY = -10;
     this.y = this.groundY;
@@ -65,39 +65,40 @@ class Endboss extends MoveableObject {
   }
 
   state = "walking";
-  leftLimit = 3600;
-  rightLimit = 4800;
-  movingRight = false;
-
   lastAttack = 0;
   attackCooldown = 1800;
   attackRange = 650;
   attackSpeed = 22;
   attackDirection = -1;
-
   deadAnimationStarted = false;
   deadAnimationFinished = false;
   deadFrameCounter = 0;
-
   isActivated = false;
+
+  offset = {
+    top: 120,
+    left: 70,
+    right: 70,
+    bottom: 40,
+  };
 
   /**
    * Starts the endboss animation and behavior loop.
    * Checks activation, attack range, movement and image updates.
    */
   animate() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       this.checkActivation();
       if (!this.isActivated) {
         this.updateImages();
         return;
       }
-
       this.checkAttackRange();
       this.moveDuringAttack();
-      this.moveBox();
       this.updateImages();
     }, 100);
+
+    intervalIds.push(interval);
   }
 
   /**
@@ -129,7 +130,6 @@ class Endboss extends MoveableObject {
    */
   playLoopAnimation() {
     let currentImages = this.getCurrentAnimationImages();
-
     this.showAnimationImage(currentImages);
     this.resetAttackAnimation();
   }
@@ -163,44 +163,25 @@ class Endboss extends MoveableObject {
   showAnimationImage(currentImages) {
     let imageIndex = this.currentImage % currentImages.length;
     let path = currentImages[imageIndex];
-
     this.img = this.imageCache[path];
     this.currentImage++;
   }
 
   /**
-   * Resets the attack animation
-   * after it has finished.
+   * Ends the attack animation
+   * and makes the endboss step backwards.
    */
   resetAttackAnimation() {
+    if (this.isDead()) {
+      return;
+    }
     if (
       this.state === "attack" &&
       this.currentImage >= this.imagesAttack.length
     ) {
       this.state = "walking";
       this.currentImage = 0;
-    }
-  }
-
-  /**
-   * Moves the endboss left and right between its movement limits.
-   * Stops regular movement while the endboss is attacking.
-   */
-  moveBox() {
-    if (this.state === "attack") {
-      // Dann bleibt der boss während der Attacke stehen
-      return;
-    }
-    if (!this.movingRight) {
-      this.x -= this.speed;
-    } else {
-      this.x += this.speed;
-    }
-    if (this.x >= this.rightLimit) {
-      this.movingRight = false;
-    }
-    if (this.x <= this.leftLimit) {
-      this.movingRight = true;
+      this.x -= 40 * this.attackDirection;
     }
   }
 
@@ -240,7 +221,6 @@ class Endboss extends MoveableObject {
     if (this.state === "attack") {
       this.x += this.attackSpeed * this.attackDirection;
     }
-    this.stopAttackAtLimits();
   }
 
   /**
@@ -259,32 +239,73 @@ class Endboss extends MoveableObject {
   }
 
   /**
-   * Stops the attack movement when the endboss
-   * reaches the left or right movement limit.
+   * Makes the endboss follow Pepe
+   * while not attacking.
    */
-  stopAttackAtLimits() {
-    if (this.x < this.leftLimit) {
-      this.x = this.leftLimit;
-      this.state = "walking";
-      this.movingRight = true;
+  followCharacter() {
+    if (this.state === "attack") {
+      return;
+    }
+    let distance = Math.abs(this.x - this.world.character.x);
+    if (distance < 120) {
+      return;
+    }
+    if (this.world.character.x < this.x) {
+      this.x -= this.speed;
+      this.otherDirection = false;
+    } else {
+      this.x += this.speed;
+      this.otherDirection = true;
+    }
+  }
+
+  /**
+   * Plays the endboss death animation once.
+   */
+  playDeadAnimation() {
+    this.startDeadAnimation();
+    this.showDeadImage();
+    this.nextDeadFrame();
+  }
+
+  /**
+   * Starts the death animation.
+   */
+  startDeadAnimation() {
+    if (!this.deadAnimationStarted) {
+      this.state = "dead";
+      this.currentImage = 0;
+      this.deadFrameCounter = 0;
+      this.deadAnimationStarted = true;
+    }
+  }
+
+  /**
+   * Displays the current death animation frame.
+   */
+  showDeadImage() {
+    let imageIndex = Math.min(this.currentImage, this.imagesDead.length - 1);
+    let path = this.imagesDead[imageIndex];
+
+    this.img = this.imageCache[path];
+  }
+
+  /**
+   * Advances the death animation slowly
+   * and marks it as finished on the last frame.
+   */
+  nextDeadFrame() {
+    this.deadFrameCounter++;
+
+    if (
+      this.deadFrameCounter % 5 === 0 &&
+      this.currentImage < this.imagesDead.length - 1
+    ) {
+      this.currentImage++;
     }
 
-    if (this.x > this.rightLimit) {
-      this.x = this.rightLimit;
-      this.state = "walking";
-      this.movingRight = false;
+    if (this.currentImage >= this.imagesDead.length - 1) {
+      this.deadAnimationFinished = true;
     }
   }
 }
-
-
-// Zugriff auf Pepe
-// -- der Endboss muss wissen, wo der Character ist!
-
-// Distanz berechnen
-// .. Unterschied zwischen den x-Werten
-// -- also wie weit ist Pepe vom Boss entfernt
-
-// Entscheidung 
-// ... wenn Distanz < x dann attack() 
-// --- attack() darf nicht dauerhaft gespammt werden 

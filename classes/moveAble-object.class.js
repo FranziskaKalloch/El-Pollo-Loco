@@ -29,15 +29,17 @@ class MoveableObject extends DrawableObject {
    * Moves the object vertically and simulates falling and jumping physics.
    */
   gravity() {
-    setInterval(() => {
+    let interval = setInterval(() => {
       if (this.isAboveGround() || this.speedY < 0) {
-        this.y = this.y + this.speedY; // Pepe bewegt sich nach unten / y = wo ist Pepe gerade / speedY = wie große Schritte macht er
-        this.speedY = this.speedY + this.acceleration; //
+        this.y = this.y + this.speedY;
+        this.speedY = this.speedY + this.acceleration;
       } else {
-        this.y = this.groundY; // „Bleib optisch hier stehen.“
-        this.speedY = 0; // „Die Fallbewegung ist wirklich beendet.“
+        this.y = this.groundY;
+        this.speedY = 0;
       }
     }, 1000 / 25);
+
+    intervalIds.push(interval);
   }
 
   /**
@@ -50,8 +52,8 @@ class MoveableObject extends DrawableObject {
     if (this instanceof ThrowableObject) {
       return true;
     }
-    return this.y < this.groundY; // Pepe ist in der Luft, wenn seine y-Position kleiner als 150 ist -- 150 = Bodenhöhe - und alles dadrüber ist unter dem Boden
-  } // gibt ein true zurück // Ja Pepe ist in der Luft
+    return this.y < this.groundY;
+  }
 
   /**
    * Checks whether this object collides with another object.

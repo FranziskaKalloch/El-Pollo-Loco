@@ -120,16 +120,26 @@ li {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 10px;
+    bottom: 16px;
     justify-content: space-between;
     padding: 0 24px;
     z-index: 20;
   }
 
-  .responsive-buttons button {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
+  #btnLeft,
+  #btnRight,
+  #btnJump,
+  #btnThrow {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px; 
+    font-size: 18px; 
+    border-radius: 100%; 
+    border: 3px solid rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 
  #gameSettingsButton {
@@ -194,19 +204,24 @@ li {
 
   .responsive-buttons {
     display: flex;
+    align-items: center;
+     justify-content: space-between;
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -10px;
-   justify-content: space-between;
+    bottom: 2px;
     padding: 0 24px;
     z-index: 20;
   }
 
-  .responsive-buttons button {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
+  #btnLeft,
+  #btnRight,
+  #btnJump,
+  #btnThrow {
+    height: 34px;
+    width: 34px; 
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    font-size: 16px; 
   }
 
   .canvas-container {
@@ -221,12 +236,7 @@ li {
     height: 90dvh; 
   }
 
- .pause-overlay {
-  left: -60px; 
-  top: -30px; 
- }
-
-  .btn {
+.btn {
     font-size: 12px;
     padding: 7px 14px;
   }
@@ -245,21 +255,26 @@ li {
     gap: 24px; 
   }
 
-   #gameSettingsButton {
-width: 20px;
-height: 20px;  
+  #gameSettingsButton {
+  width: 20px;
+  height: 20px;  
   top: 0px; 
   right: -20px;
  }
+
+  #btnLeft,
+  #btnRight,
+  #btnJump,
+  #btnThrow {
+    height: 18px;
+    width: 18px; 
+   
+  }
 
   h1 {
     font-size: 52px; 
   }
 
-  .pause-overlay {
-  left: -110px; 
-  top: -60px; 
- }
 }
 
 @media (hover: none) and (orientation: landscape) and (max-width: 500px) {
@@ -268,10 +283,5 @@ height: 20px;
     width: 100vw; 
     overflow-y: auto;
   }
-
-  .pause-overlay {
-  left: -110px; 
-  top: -60px; 
- }
 
 }

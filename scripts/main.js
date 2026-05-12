@@ -40,6 +40,7 @@ function startGame() {
   let startGame = document.getElementById("startButton");
   startGame.addEventListener("click", () => {
     clearAllIntervals();
+    gamePaused = false;
     sound.play("click");
     startScreen.classList.add("hidden");
     game.classList.remove("hidden");
@@ -57,20 +58,32 @@ function startGame() {
  */
 function restartGame() {
   clearAllIntervals();
-
+  resetGameSounds();
   gamePaused = false;
   pauseOverlay.classList.add("hidden");
-
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.remove("hidden");
   startScreen.classList.add("hidden");
-
-  sound.stopBackgroundMusic();
   sound.playBackgroundMusic();
-
   initLevel();
   init();
+}
+
+/**
+ * Stops all active game sounds
+ * and resets the snoring state.
+ */
+function resetGameSounds() {
+  if (world && world.sound) {
+    world.sound.stopBackgroundMusic();
+    world.sound.stopSnoreSound();
+  }
+  sound.stopBackgroundMusic();
+  sound.stopSnoreSound();
+  if (world && world.character) {
+    world.character.isSnoring = false;
+  }
 }
 
 /**
@@ -85,17 +98,16 @@ function clearAllIntervals() {
  * Opens the main menu and hides all active game screens.
  */
 function showMainMenu() {
+  clearAllIntervals();
+  resetGameSounds();
   settings.close();
-
-  gamePaused = false;
+  gamePaused = true;
   sound.stopSnoreSound();
   pauseOverlay.classList.add("hidden");
-
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.add("hidden");
   startScreen.classList.remove("hidden");
-
   document.getElementById("impressum").classList.remove("hidden");
 }
 

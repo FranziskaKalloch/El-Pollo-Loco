@@ -90,22 +90,6 @@ class Sounds {
     }
   }
 
-  /**
-   * Pauses all active game sounds.
-   */
-  pauseAllSounds() {
-    this.backgroundMusic.pause();
-    this.snoreSound.pause();
-  }
-
-  /**
-   * Resumes looping game sounds.
-   */
-  resumeAllSounds() {
-    if (!this.musicMuted) {
-      this.backgroundMusic.play();
-    }
-  }
 
   /**
    * Enables or disables all sound effects.
