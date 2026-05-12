@@ -44,6 +44,7 @@ function startGame() {
     game.classList.remove("hidden");
     sound.stopStartScreenMusic();
     sound.playBackgroundMusic();
+    initLevel();
     init();
   });
 }
@@ -61,6 +62,7 @@ function restartGame() {
   gamePaused = false;
   sound.stopBackgroundMusic();
   sound.playBackgroundMusic();
+  initLevel();
   init();
 }
 

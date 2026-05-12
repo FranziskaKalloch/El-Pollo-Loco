@@ -1,58 +1,81 @@
-let backgroundObjects = [];
+let level1;
 
-for(let i = 0; i < 7; i++) {
-  let x = i * 720; 
+function initLevel() {
+  let backgroundObjects = [];
 
-  let imageNumber;
+  for (let i = 0; i < 7; i++) {
+    let x = i * 720;
+
+    let imageNumber;
     if (i % 2 === 0) {
-     imageNumber = 1;
+      imageNumber = 1;
     } else {
-    imageNumber = 2;
+      imageNumber = 2;
+    }
+    backgroundObjects.push(
+      new Background("img/5_background/layers/air.png", x, 0),
+    );
+    backgroundObjects.push(
+      new Background(
+        `img/5_background/layers/3_third_layer/${imageNumber}.png`,
+        x,
+        0,
+      ),
+    );
+    backgroundObjects.push(
+      new Background(
+        `img/5_background/layers/2_second_layer/${imageNumber}.png`,
+        x,
+        0,
+      ),
+    );
+    backgroundObjects.push(
+      new Background(
+        `img/5_background/layers/1_first_layer/${imageNumber}.png`,
+        x,
+        0,
+      ),
+    );
   }
-  backgroundObjects.push(new Background('img/5_background/layers/air.png', x, 0)); 
-  backgroundObjects.push(new Background(`img/5_background/layers/3_third_layer/${imageNumber}.png`, x, 0));
-  backgroundObjects.push(new Background(`img/5_background/layers/2_second_layer/${imageNumber}.png`, x, 0));
-  backgroundObjects.push(new Background(`img/5_background/layers/1_first_layer/${imageNumber}.png`, x, 0));
-}
 
-let enemies = [];
+  let enemies = [];
 
-for (let i = 0; i < 10; i++) {
-  let x = 800 + i * 600 + Math.random() * 300;
+  for (let i = 0; i < 10; i++) {
+    let x = 800 + i * 600 + Math.random() * 300;
 
-  if (Math.random() < 0.5) {
-    enemies.push(new Chicken(x));
-  } else {
-    enemies.push(new SmallChicken(x));
+    if (Math.random() < 0.5) {
+      enemies.push(new Chicken(x));
+    } else {
+      enemies.push(new SmallChicken(x));
+    }
   }
+
+  let bottles = [];
+
+  for (let i = 0; i < 10; i++) {
+    let x = 300 + i * 350 + Math.random() * 150;
+    bottles.push(new SalsaBottle(x));
+  }
+
+  bottles.push(new SalsaBottle(4000));
+  bottles.push(new SalsaBottle(4250));
+  bottles.push(new SalsaBottle(4450));
+
+  let clouds = []; // ich brauche 20 Blöcke von Clouds
+
+  for (let i = 0; i <= 21; i++) {
+    let x = i * 250;
+    clouds.push(new Cloud(x));
+  }
+
+  level1 = new Level(
+    enemies,
+    bottles,
+    clouds,
+    backgroundObjects,
+    5000, // Länge des Levels
+  );
 }
-
-let bottles = [];
-
-for(let i = 0; i < 10; i++ ){
-  let x = 300 + (i * 350) + Math.random() * 150; 
-  bottles.push(new SalsaBottle(x)); 
-}
-
-bottles.push(new SalsaBottle(4000));
-bottles.push(new SalsaBottle(4250));
-bottles.push(new SalsaBottle(4450));
-
-let clouds = []; // ich brauche 20 Blöcke von Clouds
-
-for(let i = 0; i <= 21; i++) {
-  let x = i * 250; 
-  clouds.push(new Cloud(x)); 
-}
-
-
-const level1 = new Level(
-  enemies,
-  bottles, 
-  clouds, 
-  backgroundObjects,
-  5000,  // Länge des Levels
-);
 
 /*
 bottles = [
@@ -68,7 +91,6 @@ bottles = [
     new SalsaBottle(),
    ]
   */
-
 
 // Welche Gegner gibt es?
 // Welche Coins gibt es?
@@ -112,4 +134,4 @@ bottles = [
     new Background('img/5_background/layers/1_first_layer/1.png', 5040, 0),
   ],
   // Aufgabe ---> SChleife erstellen und jedes Mal aufssummieren!
-*/ 
+*/
