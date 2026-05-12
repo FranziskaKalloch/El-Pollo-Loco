@@ -18,21 +18,27 @@ class Sounds {
     this.hurtSound = new Audio("audio/hurt-pepe.wav");
     this.wonSound = new Audio("audio/you-won.mp3");
     this.gameOverSound = new Audio("audio/game-over.wav");
+    this.snoreSound = new Audio("audio/snore.wav");
 
     this.windSound = new Audio("audio/wind.mp3");
 
     this.clickSound = new Audio("audio/click-sound.mp3");
     this.startScreenSound = new Audio("audio/intro-music.mp3");
 
-    this.backgroundMusic.volume = 0.5;
+    this.backgroundMusic.volume = this.musicVolume;
+    this.startScreenSound.volume = this.musicVolume;
+
     this.wonSound.volume = 0.4;
     this.coinSound.volume = 1.0;
+    this.snoreSound.loop = true;
+    this.snoreSound.volume = 0.5;
+
     this.loadSettings();
   }
 
   musicMuted = false;
   soundMuted = false;
-  musicVolume = 0.5;
+  musicVolume = 0.1;
 
   /**
    * Plays a specific sound effect depending on the provided sound type.
@@ -85,12 +91,33 @@ class Sounds {
   }
 
   /**
+   * Pauses all active game sounds.
+   */
+  pauseAllSounds() {
+    this.backgroundMusic.pause();
+    this.snoreSound.pause();
+  }
+
+  /**
+   * Resumes looping game sounds.
+   */
+  resumeAllSounds() {
+    if (!this.musicMuted) {
+      this.backgroundMusic.play();
+    }
+  }
+
+  /**
    * Enables or disables all sound effects.
    *
    * @param {boolean} isMuted - Whether sound effects should be muted.
    */
   setSoundMuted(isMuted) {
     this.soundMuted = isMuted;
+    if (isMuted) {
+      this.stopSnoreSound();
+    }
+
     localStorage.setItem("soundMuted", isMuted);
   }
 
@@ -122,7 +149,7 @@ class Sounds {
    */
   playStartScreenMusic() {
     this.startScreenSound.loop = true;
-    this.startScreenSound.volume = 0.5;
+    this.startScreenSound.volume = this.musicVolume;
     this.startScreenSound.play();
   }
 
@@ -163,5 +190,22 @@ class Sounds {
     if (savedMusicMuted !== null) {
       this.setMusicMuted(savedMusicMuted === "true");
     }
+  }
+
+  /**
+   * Starts the snore sound.
+   */
+  playSnoreSound() {
+    if (!this.soundMuted) {
+      this.snoreSound.play();
+    }
+  }
+
+  /**
+   * Stops the snore sound.
+   */
+  stopSnoreSound() {
+    this.snoreSound.pause();
+    this.snoreSound.currentTime = 0;
   }
 }

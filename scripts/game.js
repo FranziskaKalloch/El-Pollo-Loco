@@ -41,6 +41,9 @@ window.addEventListener("keydown", (event) => {
   }
   if (event.key === "p" || event.key === "P") {
     gamePaused = !gamePaused;
+    if (gamePaused) {
+      sound.stopSnoreSound();
+    }
     let pauseOverlay = document.getElementById("pauseOverlay");
     pauseOverlay.classList.toggle("hidden", !gamePaused);
   }

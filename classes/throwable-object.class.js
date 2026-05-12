@@ -34,24 +34,3 @@ class ThrowableObject extends MoveableObject {
     }, 1000 / 60);
   }
 }
-
-// speedY
-// negativer Wert = Bottle fliegt zuerst nach oben
-// -15 = flacher Wurf
-// -20 = aktueller Wurf
-// -25 = höherer Bogen
-
-// Aufgabe:
-//	- throw(100,150) x und y koordinate angeben
-//	- this.height = ?
-//	- this.width = ?
-
-//		in isAboveGround() {
-//		if(!this instanceOf ThrowableObject) ) {
-//		return this.y < 100;
-//		}
-
-//		checkThrowObjects() {
-//			if(this.keyboard.D) {
-//				let bottle = new ThrowableObject(this.character.x +100, this.character.y + 100)
-//				this.throwableobjects.push(bottle);

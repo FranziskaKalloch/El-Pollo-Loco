@@ -27,12 +27,11 @@
     <script src="./scripts/game.js" defer></script>
     <script src="./scripts/main.js" defer></script>
   </head>
-  <body>
 
   <body>
     <div class="main-container">
 
-    <!-- 🔥 STARTSCREEN -->
+    <!-- STARTSCREEN -->
     <div id="startScreen" class="start-screen">
      
       <div class="menu">
@@ -58,23 +57,20 @@
       </div>
     <!-- 🎮 GAME (anfangs versteckt) -->
     <div id="gameContainer" class="hidden">
-
-      <h2 id="pauseOverlay" class="hidden">PAUSE</h2>
       
       <div class="canvas-container" id="fullscreen">
       
           <canvas id="canvas" width="720" height="480"></canvas>
 
+           <div id="pauseOverlay" class="pause-overlay hidden">
+            <h2>PAUSE</h2>
+           </div>
+
            <button id="gameSettingsButton" class="menu-button wiggle game-settings-icon">
             <img src="img/settings-icon.png" alt="Setting Icon" class="settings-icon" / >
           </button>
-
-          <button id="fullscreen-btn">
-            <img src="img/fullscreen-blue.png" alt="Vollbild" />
-          </button>
          
           <div class="responsive-buttons">
-
             <div class="left-buttons">
               <button id="btnLeft">←</button>
               <button id="btnRight">→</button>
@@ -84,7 +80,6 @@
               <button id="btnJump">↑</button>
               <button id="btnThrow">D</button>
             </div>
-
           </div>
 
       </div>
@@ -92,7 +87,7 @@
     </div>
 
 
-    <!-- 💀 GAME OVER -->
+    <!-- GAME OVER -->
     <div id="gameOverScreen" class="endscreen hidden game-over-screen">
       <div class="end-screen-button-container">
         <button class="restart-button btn">Nochmal spielen</button>
@@ -101,7 +96,7 @@
     </div>
 
 
-    <!-- 🏆 WIN -->
+    <!--  WIN -->
     <div id="winScreen" class="endscreen hidden win-screen">
       <div class="end-screen-button-container">
         <button  class="restart-button btn">Nochmal spielen</button>
@@ -135,7 +130,7 @@
       </div>
     </dialog>
 
-    <!-- ⚙️ SETTINGS DIALOG -->
+    <!--  SETTINGS DIALOG -->
     <dialog id="settingsDialog" class="dialog-close-outside">
       <h2>Einstellungen</h2>
       <div class="button-setting-container">
@@ -145,17 +140,17 @@
 
       <label>
         Musiklautstärke
-        <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.5" />
+        <input id="musicVolume" type="range" min="0" max="1" step="0.1" value="0.1" />
       </label>
       <div class="close-setting-container">
        <button id="closeSettingsButton" class="btn">Schließen</button>
         <button id="settingsMenuButton" class="menu-btn btn hidden">Spiel Beenden</button>
       </div>
     </dialog>
-
-  </div>
-  <div class="impressum">
+    <div class="impressum" id="impressum">
     <a href="impressum.html" target="_blank">Impressum</a>
   </div>
+  </div>
+  
   </body>
 </html>

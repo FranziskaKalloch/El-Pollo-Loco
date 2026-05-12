@@ -68,6 +68,7 @@ class Character extends MoveableObject {
   deadFrameCounter = 0;
   coins = 0;
   lastActionTime = Date.now();
+  isSnoring = false;
 
   /**
    * Creates a new character and initializes animations,
@@ -85,7 +86,7 @@ class Character extends MoveableObject {
     this.loadImages(this.imagesDead);
     this.loadImages(this.imagesIdle);
     this.loadImages(this.imagesLongIdle);
-    this.sound = new Sounds();
+    this.sound = sound;
     this.animate();
     this.gravity();
     this.jump();
@@ -122,41 +123,85 @@ class Character extends MoveableObject {
   }
 
   /**
-   * Plays the correct animation depending on the current character state.
-   * Handles hurt, jump, idle and walking animations.
+   * Plays the correct loop animation
+   * depending on the current character state.
    */
   playLoopAnimation() {
-    let currentImages;
-    let idleImages = this.idle();
-
-    if (this.isHurt()) {
-      currentImages = this.imagesHurt;
-    } else if (this.isAboveGround()) {
-      this.playJumpAnimationOnce();
+    let currentImages = this.getCurrentLoopImages();
+    if (!currentImages) {
       return;
-    } else if (idleImages) {
-      currentImages = idleImages;
-    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-      currentImages = this.imagesWalking;
-    } else {
-      currentImages = [this.imagesIdle[0]];
     }
+    this.resetJumpAnimation();
+    this.showLoopImage(currentImages);
+  }
 
+  /**
+   * Returns the correct image array
+   * for the current character state.
+   */
+  getCurrentLoopImages() {
+    let idleImages = this.idle();
+    if (this.isHurt()) {
+      return this.imagesHurt;
+    }
+    if (this.isAboveGround()) {
+      this.playJumpAnimationOnce();
+      return null;
+    }
+    if (idleImages) {
+      return idleImages;
+    }
+    if (this.isMoving()) {
+      return this.imagesWalking;
+    }
+    return [this.imagesIdle[0]];
+  }
+
+  /**
+   * Checks if the character is moving left or right.
+   */
+  isMoving() {
+    return this.world.keyboard.RIGHT || this.world.keyboard.LEFT;
+  }
+
+  /**
+   * Resets the jump animation state
+   * when the character is not in the air.
+   */
+  resetJumpAnimation() {
     this.jumpImageIndex = 0;
     this.jumpFrameCounter = 0;
     this.wasInAir = false;
+  }
+
+  /**
+   * Displays the next image of the current loop animation.
+   *
+   * @param {string[]} currentImages - The current animation image array.
+   */
+  showLoopImage(currentImages) {
     let imageIndex = this.currentImage % currentImages.length;
     let path = currentImages[imageIndex];
+
     this.img = this.imageCache[path];
     this.currentImage++;
   }
 
   /**
-   * Handles character movement and camera positioning.
-   * Controls left and right movement and limits camera boundaries.
+   * Handles all horizontal character movement
+   * and updates the camera position.
    */
   move() {
-    // 👉 Nach rechts laufen
+    this.moveRight();
+    this.moveLeft();
+    this.updateCamera();
+  }
+
+  /**
+   * Moves the character to the right
+   * while staying inside the level bounds.
+   */
+  moveRight() {
     if (
       this.world.keyboard.RIGHT &&
       this.x + this.width < this.world.levelEndX
@@ -166,22 +211,47 @@ class Character extends MoveableObject {
       } else {
         this.x += 15;
       }
+
       this.otherDirection = false;
     }
+  }
 
-    // 👉 Nach links laufen
+  /**
+   * Moves the character to the left
+   * while preventing movement beyond the level start.
+   */
+  moveLeft() {
     if (this.world.keyboard.LEFT && this.x > 0) {
       this.x -= 11;
       this.otherDirection = true;
     }
-    // 👉 Kamera folgt immer nach Bewegung
-    this.world.camera_x = -this.x + 100;
+  }
 
-    // 👉 Linke Grenze (Start)
+  /**
+   * Updates the camera position
+   * and applies camera boundaries.
+   */
+  updateCamera() {
+    this.world.camera_x = -this.x + 100;
+    this.stopCameraAtStart();
+    this.stopCameraAtEnd();
+  }
+
+  /**
+   * Prevents the camera from moving
+   * beyond the start of the level.
+   */
+  stopCameraAtStart() {
     if (this.world.camera_x > 0) {
       this.world.camera_x = 0;
     }
-    // 👉 Rechte Grenze (Level-Ende)
+  }
+
+  /**
+   * Prevents the camera from moving
+   * beyond the end of the level.
+   */
+  stopCameraAtEnd() {
     if (
       this.world.camera_x < -(this.world.levelEndX - this.world.canvas.width)
     ) {
@@ -191,25 +261,42 @@ class Character extends MoveableObject {
 
   /**
    * Plays the character death animation once.
-   * Slows down the animation and stops on the final frame.
    */
   playDeadAnimation() {
-    let currentImages = this.imagesDead;
-    // Start der Dead Animation
+    this.startDeadAnimation();
+    this.showDeadImage();
+    this.nextDeadFrame();
+  }
+
+  /**
+   * Starts the death animation.
+   */
+  startDeadAnimation() {
     if (!this.deadAnimationStarted) {
       this.currentImage = 0;
       this.deadAnimationStarted = true;
       this.deadFrameCounter = 0;
     }
-    let imageIndex = Math.min(this.currentImage, currentImages.length - 1);
-    let path = currentImages[imageIndex];
-    this.img = this.imageCache[path];
+  }
 
-    // langsamer abspielen
+  /**
+   * Displays the current death animation frame.
+   */
+  showDeadImage() {
+    let imageIndex = Math.min(this.currentImage, this.imagesDead.length - 1);
+    let path = this.imagesDead[imageIndex];
+    this.img = this.imageCache[path];
+  }
+
+  /**
+   * Advances the death animation slowly
+   * until the last frame is reached.
+   */
+  nextDeadFrame() {
     this.deadFrameCounter++;
     if (
       this.deadFrameCounter % 5 === 0 &&
-      this.currentImage < currentImages.length - 1
+      this.currentImage < this.imagesDead.length - 1
     ) {
       this.currentImage++;
     }
@@ -268,18 +355,25 @@ class Character extends MoveableObject {
    * Increases the collected coin amount of the character.
    */
   collectCoins() {
-    this.Character.coins += 20;
+    this.coins += 20;
   }
 
   /**
    * Determines whether the character should play an idle animation.
-   * Returns normal idle or long idle images depending on inactivity time.
    *
    * @returns {Array<string>|undefined} The current idle animation images.
    */
   idle() {
-    let currentImages;
+    this.checkPlayerActivity();
+    let idleTime = Date.now() - this.lastActionTime;
+    return this.getIdleImages(idleTime);
+  }
 
+  /**
+   * Checks whether the player is currently active.
+   * Stops the snore sound when movement is detected.
+   */
+  checkPlayerActivity() {
     if (
       this.world.keyboard.RIGHT ||
       this.world.keyboard.LEFT ||
@@ -287,16 +381,39 @@ class Character extends MoveableObject {
       this.world.keyboard.D
     ) {
       this.lastActionTime = Date.now();
+
+      if (this.isSnoring) {
+        this.sound.stopSnoreSound();
+        this.isSnoring = false;
+      }
+    }
+  }
+
+  /**
+   * Returns the correct idle animation
+   * depending on the current idle time.
+   *
+   * @param {number} idleTime - Current inactivity time in milliseconds.
+   * @returns {Array<string>|undefined} The current idle animation images.
+   */
+  getIdleImages(idleTime) {
+    if (idleTime > 5000) {
+      this.startSnoring();
+      return this.imagesLongIdle;
     }
 
-    let idleTime = Date.now() - this.lastActionTime;
-
-    if (idleTime > 8000) {
-      currentImages = this.imagesLongIdle;
-    } else if (idleTime > 5000) {
-      currentImages = this.imagesIdle;
+    if (idleTime > 3000) {
+      return this.imagesIdle;
     }
+  }
 
-    return currentImages;
+  /**
+   * Starts the snore sound once.
+   */
+  startSnoring() {
+    if (!this.isSnoring) {
+      this.sound.playSnoreSound();
+      this.isSnoring = true;
+    }
   }
 }

@@ -73,6 +73,7 @@ class Endboss extends MoveableObject {
   attackCooldown = 1800;
   attackRange = 650;
   attackSpeed = 22;
+  attackDirection = -1;
 
   deadAnimationStarted = false;
   deadAnimationFinished = false;
@@ -111,42 +112,8 @@ class Endboss extends MoveableObject {
     if (this.state === "hurt" && !this.isHurt()) {
       this.state = "walking";
     }
-
     this.playLoopAnimation();
   }
-
-  /**
-   * Plays the correct loop animation depending on the current endboss state.
-   * Handles walking, alert, attack, hurt and dead animation frames.
-   */
-  playLoopAnimation() {
-    let currentImages;
-    if (this.state === "dead") {
-      currentImages = this.imagesDead;
-    } else if (this.state === "hurt") {
-      currentImages = this.imagesHurt;
-    } else if (this.state === "attack") {
-      currentImages = this.imagesAttack;
-    } else if (this.state === "alert") {
-      currentImages = this.imagesAlert;
-    } else {
-      currentImages = this.imagesWalking;
-    }
-
-    let imageIndex = this.currentImage % currentImages.length;
-    let path = currentImages[imageIndex];
-    this.img = this.imageCache[path];
-    this.currentImage++;
-
-    if (
-      this.state === "attack" &&
-      this.currentImage >= this.imagesAttack.length
-    ) {
-      this.state = "walking";
-      this.currentImage = 0;
-    }
-  }
-
   /**
    * Activates the endboss when the character reaches the boss area.
    */
@@ -157,30 +124,61 @@ class Endboss extends MoveableObject {
   }
 
   /**
-   * Plays the endboss death animation once and marks it as finished
-   * when the last animation frame is reached.
+   * Plays the correct loop animation
+   * depending on the current endboss state.
    */
-  playDeadAnimation() {
-    let currentImages = this.imagesDead;
-    if (!this.deadAnimationStarted) {
-      this.currentImage = 0;
-      this.deadAnimationStarted = true;
-      this.deadFrameCounter = 0;
-    }
-    let imageIndex = Math.min(this.currentImage, currentImages.length - 1);
-    let path = currentImages[imageIndex];
-    this.img = this.imageCache[path];
+  playLoopAnimation() {
+    let currentImages = this.getCurrentAnimationImages();
 
-    // langsamer abspielen
-    this.deadFrameCounter++;
-    if (
-      this.deadFrameCounter % 15 === 0 &&
-      this.currentImage < currentImages.length - 1
-    ) {
-      this.currentImage++;
+    this.showAnimationImage(currentImages);
+    this.resetAttackAnimation();
+  }
+
+  /**
+   * Returns the correct image array
+   * for the current endboss state.
+   */
+  getCurrentAnimationImages() {
+    if (this.state === "dead") {
+      return this.imagesDead;
     }
-    if (this.currentImage >= currentImages.length - 1) {
-      this.deadAnimationFinished = true;
+    if (this.state === "hurt") {
+      return this.imagesHurt;
+    }
+    if (this.state === "attack") {
+      return this.imagesAttack;
+    }
+    if (this.state === "alert") {
+      return this.imagesAlert;
+    }
+    return this.imagesWalking;
+  }
+
+  /**
+   * Displays the next image
+   * of the current endboss animation.
+   *
+   * @param {string[]} currentImages - Current animation image array.
+   */
+  showAnimationImage(currentImages) {
+    let imageIndex = this.currentImage % currentImages.length;
+    let path = currentImages[imageIndex];
+
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
+  /**
+   * Resets the attack animation
+   * after it has finished.
+   */
+  resetAttackAnimation() {
+    if (
+      this.state === "attack" &&
+      this.currentImage >= this.imagesAttack.length
+    ) {
+      this.state = "walking";
+      this.currentImage = 0;
     }
   }
 
@@ -211,10 +209,9 @@ class Endboss extends MoveableObject {
    * Starts an attack if the cooldown is over and the endboss is on the ground.
    */
   checkAttackRange() {
-    let distance = this.x - this.world.character.x;
+    let distance = Math.abs(this.x - this.world.character.x);
     if (
       distance < this.attackRange &&
-      distance > 0 &&
       this.state === "walking" &&
       Date.now() - this.lastAttack > this.attackCooldown &&
       !this.isAboveGround()
@@ -228,10 +225,11 @@ class Endboss extends MoveableObject {
    * and giving the endboss upward movement.
    */
   attack() {
+    this.setAttackDirection();
     this.state = "attack";
     this.lastAttack = Date.now();
     this.currentImage = 0;
-    this.speedY = -30; // nach oben
+    this.speedY = -40;
   }
 
   /**
@@ -240,16 +238,43 @@ class Endboss extends MoveableObject {
    */
   moveDuringAttack() {
     if (this.state === "attack") {
-      this.x -= this.attackSpeed;
+      this.x += this.attackSpeed * this.attackDirection;
     }
+    this.stopAttackAtLimits();
+  }
+
+  /**
+   * Sets the attack direction depending
+   * on the current character position.
+   * The endboss turns towards Pepe before attacking.
+   */
+  setAttackDirection() {
+    if (this.world.character.x < this.x) {
+      this.attackDirection = -1;
+      this.otherDirection = false;
+    } else {
+      this.attackDirection = 1;
+      this.otherDirection = true;
+    }
+  }
+
+  /**
+   * Stops the attack movement when the endboss
+   * reaches the left or right movement limit.
+   */
+  stopAttackAtLimits() {
     if (this.x < this.leftLimit) {
       this.x = this.leftLimit;
       this.state = "walking";
       this.movingRight = true;
     }
-  }
 
-  //isHurt() und isDead() wird von MoveableObject geerbt
+    if (this.x > this.rightLimit) {
+      this.x = this.rightLimit;
+      this.state = "walking";
+      this.movingRight = false;
+    }
+  }
 }
 
 

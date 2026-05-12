@@ -9,6 +9,7 @@ let musicButton = document.getElementById("toggleMusicButton");
 let settingsButton = document.getElementById("settingsButton");
 let gameSettingsButton = document.getElementById("gameSettingsButton");
 let closeSettingsButton = document.getElementById("closeSettingsButton");
+let fullscreenButton = document.getElementById("toggleFullscreenButton");
 const sound = new Sounds();
 
 let gamePaused = false;
@@ -42,6 +43,7 @@ function startGame() {
     sound.play("click");
     startScreen.classList.add("hidden");
     game.classList.remove("hidden");
+    document.getElementById("impressum").classList.add("hidden");
     sound.stopStartScreenMusic();
     sound.playBackgroundMusic();
     initLevel();
@@ -55,13 +57,18 @@ function startGame() {
  */
 function restartGame() {
   clearAllIntervals();
+
+  gamePaused = false;
+  pauseOverlay.classList.add("hidden");
+
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.remove("hidden");
   startScreen.classList.add("hidden");
-  gamePaused = false;
+
   sound.stopBackgroundMusic();
   sound.playBackgroundMusic();
+
   initLevel();
   init();
 }
@@ -79,10 +86,17 @@ function clearAllIntervals() {
  */
 function showMainMenu() {
   settings.close();
+
+  gamePaused = false;
+  sound.stopSnoreSound();
+  pauseOverlay.classList.add("hidden");
+
   gameOverScreen.classList.add("hidden");
   winScreen.classList.add("hidden");
   game.classList.add("hidden");
   startScreen.classList.remove("hidden");
+
+  document.getElementById("impressum").classList.remove("hidden");
 }
 
 /**
@@ -121,7 +135,6 @@ function manageIntroduction() {
   });
 }
 
-
 /**
  * Handles the settings dialog behavior.
  * Shows or hides the main menu button depending on whether
@@ -131,17 +144,16 @@ function manageSettings() {
   let settingsMenubutton = document.getElementById("settingsMenuButton"); 
   settingsButton.addEventListener("click", () => {
     sound.play("click");
-    settingsMenubutton.classList.add("hidden"); 
+    settingsMenubutton.classList.add("hidden");
     openDialog(settings);
   });
-
   gameSettingsButton.addEventListener("click", () => {
     sound.play("click");
     gamePaused = true;
-    settingsMenubutton.classList.remove("hidden"); 
+    sound.stopSnoreSound();
+    settingsMenubutton.classList.remove("hidden");
     openDialog(settings);
   });
-
   closeSettingsButton.addEventListener("click", () => {
     sound.play("click");
     closeDialog(settings);
@@ -247,92 +259,32 @@ function closeDialogOutside() {
 }
 
 /**
-* Initializes the fullscreen button for the canvas element.
-*/
-function fullScreen() {
-  let canvas = document.getElementById("canvas");
-  let fullScreenButton = document.getElementById("fullscreen-btn");
-
-  fullScreenButton.addEventListener("click", () => {
-    enterFullscreen(canvas);
-  });
-}
-
-/**
-* Requests fullscreen mode for the given element.
-* Includes browser-specific fallbacks.
-*
-* @param {HTMLElement} element - The element that should enter fullscreen mode.
-*/
-function enterFullscreen(element) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.msRequestFullScreen) {
-    element.msRequestFullScreen();
-  } else if (element.webkitRequestFullScreen) {
-    element.webkitRequestFullScreen();
-  }
-}
-
-/**
- * Exits fullscreen mode.
- * Includes browser-specific fallback support.
- */
-function exitFullScreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullScreen) {
-    document.webkitExitFullScreen();
-  }
-}
-
-/**
  * Adds touch controls for mobile devices.
- * Handles movement, jumping and throwing actions via touch events.
  */
 function bindTouchButtons() {
-  document.getElementById("btnLeft").addEventListener("touchstart", (event) => {
+  bindTouchButton("btnLeft", "LEFT");
+  bindTouchButton("btnRight", "RIGHT");
+  bindTouchButton("btnJump", "SPACE");
+  bindTouchButton("btnThrow", "D");
+}
+
+/**
+ * Connects a touch button with a keyboard action.
+ *
+ * @param {string} buttonId - The id of the touch button.
+ * @param {string} key - The keyboard property to control.
+ */
+function bindTouchButton(buttonId, key) {
+  let button = document.getElementById(buttonId);
+
+  button.addEventListener("touchstart", (event) => {
     event.preventDefault();
-    keyboard.LEFT = true;
+    keyboard[key] = true;
   });
 
-  document.getElementById("btnLeft").addEventListener("touchend", (event) => {
+  button.addEventListener("touchend", (event) => {
     event.preventDefault();
-    keyboard.LEFT = false;
-  });
-
-  document
-    .getElementById("btnRight")
-    .addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.RIGHT = true;
-    });
-
-  document.getElementById("btnRight").addEventListener("touchend", (event) => {
-    event.preventDefault();
-    keyboard.RIGHT = false;
-  });
-
-  document.getElementById("btnJump").addEventListener("touchstart", (event) => {
-    event.preventDefault();
-    keyboard.SPACE = true;
-  });
-
-  document.getElementById("btnJump").addEventListener("touchend", (event) => {
-    event.preventDefault();
-    keyboard.SPACE = false;
-  });
-
-  document
-    .getElementById("btnThrow")
-    .addEventListener("touchstart", (event) => {
-      event.preventDefault();
-      keyboard.D = true;
-    });
-
-  document.getElementById("btnThrow").addEventListener("touchend", (event) => {
-    event.preventDefault();
-    keyboard.D = false;
+    keyboard[key] = false;
   });
 }
 
@@ -344,4 +296,4 @@ muteSoundsAndMusic();
 closeDialogOutside();
 manageScreenButtons(); 
 playStartScreenMusic();
-fullScreen(); 
+bindTouchButtons();

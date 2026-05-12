@@ -121,36 +121,24 @@ button {
 
 .canvas-container {
   position: relative; 
-  display: inline-block;
 }
 
 canvas {
   background-color: black;
 }
 
-#fullscreen-btn {
+.pause-overlay {
   position: absolute;
-  bottom: 16px;
-  right: 134px;
+  top: 0;
+  left: 0;
 
-  border: none; 
-  background: none;
+  width: 720px;
+  height: 480px;
 
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-
-
-#pauseOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  color: white;
-  text-shadow: 4px 4px 8px rgba(0,0,0,0.7);
-  z-index: 5; 
-} 
 
 .responsive-buttons {
   display: none;
@@ -165,6 +153,35 @@ canvas {
   top: 0px;
   right: 0;
   z-index: 10;
+}
+
+#fullscreen:fullscreen {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: black;
+}
+
+#fullscreen:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: black;
+}
+
+#fullscreen:fullscreen canvas,
+#fullscreen:-webkit-full-screen canvas {
+  width: 100vw;
+  height: auto;
+  max-height: 100vh;
 }
 
 
@@ -380,7 +397,8 @@ li {
 
 .impressum {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: center;
   gap: 64px; 
   font-size: 14px;
   padding: 16px;

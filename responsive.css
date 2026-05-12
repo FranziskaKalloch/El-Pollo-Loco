@@ -102,6 +102,11 @@ li {
 
 
 @media (hover: none) and (orientation: landscape) and (max-width: 1400px) {
+  
+  .fullscreen-btn {
+    display: none; 
+  }
+  
   #introductionDialog, #settingsDialog {
     height: 90vh; 
   }
@@ -116,7 +121,7 @@ li {
     left: 0;
     right: 0;
     bottom: 10px;
-    justify-content: center;
+    justify-content: space-between;
     padding: 0 24px;
     z-index: 20;
   }
@@ -137,8 +142,8 @@ li {
 
  #fullscreen-btn {
   position: absolute;
-  bottom: 16px;
-  right: 10px;
+  bottom: 2px;
+  right: 2px;
 
   cursor: pointer; 
 }
@@ -157,7 +162,7 @@ li {
   }
 
   #settingsDialog {
-    gap: 42px; 
+    gap: 40px; 
   }
 
   .impressum {
@@ -193,7 +198,7 @@ li {
     left: 0;
     right: 0;
     bottom: -10px;
-    justify-content: center;
+   justify-content: space-between;
     padding: 0 24px;
     z-index: 20;
   }
@@ -216,15 +221,45 @@ li {
     height: 90dvh; 
   }
 
-  #fullscreen-btn img {
-    width: 24px;
-    height: 24px;
-  }
+ .pause-overlay {
+  left: -60px; 
+  top: -30px; 
+ }
 
   .btn {
     font-size: 12px;
     padding: 7px 14px;
   }
+}
+
+@media (hover: none) and (orientation: landscape) and (max-width: 750px) {
+  #introductionDialog, #settingsDialog {
+    height: 100dvh; 
+    width: 100vw; 
+    overflow-y: auto;
+    font-size: 14px; 
+    gap: 8px; 
+  }
+
+  #settingsDialog {
+    gap: 24px; 
+  }
+
+   #gameSettingsButton {
+width: 20px;
+height: 20px;  
+  top: 0px; 
+  right: -20px;
+ }
+
+  h1 {
+    font-size: 52px; 
+  }
+
+  .pause-overlay {
+  left: -110px; 
+  top: -60px; 
+ }
 }
 
 @media (hover: none) and (orientation: landscape) and (max-width: 500px) {
@@ -233,5 +268,10 @@ li {
     width: 100vw; 
     overflow-y: auto;
   }
+
+  .pause-overlay {
+  left: -110px; 
+  top: -60px; 
+ }
 
 }
