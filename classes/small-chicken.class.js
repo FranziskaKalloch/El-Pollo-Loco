@@ -18,4 +18,11 @@ class SmallChicken extends Chicken {
     this.y = 370;
     this.speed = 0.3 + Math.random() * 0.5;
   }
+
+  offset = {
+    top: 25,
+    bottom: 10,
+    left: 20,
+    right: 20,
+  };
 }

@@ -162,7 +162,7 @@ class Character extends MoveableObject {
       this.x + this.width < this.world.levelEndX
     ) {
       if (this.isAboveGround()) {
-        this.x += 15;
+        this.x += 16;
       } else {
         this.x += 15;
       }
