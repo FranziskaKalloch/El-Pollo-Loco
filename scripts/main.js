@@ -15,6 +15,18 @@ const sound = new Sounds();
 let gamePaused = false;
 let intervalIds = [];
 
+function initPage() {
+  startGame();
+  manageIntroduction();
+  manageSettings();
+  manageMusicVolume();
+  muteSoundsAndMusic();
+  closeDialogOutside();
+  manageScreenButtons();
+  playStartScreenMusic();
+  bindTouchButtons();
+}
+
 /**
  * Starts the start screen music after the first user interaction.
  * Music is only played if the start screen is currently visible.
@@ -299,12 +311,4 @@ function bindTouchButton(buttonId, key) {
   });
 }
 
-startGame();
-manageIntroduction();
-manageSettings();
-manageMusicVolume();
-muteSoundsAndMusic();
-closeDialogOutside();
-manageScreenButtons(); 
-playStartScreenMusic();
-bindTouchButtons();
+
