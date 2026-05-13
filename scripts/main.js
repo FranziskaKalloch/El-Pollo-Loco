@@ -10,11 +10,17 @@ let settingsButton = document.getElementById("settingsButton");
 let gameSettingsButton = document.getElementById("gameSettingsButton");
 let closeSettingsButton = document.getElementById("closeSettingsButton");
 let fullscreenButton = document.getElementById("toggleFullscreenButton");
+let settingsMenubutton = document.getElementById("settingsMenuButton");
 const sound = new Sounds();
-
+let wasPausedBeforeSettings = false;
 let gamePaused = false;
 let intervalIds = [];
 
+/**
+ * Initializes all page controls and menu interactions.
+ * Sets up buttons, dialogs, sound controls and touch controls
+ * after the page has fully loaded.
+ */
 function initPage() {
   startGame();
   manageIntroduction();
@@ -130,12 +136,8 @@ function showMainMenu() {
 function manageScreenButtons() {
   let menuButton = document.querySelectorAll(".menu-btn");
   for (let menu of menuButton) {
-    menu.addEventListener("click", showMainMenu);
-  }
-  for (let menu of menuButton) {
     menu.addEventListener("click", showMenuWithSound);
   }
-
   let restartButton = document.querySelectorAll(".restart-button");
   for (let restart of restartButton) {
     restart.addEventListener("click", restartGameWithSound);
@@ -165,22 +167,29 @@ function manageIntroduction() {
  * the settings dialog was opened from the start screen or during gameplay.
  */
 function manageSettings() {
-  let settingsMenubutton = document.getElementById("settingsMenuButton"); 
   settingsButton.addEventListener("click", () => {
     sound.play("click");
     settingsMenubutton.classList.add("hidden");
     openDialog(settings);
   });
+
   gameSettingsButton.addEventListener("click", () => {
     sound.play("click");
+    wasPausedBeforeSettings = gamePaused;
     gamePaused = true;
     sound.stopSnoreSound();
     settingsMenubutton.classList.remove("hidden");
     openDialog(settings);
   });
+
   closeSettingsButton.addEventListener("click", () => {
     sound.play("click");
     closeDialog(settings);
+
+    if (!wasPausedBeforeSettings) {
+      gamePaused = false;
+      pauseOverlay.classList.add("hidden");
+    }
   });
 }
 
