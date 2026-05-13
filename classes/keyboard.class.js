@@ -3,8 +3,8 @@ class Keyboard {
   LEFT = false;
   DOWN = false;
   UP = false;
-  SPACE = false; // jump
-  D = false; // throw
+  SPACE = false;
+  D = false;
 
   constructor() {}
 }

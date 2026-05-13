@@ -1,6 +1,6 @@
 class ThrowableObject extends MoveableObject {
   speedY;
-  speedX = 6; // horizontale Geschwindigkeit: kleiner = langsamer, größer = schneller
+  speedX = 6;
   hasHitGround = false;
 
   /**
@@ -35,6 +35,10 @@ class ThrowableObject extends MoveableObject {
     intervalIds.push(interval);
   }
 
+  /**
+   * Sets a larger collision box for the thrown bottle.
+   * Makes hits against enemies easier during flight.
+   */
   setThrowOffset() {
     this.offset = {
       top: 10,

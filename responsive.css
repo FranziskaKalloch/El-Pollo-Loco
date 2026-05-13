@@ -148,9 +148,9 @@ li {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    width: 40px; 
-    font-size: 18px; 
+    height: 100px;
+    width: 100px; 
+    font-size: 38px; 
     border-radius: 100%; 
     border: 3px solid rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px); 
@@ -233,10 +233,10 @@ li {
   #btnRight,
   #btnJump,
   #btnThrow {
-    height: 34px;
-    width: 34px; 
+    height: 58px;
+    width: 58px; 
     border: 2px solid rgba(0, 0, 0, 0.6);
-    font-size: 16px; 
+    font-size: 22px; 
   }
 
   .canvas-container {
@@ -281,8 +281,8 @@ li {
   #btnRight,
   #btnJump,
   #btnThrow {
-    height: 32px;
-    width: 32px; 
+    height: 42px;
+    width: 42px; 
    
   }
 
@@ -292,11 +292,20 @@ li {
 
 }
 
-@media (hover: none) and (orientation: landscape) and (max-width: 500px) {
+@media (hover: none) and (orientation: landscape) and (max-width: 600px) {
    #introductionDialog, #settingsDialog {
     height: 100dvh; 
     width: 100vw; 
     overflow-y: auto;
+  }
+
+  #btnLeft,
+  #btnRight,
+  #btnJump,
+  #btnThrow {
+    height: 24px;
+    width: 24px; 
+   
   }
 
 }
