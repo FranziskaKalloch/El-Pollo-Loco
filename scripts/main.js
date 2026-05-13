@@ -169,7 +169,6 @@ function manageSettings() {
   closeSettingsButton.addEventListener("click", () => {
     sound.play("click");
     closeDialog(settings);
-    gamePaused = false;
   });
 }
 

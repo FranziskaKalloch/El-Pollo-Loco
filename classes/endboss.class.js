@@ -68,7 +68,7 @@ class Endboss extends MoveableObject {
   lastAttack = 0;
   attackCooldown = 1800;
   attackRange = 650;
-  attackSpeed = 22;
+  attackSpeed = 30;
   attackDirection = -1;
   deadAnimationStarted = false;
   deadAnimationFinished = false;
@@ -76,10 +76,10 @@ class Endboss extends MoveableObject {
   isActivated = false;
 
   offset = {
-    top: 120,
-    left: 70,
-    right: 70,
-    bottom: 40,
+    top: 150,
+    left: 130,
+    right: 130,
+    bottom: 60,
   };
 
   /**
@@ -210,7 +210,7 @@ class Endboss extends MoveableObject {
     this.state = "attack";
     this.lastAttack = Date.now();
     this.currentImage = 0;
-    this.speedY = -40;
+    this.speedY = -26;
   }
 
   /**

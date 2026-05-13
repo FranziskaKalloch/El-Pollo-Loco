@@ -121,17 +121,26 @@ button {
 
 .canvas-container {
   position: relative; 
+  display: flex;
 }
+
 
 canvas {
   background-color: black;
 }
 
-.pause-overlay {
-  position: absolute;
-  transform: translate(100%, 200%);
+/* PAUSE OVERLAY */
 
-  z-index: 10;
+.wrapper-canvas {
+  position: relative; 
+}
+
+.pause-overlay {
+ position: absolute;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ inset: 0;
 }
 
 .responsive-buttons {
@@ -370,6 +379,8 @@ li {
   gap: 16px;
 }
 
+/* IMPRESSUM */ 
+
 .impressum-container {
   max-width: 1440px; 
   display: flex;
@@ -377,8 +388,10 @@ li {
   align-items: flex-start;
   text-align: left;
   font-size: 16px; 
+  padding-inline: 64px;
   padding-top: 64px; 
-  gap: 40px;
+  padding-bottom: 64px; 
+  gap: 30px;
 }
 
 .impressum-container h1,
