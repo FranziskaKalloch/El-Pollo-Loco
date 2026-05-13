@@ -37,10 +37,10 @@ class SalsaBottle extends ThrowableObject {
   }
 
   offset = {
-    top: 40,
-    bottom: 40,
-    left: 45,
-    right: 45,
+    top: 30,
+    bottom: 30,
+    left: 40,
+    right: 40,
   };
 
   splashStartTime;

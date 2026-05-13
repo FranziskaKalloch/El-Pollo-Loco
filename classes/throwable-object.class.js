@@ -19,6 +19,7 @@ class ThrowableObject extends MoveableObject {
    * @param {number} direction - The horizontal throw direction and speed.
    */
   throw(x, y, direction) {
+    this.setThrowOffset();
     this.x = x;
     this.y = y;
     this.speedX = direction;
@@ -32,5 +33,14 @@ class ThrowableObject extends MoveableObject {
     }, 1000 / 60);
 
     intervalIds.push(interval);
+  }
+
+  setThrowOffset() {
+    this.offset = {
+      top: 10,
+      bottom: 10,
+      left: 10,
+      right: 10,
+    };
   }
 }
