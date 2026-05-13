@@ -281,8 +281,8 @@ li {
   #btnRight,
   #btnJump,
   #btnThrow {
-    height: 42px;
-    width: 42px; 
+    height: 45px;
+    width: 45px; 
    
   }
 
@@ -303,9 +303,8 @@ li {
   #btnRight,
   #btnJump,
   #btnThrow {
-    height: 24px;
-    width: 24px; 
-   
+    height: 50px;
+    width: 50px; 
   }
 
 }

@@ -62,6 +62,7 @@ function startGame() {
     sound.play("click");
     startScreen.classList.add("hidden");
     game.classList.remove("hidden");
+    document.querySelector(".responsive-buttons").classList.remove("hidden");
     document.getElementById("impressum").classList.add("hidden");
     sound.stopStartScreenMusic();
     sound.playBackgroundMusic();
@@ -127,6 +128,7 @@ function showMainMenu() {
   game.classList.add("hidden");
   startScreen.classList.remove("hidden");
   document.getElementById("impressum").classList.remove("hidden");
+  document.querySelector(".responsive-buttons").classList.add("hidden");
 }
 
 /**
