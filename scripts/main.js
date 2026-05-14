@@ -184,15 +184,17 @@ function manageSettings() {
     openDialog(settings);
   });
 
-  closeSettingsButton.addEventListener("click", () => {
-    sound.play("click");
-    closeDialog(settings);
+  closeSettingsButton.addEventListener("click", closeSettings);
+}
 
-    if (!wasPausedBeforeSettings) {
-      gamePaused = false;
-      pauseOverlay.classList.add("hidden");
-    }
-  });
+function closeSettings() {
+  sound.play("click");
+  closeDialog(settings);
+
+  if (!wasPausedBeforeSettings) {
+    gamePaused = false;
+    pauseOverlay.classList.add("hidden");
+  }
 }
 
 /**
@@ -286,7 +288,7 @@ function closeDialogOutside() {
   for (let dialog of dialogRef) {
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) {
-        dialog.close();
+        closeSettings();
       }
     });
   }
