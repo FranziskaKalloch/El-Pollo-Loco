@@ -505,6 +505,7 @@ class World {
       this.sound.stopBackgroundMusic();
       this.sound.play("gameOver");
       gameOverScreen.classList.remove("hidden");
+      document.querySelector(".responsive-buttons").classList.add("hidden");
       game.classList.add("hidden");
       return; 
     }
@@ -514,6 +515,7 @@ class World {
       this.sound.stopBackgroundMusic();
       this.sound.play("won");
       winScreen.classList.remove("hidden");
+      document.querySelector(".responsive-buttons").classList.add("hidden");
       game.classList.add("hidden");
     }
   }

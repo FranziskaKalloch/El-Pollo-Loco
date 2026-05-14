@@ -84,6 +84,7 @@ function restartGame() {
   winScreen.classList.add("hidden");
   game.classList.remove("hidden");
   startScreen.classList.add("hidden");
+  document.querySelector(".responsive-buttons").classList.remove("hidden");
   sound.playBackgroundMusic();
   initLevel();
   init();
