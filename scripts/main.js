@@ -326,5 +326,3 @@ function bindTouchButton(buttonId, key) {
     keyboard[key] = false;
   });
 }
-
-

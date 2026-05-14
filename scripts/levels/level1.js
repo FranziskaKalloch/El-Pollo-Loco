@@ -15,33 +15,11 @@ function setBackgroundObjects() {
   for (let i = 0; i < 7; i++) {
     let x = i * 720;
     let imageNumber = i % 2 === 0 ? 1 : 2;
-
-    backgroundObjects.push(
-      new Background("img/5_background/layers/air.png", x, 0),
-    );
-    backgroundObjects.push(
-      new Background(
-        `img/5_background/layers/3_third_layer/${imageNumber}.png`,
-        x,
-        0,
-      ),
-    );
-    backgroundObjects.push(
-      new Background(
-        `img/5_background/layers/2_second_layer/${imageNumber}.png`,
-        x,
-        0,
-      ),
-    );
-    backgroundObjects.push(
-      new Background(
-        `img/5_background/layers/1_first_layer/${imageNumber}.png`,
-        x,
-        0,
-      ),
-    );
+    backgroundObjects.push(new Background("img/5_background/layers/air.png", x, 0));
+    backgroundObjects.push(new Background(`img/5_background/layers/3_third_layer/${imageNumber}.png`, x, 0));
+    backgroundObjects.push(new Background(`img/5_background/layers/2_second_layer/${imageNumber}.png`, x, 0));
+    backgroundObjects.push(new Background(`img/5_background/layers/1_first_layer/${imageNumber}.png`, x, 0));
   }
-
   return backgroundObjects;
 }
 
