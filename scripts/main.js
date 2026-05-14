@@ -313,14 +313,16 @@ function bindTouchButtons() {
  */
 function bindTouchButton(buttonId, key) {
   let button = document.getElementById(buttonId);
-
   button.addEventListener("touchstart", (event) => {
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
     keyboard[key] = true;
   });
-
   button.addEventListener("touchend", (event) => {
-    event.preventDefault();
+    if (event.cancelable) {
+      event.preventDefault();
+    }
     keyboard[key] = false;
   });
 }
