@@ -5,7 +5,7 @@ A browser-based 2D jump-and-run game built with HTML, CSS, and object-oriented J
 🚀 Live Demo
 
 Live Version:
-https://franziskakalloch.developerakademie.net/el%20pollo%20loco/
+https://elpolloloco.franziska-kalloch.de
 
 ✨ Features
 
@@ -39,9 +39,6 @@ During development I learned how to:
 * manage game states
 * organize code into maintainable modules
 
-📷 Screenshot
-
-(Add a screenshot of the game here.)
 
 📦 Installation
 
